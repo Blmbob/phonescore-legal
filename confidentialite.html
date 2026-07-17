@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Politique de confidentialité — PhoneScore</title>
+<style>
+  :root{
+    --bg:#0D1117; --panel:#161B22; --text:#E6EDF3; --muted:#8B949E;
+    --green:#2EA043; --blue:#2563EB; --border:#30363D;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;line-height:1.7;font-size:16px}
+  .wrap{max-width:760px;margin:0 auto;padding:32px 20px 80px}
+  header{padding:28px 0 20px;border-bottom:1px solid var(--border);margin-bottom:32px}
+  .brand{display:flex;align-items:center;gap:10px;margin-bottom:14px}
+  .shield{width:34px;height:34px;flex:none}
+  .brand h1{font-size:1.5rem;font-weight:800;letter-spacing:-0.02em}
+  .doc-title{font-size:1.9rem;font-weight:800;letter-spacing:-0.02em;line-height:1.25}
+  .updated{color:var(--muted);font-size:.9rem;margin-top:10px}
+  h2{font-size:1.15rem;font-weight:700;margin:36px 0 12px;padding-left:14px;border-left:3px solid var(--green)}
+  p{margin-bottom:14px}
+  ul{margin:0 0 14px 22px}
+  li{margin-bottom:8px}
+  .card{background:var(--panel);border:1px solid var(--border);border-radius:12px;padding:18px 20px;margin:16px 0}
+  table{width:100%;border-collapse:collapse;margin:16px 0;font-size:.95rem}
+  th,td{text-align:left;padding:10px 12px;border-bottom:1px solid var(--border);vertical-align:top}
+  th{color:var(--muted);font-weight:600;font-size:.85rem;text-transform:uppercase;letter-spacing:.04em}
+  a{color:var(--blue);text-decoration:none}
+  a:hover{text-decoration:underline}
+  footer{margin-top:56px;padding-top:20px;border-top:1px solid var(--border);color:var(--muted);font-size:.9rem}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <div class="brand">
+    <svg class="shield" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+      <path d="M12 2L4 5.5V11c0 5 3.4 9.4 8 10.5 4.6-1.1 8-5.5 8-10.5V5.5L12 2z" fill="#2563EB"/>
+      <path d="M8.5 12l2.4 2.4 4.6-4.8" stroke="#2EA043" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+    <h1>PhoneScore</h1>
+  </div>
+  <div class="doc-title">Politique de confidentialité</div>
+  <div class="updated">Dernière mise à jour : 17 juillet 2026</div>
+</header>
+
+<p>Cette politique explique quelles données PhoneScore collecte, pourquoi, et comment elles sont protégées. Elle s'applique à l'application mobile PhoneScore, éditée à Abidjan, Côte d'Ivoire. Pour toute question : <a href="mailto:phonescore.support@gmail.com">phonescore.support@gmail.com</a>.</p>
+
+<h2>1. Données collectées</h2>
+<table>
+  <tr><th>Catégorie</th><th>Détail</th></tr>
+  <tr><td>Compte</td><td>Adresse email, mot de passe (stocké sous forme chiffrée/hachée, jamais en clair)</td></tr>
+  <tr><td>Vérifications</td><td>Numéros IMEI ou numéros de série soumis, rapports générés, dates des vérifications</td></tr>
+  <tr><td>Transactions</td><td>Packs achetés, montants, dates, référence de paiement, solde de pièces</td></tr>
+  <tr><td>Paiement</td><td>Le numéro de téléphone mobile money et les informations de paiement sont collectés et traités par notre prestataire GeniusPay ; PhoneScore ne stocke pas vos informations de paiement</td></tr>
+  <tr><td>Techniques</td><td>Données minimales de fonctionnement (journaux d'erreurs, identifiants de session)</td></tr>
+</table>
+<p>PhoneScore ne collecte ni votre localisation, ni vos contacts, ni le contenu de votre appareil. Un numéro IMEI identifie un appareil, pas une personne.</p>
+
+<h2>2. Finalités</h2>
+<ul>
+  <li>Fournir le service : exécuter les vérifications et afficher vos rapports et votre historique</li>
+  <li>Gérer votre compte, votre solde de pièces et vos achats</li>
+  <li>Créditer automatiquement vos pièces après confirmation d'un paiement</li>
+  <li>Vous répondre lorsque vous contactez le support</li>
+  <li>Prévenir la fraude et les abus du service</li>
+</ul>
+<p>Vos données ne sont ni vendues, ni louées, ni partagées à des fins publicitaires.</p>
+
+<h2>3. Sous-traitants et destinataires</h2>
+<p>Pour fonctionner, PhoneScore s'appuie sur des prestataires techniques qui traitent certaines données pour son compte :</p>
+<table>
+  <tr><th>Prestataire</th><th>Rôle</th><th>Données concernées</th></tr>
+  <tr><td>Supabase</td><td>Hébergement de la base de données et authentification (serveurs situés dans l'Union européenne, région eu-west-1)</td><td>Compte, vérifications, transactions</td></tr>
+  <tr><td>GeniusPay (GENIUS GROUPS SAS)</td><td>Traitement des paiements mobile money</td><td>Montant, numéro de téléphone, email, référence de transaction</td></tr>
+  <tr><td>Fournisseurs de vérification (dont Sickw)</td><td>Interrogation des bases de données constructeur et GSMA</td><td>Numéro IMEI ou numéro de série uniquement</td></tr>
+</table>
+<p>Ces prestataires n'utilisent vos données que pour fournir leur service et sont soumis à leurs propres politiques de confidentialité.</p>
+
+<h2>4. Conservation</h2>
+<ul>
+  <li>Données de compte : conservées tant que le compte est actif</li>
+  <li>Historique des vérifications et transactions : conservé tant que le compte est actif, afin que vous puissiez consulter vos rapports passés</li>
+  <li>Après suppression du compte : les données personnelles sont supprimées dans un délai maximal de 90 jours, à l'exception des enregistrements de transaction que la loi impose de conserver</li>
+</ul>
+
+<h2>5. Sécurité</h2>
+<p>Les échanges entre l'application et nos serveurs sont chiffrés (HTTPS/TLS). Les mots de passe sont hachés. L'accès aux données est restreint par des règles de sécurité au niveau de la base de données (Row Level Security) : chaque utilisateur ne peut accéder qu'à ses propres données. Les clés d'accès aux services tiers sont stockées côté serveur et ne transitent jamais par l'application.</p>
+
+<h2>6. Vos droits</h2>
+<p>Conformément à la loi ivoirienne n° 2013-450 du 19 juin 2013 relative à la protection des données à caractère personnel, vous disposez d'un droit d'accès, de rectification, de suppression et d'opposition sur vos données.</p>
+<div class="card">
+  <p>Pour exercer ces droits, écrivez à <a href="mailto:phonescore.support@gmail.com"><strong>phonescore.support@gmail.com</strong></a> depuis l'adresse email associée à votre compte. Nous répondons dans un délai maximal de 30 jours.</p>
+</div>
+<p>Vous pouvez également introduire une réclamation auprès de l'ARTCI (Autorité de Régulation des Télécommunications/TIC de Côte d'Ivoire), autorité de protection des données personnelles en Côte d'Ivoire.</p>
+
+<h2>7. Mineurs</h2>
+<p>Le service ne s'adresse pas aux personnes de moins de 18 ans. Si vous pensez qu'un mineur a créé un compte, contactez-nous pour sa suppression.</p>
+
+<h2>8. Modifications</h2>
+<p>Cette politique peut être mise à jour. En cas de modification substantielle, vous en serez informé via l'application. La date de dernière mise à jour figure en haut de cette page.</p>
+
+<footer>
+  © 2026 PhoneScore — Vérifie avant d'acheter.<br>
+  Questions : <a href="mailto:phonescore.support@gmail.com">phonescore.support@gmail.com</a> · <a href="cgu.html">Conditions Générales d'Utilisation</a>
+</footer>
+
+</div>
+</body>
+</html>
