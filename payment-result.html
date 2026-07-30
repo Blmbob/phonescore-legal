@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PhoneScore — Paiement</title>
+<style>
+  :root{
+    --bg:#0D1117; --panel:#161B22; --text:#E6EDF3; --muted:#8B949E;
+    --green:#2EA043; --red:#F85149; --border:#30363D;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{
+    background:var(--bg);color:var(--text);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    min-height:100vh;display:flex;align-items:center;justify-content:center;padding:24px;
+  }
+  .card{
+    background:var(--panel);border:1px solid var(--border);border-radius:16px;
+    padding:32px 28px;max-width:420px;width:100%;text-align:center;
+  }
+  .icon{font-size:2.5rem;margin-bottom:16px}
+  h1{font-size:1.2rem;font-weight:700;margin-bottom:10px}
+  p{color:var(--muted);font-size:.95rem;line-height:1.5}
+  .success h1{color:var(--green)}
+  .error h1{color:var(--red)}
+</style>
+</head>
+<body>
+<div class="card" id="card">
+  <p>Chargement…</p>
+</div>
+<script>
+  var status = new URLSearchParams(window.location.search).get('status') === 'success' ? 'success' : 'error';
+  var card = document.getElementById('card');
+  card.className = status;
+  card.innerHTML = status === 'success'
+    ? '<div class="icon">✅</div><h1>Paiement reçu</h1><p>Tu peux fermer cette fenêtre et retourner dans l\'application PhoneScore.</p>'
+    : '<div class="icon">❌</div><h1>Paiement annulé</h1><p>Le paiement a été annulé ou a échoué. Tu peux fermer cette fenêtre et réessayer dans l\'application.</p>';
+</script>
+</body>
+</html>
