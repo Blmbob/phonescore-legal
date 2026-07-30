@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Réinitialiser mon mot de passe — PhoneScore</title>
+<style>
+  :root{
+    --bg:#0D1117; --panel:#161B22; --text:#E6EDF3; --muted:#8B949E;
+    --green:#2EA043; --red:#F85149; --border:#30363D;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{
+    background:var(--bg);color:var(--text);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    min-height:100vh;display:flex;align-items:center;justify-content:center;padding:24px;
+  }
+  .carte{background:var(--panel);border:1px solid var(--border);border-radius:16px;
+         padding:28px 24px;max-width:420px;width:100%}
+  .marque{display:flex;align-items:center;gap:10px;margin-bottom:18px}
+  .marque svg{width:30px;height:30px;flex:none}
+  .marque span{font-size:1.2rem;font-weight:800;letter-spacing:-0.02em}
+  h1{font-size:1.25rem;font-weight:700;margin-bottom:8px}
+  p.intro{color:var(--muted);font-size:.95rem;line-height:1.5;margin-bottom:6px}
+  input{width:100%;padding:14px;margin-top:14px;border-radius:10px;
+        border:1px solid var(--border);background:#0D1117;color:var(--text);font-size:16px}
+  input:focus{outline:none;border-color:var(--green)}
+  button{width:100%;padding:14px;margin-top:18px;border-radius:10px;border:none;
+         background:var(--green);color:#fff;font-size:16px;font-weight:700;cursor:pointer}
+  button:disabled{opacity:.5;cursor:default}
+  .message{margin-top:16px;font-size:.95rem;line-height:1.5}
+  .erreur{color:var(--red)}
+  .succes{color:var(--green)}
+</style>
+</head>
+<body>
+<div class="carte">
+  <div class="marque">
+    <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+      <path d="M12 2L4 5.5V11c0 5 3.4 9.4 8 10.5 4.6-1.1 8-5.5 8-10.5V5.5L12 2z" fill="#2563EB"/>
+    </svg>
+    <span>PhoneScore</span>
+  </div>
+
+  <h1>Nouveau mot de passe</h1>
+  <p class="intro">Choisis un mot de passe d'au moins 8 caractères, puis retourne dans l'application PhoneScore pour te connecter.</p>
+
+  <input id="motDePasse" type="password" placeholder="Nouveau mot de passe" autocomplete="new-password">
+  <input id="confirmation" type="password" placeholder="Confirmer le mot de passe" autocomplete="new-password">
+  <button id="valider">Enregistrer</button>
+  <div id="message" class="message"></div>
+</div>
+
+<script type="module">
+  import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
+
+  // Cle publique : sans danger cote client (protegee par RLS cote base).
+  const SUPABASE_URL = "https://bvriicetjcnxrbhelokh.supabase.co";
+  const SUPABASE_PUBLISHABLE_KEY = "sb_publishable_p35a312TC0qA8YDdw_fWAQ_b0AUrfqf";
+
+  const supabase = createClient(SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY);
+  const message = document.getElementById("message");
+  const bouton = document.getElementById("valider");
+  let sessionPrete = false;
+
+  // Le lien Supabase depose un token de recuperation dans le fragment d'URL :
+  // le client ouvre alors une session temporaire, seule facon d'autoriser
+  // updateUser({ password }).
+  supabase.auth.onAuthStateChange((event) => {
+    if (event === "PASSWORD_RECOVERY" || event === "SIGNED_IN") sessionPrete = true;
+  });
+
+  bouton.addEventListener("click", async () => {
+    const mdp = document.getElementById("motDePasse").value;
+    const confirmation = document.getElementById("confirmation").value;
+    message.className = "message";
+
+    if (mdp.length < 8) {
+      message.className = "message erreur";
+      message.textContent = "Le mot de passe doit contenir au moins 8 caractères.";
+      return;
+    }
+    if (mdp !== confirmation) {
+      message.className = "message erreur";
+      message.textContent = "Les deux mots de passe ne correspondent pas.";
+      return;
+    }
+    if (!sessionPrete) {
+      message.className = "message erreur";
+      message.textContent = "Ce lien a expiré ou a déjà été utilisé. Demande-en un nouveau depuis l'application.";
+      return;
+    }
+
+    bouton.disabled = true;
+    const { error } = await supabase.auth.updateUser({ password: mdp });
+    bouton.disabled = false;
+
+    if (error) {
+      message.className = "message erreur";
+      message.textContent = "Échec de la mise à jour. Demande un nouveau lien depuis l'application.";
+      return;
+    }
+
+    message.className = "message succes";
+    message.textContent = "Mot de passe modifié ✓ Tu peux retourner dans l'application PhoneScore et te connecter.";
+  });
+</script>
+</body>
+</html>
