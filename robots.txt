@@ -1,0 +1,9 @@
+User-agent: *
+Allow: /
+
+# Pages utilitaires : sans intérêt pour la recherche, et atteintes
+# uniquement par un lien à usage unique ou un retour de paiement.
+Disallow: /reinitialiser.html
+Disallow: /payment-result.html
+
+Sitemap: https://phonescore.app/sitemap.xml
