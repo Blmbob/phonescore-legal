@@ -43,6 +43,11 @@ canal reproduirait le rejet 3.1.1 du 4 août 2026.
 - `og-image.png` — 1024×1024, opaque, reprise de l'icône de l'app. Utilisée pour
   les aperçus de liens (WhatsApp, réseaux sociaux).
 - `favicon.png` — 256×256.
+- `captures/` — captures d'écran réelles, réduites d'un facteur 3 depuis les
+  originaux 6,5" (1242×2688) fournis à l'App Store, soit 414×896. Le lot pèse
+  209 Ko au lieu de 1,2 Mo : la page est consultée en 3G. Pour en régénérer une,
+  réduire par un facteur entier — un facteur 3 donne 2× la taille d'affichage,
+  suffisant en écran haute densité.
 - `robots.txt`, `sitemap.xml` — indexation.
 
 ## Déploiement
@@ -60,5 +65,6 @@ version.
 
 - [ ] Remplacer l'espace réservé « Bientôt sur l'App Store » par le badge Apple
       officiel et le lien réel.
-- [ ] Ajouter de vraies captures d'écran de l'application (l'illustration
-      actuelle du rapport est une maquette HTML/CSS, pas une capture).
+- [ ] Reprendre `captures/stock.png` : la valeur du stock y déborde de sa carte
+      et se coupe sur deux lignes. C'est un défaut d'affichage de l'app, corrigé
+      en v1.1 — la capture devra être refaite après.
