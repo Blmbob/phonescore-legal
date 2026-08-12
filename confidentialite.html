@@ -18,6 +18,7 @@
   .brand h1{font-size:1.5rem;font-weight:800;letter-spacing:-0.02em}
   .doc-title{font-size:1.9rem;font-weight:800;letter-spacing:-0.02em;line-height:1.25}
   .updated{color:var(--muted);font-size:.9rem;margin-top:10px}
+  .opt{color:var(--muted);font-weight:400;font-size:.85em;white-space:nowrap}
   h2{font-size:1.15rem;font-weight:700;margin:36px 0 12px;padding-left:14px;border-left:3px solid var(--green)}
   p{margin-bottom:14px}
   ul{margin:0 0 14px 22px}
@@ -55,15 +56,21 @@
   <tr><td>Vérifications</td><td>Numéros IMEI ou numéros de série soumis, rapports générés, dates des vérifications</td></tr>
   <tr><td>Transactions</td><td>Packs achetés, montants, dates, référence de paiement, solde de pièces</td></tr>
   <tr><td>Paiement</td><td>Sur iPhone et iPad, les achats de pièces sont traités par Apple : nous recevons uniquement un reçu signé contenant l'identifiant de la transaction et celui du produit acheté. Sur les autres canaux, le numéro de téléphone mobile money et les informations de paiement sont collectés et traités par notre prestataire GeniusPay. Dans les deux cas, PhoneScore ne stocke aucune information bancaire</td></tr>
+  <tr><td>Boutique <span class="opt">(facultatif)</span></td><td>Si vous inscrivez votre boutique à l'annuaire : nom, quartier, ville, description, numéro WhatsApp, liens vers vos réseaux sociaux</td></tr>
+  <tr><td>Localisation <span class="opt">(facultatif)</span></td><td>Uniquement si vous choisissez de placer votre boutique sur la carte : les coordonnées GPS de la boutique, relevées à votre demande explicite. Ces coordonnées sont publiques dans l'annuaire. Aucun suivi de position, ni en arrière-plan, ni en continu</td></tr>
+  <tr><td>Stock et factures <span class="opt">(facultatif)</span></td><td>Si vous utilisez les outils revendeur : appareils en stock, prix d'achat et de vente, factures émises, et le cas échéant le nom et le numéro de téléphone du client que vous y saisissez</td></tr>
   <tr><td>Techniques</td><td>Données minimales de fonctionnement (journaux d'erreurs, identifiants de session)</td></tr>
 </table>
-<p>PhoneScore ne collecte ni votre localisation, ni vos contacts, ni le contenu de votre appareil. Un numéro IMEI identifie un appareil, pas une personne.</p>
+<p>PhoneScore ne lit jamais votre carnet d'adresses, vos photos ni le contenu de votre appareil. L'appareil photo n'est utilisé que pour scanner un code-barres IMEI : l'image n'est ni enregistrée ni transmise. Un numéro IMEI identifie un appareil, pas une personne.</p>
+<p>Les données de boutique, de localisation, de stock et de factures ne sont collectées que si vous utilisez les fonctionnalités correspondantes. Vous pouvez utiliser PhoneScore pour vérifier des appareils sans en fournir aucune.</p>
 
 <h2>2. Finalités</h2>
 <ul>
   <li>Fournir le service : exécuter les vérifications et afficher vos rapports et votre historique</li>
   <li>Gérer votre compte, votre solde de pièces et vos achats</li>
   <li>Créditer automatiquement vos pièces après confirmation d'un paiement</li>
+  <li>Afficher votre boutique dans l'annuaire public et, si vous l'avez demandé, la situer sur la carte</li>
+  <li>Vous fournir les outils revendeur : suivi de stock, édition de factures et statistiques de vente</li>
   <li>Vous répondre lorsque vous contactez le support</li>
   <li>Prévenir la fraude et les abus du service</li>
 </ul>
@@ -85,6 +92,7 @@
 <ul>
   <li>Données de compte : conservées tant que le compte est actif</li>
   <li>Historique des vérifications et transactions : conservé tant que le compte est actif, afin que vous puissiez consulter vos rapports passés</li>
+  <li>Boutique, stock et factures : conservés tant que le compte est actif. Vous pouvez retirer votre boutique de l'annuaire ou supprimer une fiche de stock à tout moment depuis l'application</li>
 </ul>
 
 <h2>4 bis. Suppression de votre compte</h2>
