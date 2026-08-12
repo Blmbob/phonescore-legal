@@ -101,20 +101,20 @@
      Aucun filter:blur -- le degrade radial est deja doux et ne coute rien
      a chaque image. Important sur les appareils modestes. */
   .aurora{position:absolute; inset:-20% -10%; z-index:0; pointer-events:none}
-  .aurora i{position:absolute; display:block; border-radius:50%; opacity:.5}
+  .aurora i{position:absolute; display:block; border-radius:50%; opacity:.85}
   .aurora i:nth-child(1){
-    width:520px; height:520px; left:-6%; top:-12%;
-    background:radial-gradient(circle at 50% 50%, rgba(73,122,234,.55), rgba(73,122,234,0) 68%);
+    width:620px; height:620px; left:-8%; top:-16%;
+    background:radial-gradient(circle at 50% 50%, rgba(73,122,234,.72), rgba(73,122,234,0) 70%);
     animation:drift1 26s ease-in-out infinite;
   }
   .aurora i:nth-child(2){
-    width:440px; height:440px; right:-8%; top:8%;
-    background:radial-gradient(circle at 50% 50%, rgba(85,174,96,.38), rgba(85,174,96,0) 68%);
+    width:540px; height:540px; right:-10%; top:4%;
+    background:radial-gradient(circle at 50% 50%, rgba(85,174,96,.55), rgba(85,174,96,0) 70%);
     animation:drift2 32s ease-in-out infinite;
   }
   .aurora i:nth-child(3){
-    width:380px; height:380px; left:38%; bottom:-22%;
-    background:radial-gradient(circle at 50% 50%, rgba(126,165,245,.30), rgba(126,165,245,0) 70%);
+    width:470px; height:470px; left:34%; bottom:-26%;
+    background:radial-gradient(circle at 50% 50%, rgba(126,165,245,.46), rgba(126,165,245,0) 72%);
     animation:drift3 38s ease-in-out infinite;
   }
   @keyframes drift1{ 0%,100%{transform:translate3d(0,0,0) scale(1)} 50%{transform:translate3d(60px,40px,0) scale(1.12)} }
@@ -123,9 +123,9 @@
 
   /* Balayage : rappel du scan, volontairement lent et rare. */
   .sweepline{
-    position:absolute; left:0; right:0; height:140px; z-index:0; pointer-events:none;
-    background:linear-gradient(180deg, rgba(126,165,245,0), rgba(126,165,245,.12), rgba(126,165,245,0));
-    animation:sweepDown 14s ease-in-out infinite;
+    position:absolute; left:0; right:0; height:180px; z-index:0; pointer-events:none;
+    background:linear-gradient(180deg, rgba(126,165,245,0), rgba(126,165,245,.24), rgba(126,165,245,0));
+    animation:sweepDown 11s ease-in-out infinite;
   }
   @keyframes sweepDown{
     0%{transform:translateY(-160px); opacity:0}
@@ -137,7 +137,7 @@
   .dotted{position:relative; overflow:hidden}
   .dotted::before{
     content:""; position:absolute; inset:0; z-index:0; pointer-events:none;
-    background-image:radial-gradient(rgba(168,180,204,.16) 1px, transparent 1px);
+    background-image:radial-gradient(rgba(168,180,204,.30) 1px, transparent 1px);
     background-size:26px 26px;
     animation:dotShift 40s linear infinite;
   }
