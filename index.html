@@ -94,7 +94,55 @@
   .nav a.link:hover{color:var(--text)}
 
   /* ---------- hero ---------- */
-  .hero{padding:64px 0 56px; text-align:center}
+  .hero{position:relative; overflow:hidden; padding:64px 0 56px; text-align:center}
+  .hero .wrap{position:relative; z-index:1}
+
+  /* Fond anime : uniquement transform et opacity, donc compose par le GPU.
+     Aucun filter:blur -- le degrade radial est deja doux et ne coute rien
+     a chaque image. Important sur les appareils modestes. */
+  .aurora{position:absolute; inset:-20% -10%; z-index:0; pointer-events:none}
+  .aurora i{position:absolute; display:block; border-radius:50%; opacity:.5}
+  .aurora i:nth-child(1){
+    width:520px; height:520px; left:-6%; top:-12%;
+    background:radial-gradient(circle at 50% 50%, rgba(73,122,234,.55), rgba(73,122,234,0) 68%);
+    animation:drift1 26s ease-in-out infinite;
+  }
+  .aurora i:nth-child(2){
+    width:440px; height:440px; right:-8%; top:8%;
+    background:radial-gradient(circle at 50% 50%, rgba(85,174,96,.38), rgba(85,174,96,0) 68%);
+    animation:drift2 32s ease-in-out infinite;
+  }
+  .aurora i:nth-child(3){
+    width:380px; height:380px; left:38%; bottom:-22%;
+    background:radial-gradient(circle at 50% 50%, rgba(126,165,245,.30), rgba(126,165,245,0) 70%);
+    animation:drift3 38s ease-in-out infinite;
+  }
+  @keyframes drift1{ 0%,100%{transform:translate3d(0,0,0) scale(1)} 50%{transform:translate3d(60px,40px,0) scale(1.12)} }
+  @keyframes drift2{ 0%,100%{transform:translate3d(0,0,0) scale(1)} 50%{transform:translate3d(-50px,55px,0) scale(1.08)} }
+  @keyframes drift3{ 0%,100%{transform:translate3d(0,0,0) scale(1)} 50%{transform:translate3d(40px,-45px,0) scale(1.15)} }
+
+  /* Balayage : rappel du scan, volontairement lent et rare. */
+  .sweepline{
+    position:absolute; left:0; right:0; height:140px; z-index:0; pointer-events:none;
+    background:linear-gradient(180deg, rgba(126,165,245,0), rgba(126,165,245,.12), rgba(126,165,245,0));
+    animation:sweepDown 14s ease-in-out infinite;
+  }
+  @keyframes sweepDown{
+    0%{transform:translateY(-160px); opacity:0}
+    10%{opacity:1} 70%{opacity:1}
+    100%{transform:translateY(760px); opacity:0}
+  }
+
+  /* Trame de points en derive, sous la section des situations. */
+  .dotted{position:relative; overflow:hidden}
+  .dotted::before{
+    content:""; position:absolute; inset:0; z-index:0; pointer-events:none;
+    background-image:radial-gradient(rgba(168,180,204,.16) 1px, transparent 1px);
+    background-size:26px 26px;
+    animation:dotShift 40s linear infinite;
+  }
+  .dotted > .wrap{position:relative; z-index:1}
+  @keyframes dotShift{ to{background-position:26px 26px} }
   .hero h1{
     font-size:clamp(30px,5.4vw,46px); line-height:1.15; letter-spacing:-.8px;
     margin:0 0 16px; font-weight:800;
@@ -159,6 +207,10 @@
     .a-check{stroke-dashoffset:0}
     .a-cash{opacity:1; transform:translateX(112px)}
     .c-pin,.c-shop,.b-d1,.b-d2,.b-d3,.b-d4{opacity:1; transform:none}
+    /* Les fonds restent en place, sans mouvement. Le balayage disparait :
+       une bande claire figee sur le heros n'aurait aucun sens. */
+    .aurora i, .dotted::before{animation:none !important}
+    .sweepline{display:none}
   }
 
   .shots{
@@ -252,8 +304,10 @@
 </div>
 
 <!-- ---------------- HERO ---------------- -->
-<div class="wrap">
-  <div class="hero">
+<div class="hero">
+  <div class="aurora" aria-hidden="true"><i></i><i></i><i></i></div>
+  <div class="sweepline" aria-hidden="true"></div>
+  <div class="wrap">
     <h1>Ne payez plus pour un iPhone <em>verrouillé</em></h1>
     <p class="lead">
       Vérifiez en quelques secondes si un iPhone ou un MacBook d'occasion est
@@ -318,6 +372,7 @@
 </div>
 
 <!-- ---------------- SITUATIONS ---------------- -->
+<div class="dotted">
 <div class="wrap">
   <section>
     <h2>Trois situations où ça compte</h2>
@@ -401,6 +456,7 @@
 
     </div>
   </section>
+</div>
 </div>
 
 <!-- ---------------- COMMENT ---------------- -->
