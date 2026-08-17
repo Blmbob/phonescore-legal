@@ -61,10 +61,14 @@ gh api repos/Blmbob/phonescore-legal/pages/builds/latest --jq .status
 Attendre `built` avant de vérifier l'URL en ligne — sinon on lit l'ancienne
 version.
 
-## À faire quand l'app sera approuvée
+## État
 
-- [ ] Remplacer l'espace réservé « Bientôt sur l'App Store » par le badge Apple
-      officiel et le lien réel.
+L'app est **publiée** depuis le 13 août 2026 :
+<https://apps.apple.com/app/id6795897093> (version 1.0, gratuite).
+Le lien de téléchargement est en place sur l'accueil.
+
+## À faire
+
 - [ ] Reprendre `captures/stock.png` : la valeur du stock y déborde de sa carte
       et se coupe sur deux lignes. C'est un défaut d'affichage de l'app, corrigé
-      en v1.1 — la capture devra être refaite après.
+      en 1.0.1 — la capture devra être refaite après.

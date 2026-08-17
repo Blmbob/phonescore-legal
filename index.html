@@ -55,6 +55,14 @@
       "operatingSystem": "iOS",
       "inLanguage": "fr-FR",
       "url": "https://phonescore.app/",
+      "downloadUrl": "https://apps.apple.com/app/id6795897093",
+      "softwareVersion": "1.0",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD",
+        "availability": "https://schema.org/InStock"
+      },
       "image": "https://phonescore.app/og-image.png",
       "description": "Vérification de l'historique d'un iPhone ou d'un MacBook d'occasion à partir de son code IMEI : verrou iCloud, inscription sur liste noire, verrou opérateur, modèle réel et garantie.",
       "publisher": { "@id": "https://phonescore.app/#organization" }
@@ -150,11 +158,13 @@
   .hero h1 em{font-style:normal; color:var(--blue-l)}
   .hero .lead{color:var(--muted); font-size:18px; max-width:560px; margin:0 auto 30px}
   .cta{
-    display:inline-block; padding:14px 26px; border-radius:12px; font-size:16px;
+    display:inline-flex; align-items:center; gap:9px;
+    padding:14px 26px; border-radius:12px; font-size:16px;
     font-weight:600; text-decoration:none; border:1px solid rgba(73,122,234,.45);
     background:rgba(73,122,234,.18); color:#fff;
   }
-  .cta.soon{opacity:.85; cursor:default}
+  .cta:hover{background:rgba(73,122,234,.28); border-color:var(--blue-l)}
+  .cta-ico{width:19px; height:19px; flex:none}
   .cta-note{color:var(--muted); font-size:14px; margin:12px 0 0}
 
   /* ---------- mockup ---------- */
@@ -314,7 +324,14 @@
       bloqué sur un compte iCloud, déclaré volé, ou verrouillé par un opérateur.
       Avant de sortir l'argent.
     </p>
-    <span class="cta soon">Bientôt sur l'App&nbsp;Store</span>
+    <!-- Lien par identifiant, sans code pays : l'App Store redirige le
+         visiteur vers sa propre boutique. -->
+    <a class="cta" href="https://apps.apple.com/app/id6795897093">
+      <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" class="cta-ico">
+        <path d="M16.4 12.6c0-2 1.6-3 1.7-3-.9-1.4-2.4-1.5-2.9-1.6-1.2-.1-2.4.7-3 .7s-1.6-.7-2.6-.7c-1.3 0-2.6.8-3.2 2-1.4 2.4-.4 6 1 8 .7 1 1.5 2.1 2.5 2 1-.1 1.4-.6 2.6-.6s1.5.6 2.6.6c1.1 0 1.8-1 2.4-2 .8-1.1 1.1-2.2 1.1-2.3 0 0-2.2-.8-2.2-3.1zM14.5 6.2c.5-.7.9-1.6.8-2.6-.8 0-1.8.5-2.4 1.2-.5.6-1 1.6-.8 2.5.9.1 1.8-.4 2.4-1.1z"/>
+      </svg>
+      Télécharger sur l'App&nbsp;Store
+    </a>
     <p class="cta-note">Application iPhone — Abidjan, Côte d'Ivoire</p>
 
     <div class="phone">
