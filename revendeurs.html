@@ -3,17 +3,17 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Assistance — PhoneScore</title>
+<title>Badge boutique — PhoneScore</title>
 <link rel="icon" href="/favicon.png" type="image/png">
 <link rel="apple-touch-icon" href="/favicon.png">
-<link rel="canonical" href="https://phonescore.app/assistance.html">
-<meta name="description" content="Assistance PhoneScore : questions fréquentes, suppression de compte, et comment nous joindre. Abidjan, Côte d'Ivoire.">
+<link rel="canonical" href="https://phonescore.app/revendeurs.html">
+<meta name="description" content="Le badge Certifiée PhoneScore se gagne : 10 vérifications sur 30 jours glissants. Il prouve à vos clients que vous contrôlez vos appareils avant de les vendre. Abidjan, Côte d'Ivoire.">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="PhoneScore">
 <meta property="og:locale" content="fr_FR">
-<meta property="og:url" content="https://phonescore.app/assistance.html">
-<meta property="og:title" content="Assistance — PhoneScore">
-<meta property="og:description" content="Questions fréquentes, suppression de compte, et comment nous joindre.">
+<meta property="og:url" content="https://phonescore.app/revendeurs.html">
+<meta property="og:title" content="Badge boutique — PhoneScore">
+<meta property="og:description" content="Le badge qui prouve que vous vérifiez vos appareils. Il se gagne, et il se perd.">
 <meta property="og:image" content="https://phonescore.app/og-image.png">
 <meta name="theme-color" content="#0A1028">
 <style>
@@ -243,6 +243,45 @@
   }
   footer a{margin:0 10px; display:inline-block}
 </style>
+<style>
+  /* Niveaux de badge : la hierarchie doit se lire sans avoir a lire le texte. */
+  .niveaux{display:grid; gap:14px; margin:26px 0 8px}
+  .niveau{
+    display:flex; gap:15px; align-items:flex-start;
+    border:1px solid var(--line); border-radius:14px; padding:16px 17px;
+    background:var(--panel);
+  }
+  .niveau.fort{border-color:rgba(85,174,96,.45); background:rgba(85,174,96,.09)}
+  .pastille{
+    flex:none; display:inline-flex; align-items:center;
+    border-radius:999px; padding:5px 12px; font-size:12.5px; font-weight:800;
+    white-space:nowrap;
+  }
+  .pastille.cert{color:var(--green-l); background:rgba(85,174,96,.16); border:1px solid rgba(85,174,96,.45)}
+  .pastille.memb{color:var(--muted); background:rgba(168,180,204,.10); border:1px solid var(--line)}
+  .pastille.rien{color:var(--muted); background:transparent; border:1px dashed var(--line)}
+  .niveau p{margin:0; font-size:14.5px; color:var(--muted)}
+  .niveau p b{color:var(--text); font-weight:700}
+
+  .compteur{
+    margin:24px 0; padding:16px 18px; border-radius:14px;
+    border:1px solid rgba(85,174,96,.35); background:rgba(85,174,96,.08);
+    font-size:15px;
+  }
+  .compteur b{color:var(--green-l)}
+
+  .avantages{display:grid; gap:13px; margin:22px 0; padding:0; list-style:none}
+  .avantages li{position:relative; padding-left:26px; color:var(--muted); font-size:15px}
+  .avantages li::before{
+    content:""; position:absolute; left:2px; top:9px;
+    width:9px; height:9px; border-radius:50%; background:var(--green);
+  }
+  .avantages li b{color:var(--text); font-weight:700}
+
+  @media (max-width:520px){
+    .niveau{flex-direction:column; gap:10px}
+  }
+</style>
 </head>
 <body>
 
@@ -259,100 +298,113 @@
   </div>
 </div>
 
+<div class="hero">
+  <div class="aurora" aria-hidden="true"><i></i><i></i><i></i></div>
+  <div class="wrap">
+    <h1>Le badge qui prouve que vous <em>vérifiez</em></h1>
+    <p class="lead">
+      Sur le marché de l&rsquo;occasion, tout le monde promet des appareils sains.
+      Le badge Certifiée ne se promet pas : il se gagne, vérification après
+      vérification, et il se perd si vous arrêtez.
+    </p>
+  </div>
+</div>
+
 <div class="wrap">
   <section style="border-top:0">
     <div class="narrow">
 
-      <h2>Assistance</h2>
-      <p class="sub">Questions fréquentes, et comment nous joindre.</p>
-
-      <h3>Comment trouver l'IMEI d'un téléphone&nbsp;?</h3>
+      <h2>Pourquoi un badge</h2>
       <p>
-        Composez <code>*#06#</code> sur le clavier téléphonique de l'appareil.
-        Les 15 chiffres s'affichent immédiatement. L'IMEI figure aussi dans
-        Réglages → Général → Informations.
+        Un revendeur sérieux contrôle ses appareils avant de les vendre. Le
+        problème, c&rsquo;est que son client ne peut pas le savoir : rien ne le
+        distingue de celui qui ne contrôle rien. Les deux tiennent le même discours.
+      </p>
+      <p>
+        Le badge répond à cela. Il ne s&rsquo;achète pas et ne se déclare pas : il
+        s&rsquo;appuie sur vos vérifications réelles, enregistrées par PhoneScore. Une
+        boutique qui le porte a contrôlé au moins dix appareils dans les trente
+        derniers jours. C&rsquo;est vérifiable, et c&rsquo;est ce qui lui donne sa valeur.
       </p>
 
-      <h3>Comment fonctionnent les pièces&nbsp;?</h3>
+      <h2>Comment l&rsquo;obtenir</h2>
+
+      <div class="niveaux">
+        <div class="niveau fort">
+          <span class="pastille cert">Certifiée ✓</span>
+          <p>
+            <b>Accès revendeur actif et 10 vérifications sur 30 jours.</b>
+            Votre boutique apparaît dans l&rsquo;annuaire de l&rsquo;application, badge
+            visible par tous les acheteurs.
+          </p>
+        </div>
+        <div class="niveau">
+          <span class="pastille memb">Membre</span>
+          <p>
+            <b>Accès revendeur actif, moins de 10 vérifications.</b>
+            Votre boutique est visible, sans le badge. Chaque vérification vous
+            rapproche du seuil.
+          </p>
+        </div>
+        <div class="niveau">
+          <span class="pastille rien">Aucun</span>
+          <p>
+            <b>Accès revendeur expiré, ou aucune vérification.</b>
+            La boutique n&rsquo;apparaît pas dans l&rsquo;annuaire.
+          </p>
+        </div>
+      </div>
+
       <p>
-        Une pièce correspond à une vérification d'iPhone, deux pièces à une
-        vérification de MacBook. Les pièces sont décomptées uniquement lorsque
-        la vérification aboutit.
+        L&rsquo;accès revendeur s&rsquo;obtient avec le <b>pack Revendeur</b> : 10 pièces
+        pour 6 700 FCFA, qui ouvrent 30 jours d&rsquo;accès. Ces dix pièces sont
+        exactement de quoi faire les dix vérifications du seuil.
       </p>
 
-      <h3>Ma vérification a échoué, mes pièces sont-elles perdues&nbsp;?</h3>
+      <h2>Il se garde comme il s&rsquo;obtient</h2>
       <p>
-        Non. En cas d'échec technique, les pièces sont automatiquement restituées
-        sur votre compte. Si ce n'est pas le cas, écrivez-nous avec la date et
-        l'IMEI concerné, nous régularisons.
+        Le compte se fait sur les <b>30 derniers jours glissants</b>, et non sur le
+        mois calendaire. Il n&rsquo;y a donc pas de fenêtre de tir : on ne rattrape pas
+        un mois creux en groupant ses vérifications le dernier jour. Le badge suit
+        votre activité réelle, jour après jour, et il est recalculé chaque nuit.
+      </p>
+      <p>
+        Si vous passez sous le seuil, le badge redescend à Membre. Il revient de
+        lui-même dès que vous repassez au-dessus : rien à demander, rien à payer.
       </p>
 
-      <h3>Mon solde n'apparaît pas après un achat</h3>
+      <div class="compteur">
+        Pour que vous ne le perdiez jamais sans le voir venir, l&rsquo;écran
+        <b>Ma Boutique</b> affiche en permanence où vous en êtes :
+        <b>« 7 vérifications sur les 30 derniers jours — encore 3 pour le badge »</b>.
+      </div>
+
+      <h2>Ce que l&rsquo;accès revendeur apporte</h2>
+      <ul class="avantages">
+        <li><b>Votre stock</b> — enregistrez vos appareils, suivez ce qui est en stock, réservé ou vendu, et retrouvez un IMEI par recherche.</li>
+        <li><b>Vos factures</b> — générées à la vente, numérotées, avec un QR code qui renvoie au rapport de vérification de l&rsquo;appareil.</li>
+        <li><b>Vos archives</b> — les appareils vendus restent consultables avec leurs dates d&rsquo;entrée et de sortie, utile lors d&rsquo;un contrôle.</li>
+        <li><b>Jusqu&rsquo;à trois boutiques</b> — pour séparer vos stocks. Une seule est principale : c&rsquo;est elle qui reçoit vos vérifications et porte le badge.</li>
+      </ul>
+
+      <h2>Commencer</h2>
       <p>
-        Rouvrez l'application et patientez quelques secondes, le solde se
-        synchronise avec nos serveurs. Si un achat a été interrompu, il reprend
-        automatiquement au lancement suivant. S'il reste incorrect au bout de
-        quelques minutes, contactez-nous en précisant la date et le montant
-        du paiement.
+        Le mode revendeur s&rsquo;active depuis l&rsquo;application, après l&rsquo;achat du pack
+        Revendeur. Vous créez ensuite votre boutique, et vos vérifications
+        comptent à partir de ce moment.
       </p>
 
-      <h3>Comment sont facturées les pièces&nbsp;?</h3>
-      <p>
-        Sur iPhone et iPad, les packs sont vendus par l'App Store, au prix affiché
-        dans l'application au moment de l'achat. Une demande de remboursement se
-        fait auprès d'Apple, sur
-        <a href="https://reportaproblem.apple.com">reportaproblem.apple.com</a>,
-        et non auprès de nous&nbsp;: nous n'avons pas la faculté de rembourser un
-        achat App Store.
-      </p>
-
-      <h3>Comment inscrire ma boutique&nbsp;?</h3>
-      <p>
-        L'inscription à l'annuaire est réservée aux détenteurs du
-        <strong>Pack Revendeur</strong> (10 pièces). L'achat ouvre 30 jours
-        d'accès revendeur, qui donnent droit à la boutique sur la carte, au
-        suivi de stock et aux factures. Passé ce délai, un nouveau pack
-        prolonge l'accès&nbsp;; votre boutique et vos données restent en place
-        entre-temps.
-      </p>
-
-      <h3>Le verdict est rouge, que faire&nbsp;?</h3>
-      <p>
-        Un verdict rouge signale un appareil verrouillé iCloud, blacklisté ou
-        bloqué opérateur. Nous vous recommandons de ne pas conclure l'achat.
-        Un appareil verrouillé ne peut pas être débloqué par un revendeur.
-      </p>
-
-      <h3>Comment supprimer mon compte&nbsp;?</h3>
-      <p>
-        Directement depuis l'application, sans passer par l'assistance&nbsp;:
-        écran <strong>Profil</strong> → <strong>«&nbsp;Supprimer mon compte&nbsp;»</strong>.
-        La suppression est immédiate et irréversible. Sont effacés votre compte,
-        vos pièces restantes, votre historique de vérifications, ainsi que votre
-        boutique et son contenu si vous en aviez une.
-      </p>
-
-      <div class="card contact" style="margin-top:30px">
-        <p style="margin:0 0 6px; color:var(--muted); font-size:14px">
-          Assistance, réclamations et suppression de compte
+      <div class="card contact" style="margin-top:26px">
+        <p style="margin:0 0 14px">
+          Une question sur le badge ou sur votre boutique ? Écrivez-nous à
+          <a href="mailto:phonescore.support@gmail.com">phonescore.support@gmail.com</a>.
         </p>
-        <a href="mailto:phonescore.support@gmail.com">phonescore.support@gmail.com</a>
-        <p style="margin:10px 0 0; color:var(--muted); font-size:14px">
-          Réponse sous 48&nbsp;heures ouvrées. Écrivez en français ou en anglais.
+        <p style="margin:0">
+          <a href="/">Retour à l&rsquo;accueil</a> —
+          <a href="/verifier.html">vérifier un appareil depuis le navigateur</a>.
         </p>
       </div>
 
-      <div class="card">
-        <p style="margin:0; color:var(--muted); font-size:14px">
-          Pour toute réclamation, indiquez si possible&nbsp;:
-        </p>
-        <ul style="color:var(--muted); font-size:14px">
-          <li>l'adresse e-mail de votre compte&nbsp;;</li>
-          <li>la date et l'heure du problème&nbsp;;</li>
-          <li>l'IMEI concerné, le cas échéant.</li>
-        </ul>
-      </div>
-    
     </div>
   </section>
 </div>
@@ -360,11 +412,11 @@
 <footer>
   <div class="wrap">
     <p>
-      <a href="revendeurs.html">Badge boutique</a>
-      <a href="cgu.html">Conditions générales d'utilisation</a>
+      <a href="cgu.html">Conditions générales d&rsquo;utilisation</a>
       <a href="confidentialite.html">Politique de confidentialité</a>
+      <a href="assistance.html">Assistance</a>
     </p>
-    <p style="margin-top:14px">PhoneScore — Abidjan, Côte d'Ivoire</p>
+    <p style="margin-top:14px">PhoneScore — Abidjan, Côte d&rsquo;Ivoire</p>
   </div>
 </footer>
 
