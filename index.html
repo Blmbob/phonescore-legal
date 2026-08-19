@@ -170,18 +170,24 @@
   p{margin:8px 0}
 
   .grid{display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:16px}
+
+  /* Liste des controles : une ligne par point, puce coloree, pas de carte.
+     Sept cartes prenaient un ecran entier pour la meme information. */
+  .controles{list-style:none; margin:22px 0 0; padding:0; display:grid; gap:11px}
+  .controles li{
+    position:relative; padding-left:20px; color:var(--muted); font-size:15px;
+  }
+  .controles li::before{
+    content:""; position:absolute; left:2px; top:10px;
+    width:7px; height:7px; border-radius:50%; background:var(--blue-l);
+  }
+  .controles b{color:var(--text); font-weight:700}
   .card{
     background:var(--panel); border:1px solid var(--line);
     border-radius:14px; padding:18px 20px;
   }
   .card h4{margin:0 0 6px; font-size:16px}
   .card p{margin:0; color:var(--muted); font-size:14.5px}
-  .card .ico{
-    width:34px; height:34px; border-radius:9px; display:flex; align-items:center;
-    justify-content:center; margin-bottom:12px;
-    background:rgba(73,122,234,.16); border:1px solid rgba(73,122,234,.35);
-  }
-  .card .ico svg{width:18px; height:18px}
 
   .steps{counter-reset:s; display:grid; gap:14px}
   .step{display:flex; gap:14px; align-items:flex-start}
@@ -292,15 +298,6 @@
   .outil dl > :nth-last-child(-n+2){border-bottom:0}
   .outil .ok-v{color:var(--green-l)} .outil .ko-v{color:#FFB4B4}
 
-  .outil .o-packs{display:grid; gap:10px}
-  .outil .o-pack{
-    display:flex; align-items:center; justify-content:space-between; gap:12px;
-    padding:14px; border:1px solid var(--line); border-radius:11px; cursor:pointer;
-    background:rgba(10,16,40,.4);
-  }
-  .outil .o-pack:hover{border-color:var(--blue-l)}
-  .outil .o-pack .o-n{font-weight:700}
-  .outil .o-pack .p{color:var(--green-l); font-weight:700}
   .outil .hint{color:var(--muted); font-size:13px; margin-top:12px}
   .outil .hidden{display:none}
   .outil .spin{display:inline-block; width:15px; height:15px; border:2px solid rgba(255,255,255,.3);
@@ -324,6 +321,10 @@
   .outil #vue-auth .o-sub{text-align:center}
   /* L accueil borde et espace ses <section> ; celles de l outil n en sont pas. */
   .outil section{border-top:0; padding:0}
+  /* Le rechargement a sa propre page : la majorite des visites ne recharge
+     pas, les trois packs n'ont pas a occuper un tiers de l'ecran. */
+  .outil .recharge{text-align:center; margin:16px 0 0}
+  .outil .recharge a{font-size:14.5px; font-weight:600}
 
 </style>
 </head>
@@ -411,27 +412,9 @@
       
           <div id="rapport" class="o-card hidden"></div>
       
-          <div class="o-card">
-            <h1 style="font-size:18px; margin:0 0 4px">Recharger</h1>
-            <p class="o-sub" style="font-size:14px; margin-bottom:14px">
-              Paiement par mobile money — Orange Money, MTN, Moov, Wave.
-            </p>
-            <div class="o-packs">
-              <div class="o-pack" data-pack="decouverte" role="button" tabindex="0">
-                <span class="o-n">Découverte<br><span style="color:var(--muted);font-weight:400;font-size:13px">1 pièce</span></span>
-                <span class="p">700 FCFA</span>
-              </div>
-              <div class="o-pack" data-pack="standard" role="button" tabindex="0">
-                <span class="o-n">Standard<br><span style="color:var(--muted);font-weight:400;font-size:13px">3 pièces</span></span>
-                <span class="p">2 000 FCFA</span>
-              </div>
-              <div class="o-pack" data-pack="revendeur" role="button" tabindex="0">
-                <span class="o-n">Revendeur<br><span style="color:var(--muted);font-weight:400;font-size:13px">10 pièces · 30 j d'accès revendeur</span></span>
-                <span class="p">6 700 FCFA</span>
-              </div>
-            </div>
-            <div id="msg-achat" class="msg"></div>
-          </div>
+          <p class="recharge">
+            <a href="/recharger.html">Recharger mes pièces</a>
+          </p>
         </section>
     </div>
 
@@ -446,52 +429,21 @@
 <!-- ---------------- CE QU'ON VÉRIFIE ---------------- -->
 <div class="wrap">
   <section>
-    <h2>Ce que PhoneScore contrôle</h2>
-    <p class="sub">À partir du seul code IMEI, interrogé auprès des bases constructeur et GSMA.</p>
-    <div class="grid">
-
-      <div class="card">
-        <div class="ico"><svg viewBox="0 0 24 24" fill="none"><path d="M6 10V8a6 6 0 1112 0v2" stroke="#7EA5F5" stroke-width="2" stroke-linecap="round"/><rect x="4" y="10" width="16" height="10" rx="2.5" stroke="#7EA5F5" stroke-width="2"/></svg></div>
-        <h4>Verrou iCloud</h4>
-        <p>Le point le plus coûteux. Un appareil lié à « Localiser mon iPhone » est inutilisable, et aucun revendeur ne peut le débloquer.</p>
-      </div>
-
-      <div class="card">
-        <div class="ico"><svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="#7EA5F5" stroke-width="2"/><path d="M5.6 5.6l12.8 12.8" stroke="#7EA5F5" stroke-width="2" stroke-linecap="round"/></svg></div>
-        <h4>Déclaré volé ou perdu</h4>
-        <p>Inscription sur liste noire GSMA. Un appareil signalé peut être bloqué à tout moment par les opérateurs.</p>
-      </div>
-
-      <div class="card">
-        <div class="ico"><svg viewBox="0 0 24 24" fill="none"><path d="M4 8h11l5 4-5 4H4z" stroke="#7EA5F5" stroke-width="2" stroke-linejoin="round"/></svg></div>
-        <h4>Verrou opérateur</h4>
-        <p>Un téléphone SIM-locké ne fonctionne qu'avec l'opérateur d'origine — souvent à l'étranger.</p>
-      </div>
-
-      <div class="card">
-        <div class="ico"><svg viewBox="0 0 24 24" fill="none"><rect x="7" y="2.5" width="10" height="19" rx="2.5" stroke="#7EA5F5" stroke-width="2"/><path d="M10.5 18.5h3" stroke="#7EA5F5" stroke-width="2" stroke-linecap="round"/></svg></div>
-        <h4>Modèle et capacité réels</h4>
-        <p>Vérifiez que le téléphone est bien celui annoncé : génération, stockage, et non un modèle repeint ou reconditionné.</p>
-      </div>
-
-      <div class="card">
-        <div class="ico"><svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="#7EA5F5" stroke-width="2"/><path d="M12 7v5.2l3.2 2" stroke="#7EA5F5" stroke-width="2" stroke-linecap="round"/></svg></div>
-        <h4>Garantie</h4>
-        <p>Date d'activation et état de la couverture Apple, quand l'information est disponible.</p>
-      </div>
-
-      <div class="card">
-        <div class="ico"><svg viewBox="0 0 24 24" fill="none"><rect x="5" y="3" width="14" height="18" rx="2" stroke="#7EA5F5" stroke-width="2"/><path d="M9 8h6M9 12h6" stroke="#7EA5F5" stroke-width="2" stroke-linecap="round"/></svg></div>
-        <h4>Cartes SIM et eSIM</h4>
-        <p>Un iPhone vendu aux États-Unis depuis l&rsquo;iPhone&nbsp;14 n&rsquo;a aucun tiroir SIM : il ne fonctionne qu&rsquo;en eSIM. Le rapport le signale avant l&rsquo;achat.</p>
-      </div>
-
-      <div class="card">
-        <div class="ico"><svg viewBox="0 0 24 24" fill="none"><path d="M4 7h16M4 12h16M4 17h10" stroke="#7EA5F5" stroke-width="2" stroke-linecap="round"/></svg></div>
-        <h4>Rapport partageable</h4>
-        <p>Chaque vérification produit un rapport que vous pouvez envoyer au vendeur ou à l'acheteur, par WhatsApp.</p>
-      </div>
-
+    <div class="narrow">
+      <h2>Ce que PhoneScore contrôle</h2>
+      <p class="sub">À partir du seul code IMEI, auprès des bases constructeur et GSMA.</p>
+      <ul class="controles">
+        <li><b>Verrou iCloud</b> — le point le plus coûteux : un appareil lié à « Localiser » est inutilisable, et personne ne peut le débloquer.</li>
+        <li><b>Déclaré volé ou perdu</b> — inscription sur liste noire GSMA. Un appareil signalé peut être coupé du réseau à tout moment.</li>
+        <li><b>Verrou opérateur</b> — un téléphone SIM-locké n'accepte que l'opérateur d'origine, souvent étranger.</li>
+        <li><b>Modèle et capacité réels</b> — ce qui a été fabriqué sous cet IMEI, quoi qu'annonce le vendeur.</li>
+        <li><b>Cartes SIM et eSIM</b> — les iPhone américains depuis le 14 n'ont aucun tiroir SIM. Le rapport le signale.</li>
+        <li><b>Garantie</b> — date d'achat et couverture Apple restante, quand l'information existe.</li>
+        <li><b>Rapport partageable</b> — à envoyer au vendeur ou à l'acheteur par WhatsApp.</li>
+      </ul>
+      <p class="sub" style="margin:18px 0 0">
+        <a href="/rapport.html">Ce que chaque ligne veut dire</a>, et quoi vérifier sur l'appareil.
+      </p>
     </div>
   </section>
 </div>
@@ -801,28 +753,6 @@ function afficherRapport(r) {
   $('rapport').classList.remove('hidden');
   $('rapport').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
 }
-
-/* ---------------- achat ---------------- */
-
-for (const el of document.querySelectorAll('.o-pack')) {
-  const lancer = async () => {
-    effacer($('msg-achat'));
-    const pack_id = el.dataset.o-pack;
-    el.style.opacity = '.6';
-
-    const { data, error } = await supabase.functions.invoke('create-payment', { body: { pack_id } });
-    el.style.opacity = '1';
-
-    if (error || !data?.checkout_url) {
-      return afficher($('msg-achat'), await messageErreur(error, "Le paiement n'a pas pu être initié. Réessayez dans un instant."), 'err');
-    }
-    // GeniusPay ramene ensuite sur payment-result.html.
-    window.location.href = data.checkout_url;
-  };
-  el.addEventListener('click', lancer);
-  el.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); lancer(); } });
-}
-
 </script>
 
 </body>
