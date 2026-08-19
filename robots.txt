@@ -1,9 +1,10 @@
 User-agent: *
 Allow: /
 
-# Pages utilitaires : sans intérêt pour la recherche, et atteintes
-# uniquement par un lien à usage unique ou un retour de paiement.
-Disallow: /reinitialiser.html
-Disallow: /payment-result.html
+# reinitialiser et payment-result portent une balise <meta name="robots"
+# content="noindex">. Elles etaient aussi interdites ici, ce qui annulait la
+# balise : un robot qui n'a pas le droit de lire la page ne voit jamais le
+# noindex, et l'URL peut rester indexee sans son contenu. Le crawl est donc
+# autorise, c'est la balise qui exclut — et elle, elle fonctionne.
 
 Sitemap: https://phonescore.app/sitemap.xml
