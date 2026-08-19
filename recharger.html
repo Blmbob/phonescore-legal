@@ -2,6 +2,7 @@
 <html lang="fr">
 <head>
 <meta charset="utf-8">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self' https://bvriicetjcnxrbhelokh.supabase.co; base-uri 'none'; form-action 'none'">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Recharger — PhoneScore</title>
 <link rel="icon" href="/favicon.png" type="image/png">
@@ -438,8 +439,12 @@
   </div>
 </footer>
 
+<!-- Client Supabase servi par ce site, en version fixe : un import
+     depuis un CDN ne peut pas etre verifie par integrity.
+     Empreinte dans vendor/SHA256SUMS.txt. -->
+<script src="/vendor/supabase-2.112.3.js"></script>
 <script type="module">
-import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
+const { createClient } = window.supabase;
 
 const SUPABASE_URL = "https://bvriicetjcnxrbhelokh.supabase.co";
 const SUPABASE_PUBLISHABLE_KEY = "sb_publishable_p35a312TC0qA8YDdw_fWAQ_b0AUrfqf";
