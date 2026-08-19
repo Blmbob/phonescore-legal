@@ -22,6 +22,111 @@
 <meta name="twitter:description" content="Questions fréquentes, suppression de compte, et comment nous joindre.">
 <meta name="twitter:image" content="https://phonescore.app/og-image.png">
 <meta name="theme-color" content="#0A1028">
+
+<!-- Donnees structurees. Le fil d'Ariane est ce qui s'affiche reellement dans
+     les resultats de recherche ; le balisage FAQ ne produit plus d'extraits
+     deplies depuis 2023, mais il reste lu pour comprendre la page. Organization
+     et WebSite ne sont declarees qu'une fois, sur l'accueil : on s'y refere. -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Accueil",
+          "item": "https://phonescore.app/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Assistance"
+        }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "@id": "https://phonescore.app/assistance.html#faq",
+      "inLanguage": "fr-FR",
+      "isPartOf": {
+        "@id": "https://phonescore.app/#website"
+      },
+      "publisher": {
+        "@id": "https://phonescore.app/#organization"
+      },
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Comment trouver l'IMEI d'un téléphone ?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Composez *#06# sur le clavier téléphonique de l'appareil. Les 15 chiffres s'affichent immédiatement. L'IMEI figure aussi dans Réglages → Général → Informations."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Comment fonctionnent les pièces ?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Une pièce correspond à une vérification d'iPhone, deux pièces à une vérification de MacBook. Les pièces sont décomptées uniquement lorsque la vérification aboutit."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Ma vérification a échoué, mes pièces sont-elles perdues ?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Non. En cas d'échec technique, les pièces sont automatiquement restituées sur votre compte. Si ce n'est pas le cas, écrivez-nous avec la date et l'IMEI concerné, nous régularisons."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Mon solde n'apparaît pas après un achat",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Rouvrez l'application et patientez quelques secondes, le solde se synchronise avec nos serveurs. Si un achat a été interrompu, il reprend automatiquement au lancement suivant. S'il reste incorrect au bout de quelques minutes, contactez-nous en précisant la date et le montant du paiement."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Comment sont facturées les pièces ?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Sur iPhone et iPad, les packs sont vendus par l'App Store, au prix affiché dans l'application au moment de l'achat. Une demande de remboursement se fait auprès d'Apple, sur reportaproblem.apple.com, et non auprès de nous : nous n'avons pas la faculté de rembourser un achat App Store."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Comment inscrire ma boutique ?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "L'inscription à l'annuaire est réservée aux détenteurs du Pack Revendeur (10 pièces). L'achat ouvre 30 jours d'accès revendeur, qui donnent droit à la boutique sur la carte, au suivi de stock et aux factures. Passé ce délai, un nouveau pack prolonge l'accès ; votre boutique et vos données restent en place entre-temps."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Le verdict est rouge, que faire ?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Un verdict rouge signale un appareil verrouillé iCloud, blacklisté ou bloqué opérateur. Nous vous recommandons de ne pas conclure l'achat. Un appareil verrouillé ne peut pas être débloqué par un revendeur."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Comment supprimer mon compte ?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Directement depuis l'application, sans passer par l'assistance : écran Profil → « Supprimer mon compte ». La suppression est immédiate et irréversible. Sont effacés votre compte, vos pièces restantes, votre historique de vérifications, ainsi que votre boutique et son contenu si vous en aviez une."
+          }
+        }
+      ]
+    }
+  ]
+}
+</script>
 <style>
   :root{
     --ink:#0A1028; --ink2:#16224E; --blue:#497AEA; --blue-l:#7EA5F5;

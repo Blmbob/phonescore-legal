@@ -22,6 +22,86 @@
 <meta name="twitter:description" content="Ce que chaque ligne du rapport signifie, et ce qu'elle doit vous faire faire avant d'acheter.">
 <meta name="twitter:image" content="https://phonescore.app/og-image.png">
 <meta name="theme-color" content="#0A1028">
+
+<!-- Donnees structurees. Le fil d'Ariane est ce qui s'affiche reellement dans
+     les resultats de recherche ; le balisage FAQ ne produit plus d'extraits
+     deplies depuis que Google les a reserves aux sites gouvernementaux et de
+     sante (2023), mais il reste lu pour comprendre le contenu de la page.
+     Les entites Organization et WebSite sont declarees une seule fois, sur
+     l'accueil : on s'y refere par @id plutot que de les redeclarer. -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Accueil", "item": "https://phonescore.app/" },
+        { "@type": "ListItem", "position": 2, "name": "Comprendre le rapport" }
+      ]
+    },
+    {
+      "@type": "Article",
+      "@id": "https://phonescore.app/rapport.html#article",
+      "headline": "Comprendre le rapport PhoneScore",
+      "description": "Ce que chaque ligne du rapport signifie, et ce qu'elle doit vous faire vérifier avant d'acheter un iPhone d'occasion.",
+      "inLanguage": "fr-FR",
+      "datePublished": "2026-08-18",
+      "dateModified": "2026-08-19",
+      "image": "https://phonescore.app/og-image.png",
+      "author": { "@id": "https://phonescore.app/#organization" },
+      "publisher": { "@id": "https://phonescore.app/#organization" },
+      "isPartOf": { "@id": "https://phonescore.app/#website" },
+      "mainEntityOfPage": "https://phonescore.app/rapport.html"
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Que signifie le verrou iCloud sur un iPhone d'occasion ?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "« Localiser mon iPhone » est actif : l'appareil reste lié au compte Apple de son propriétaire et redemandera son identifiant après une remise à zéro. Personne ne peut le débloquer, ni un réparateur, ni Apple sans preuve d'achat originale. Demandez au vendeur de désactiver « Localiser » devant vous avant d'acheter."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Que faire si un IMEI est sur liste noire ?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "L'IMEI a été signalé pour vol, perte ou impayé auprès d'un opérateur. L'appareil peut être coupé du réseau à tout moment, même s'il fonctionne encore en Wi-Fi. N'achetez pas : revendre un appareil signalé volé vous expose personnellement."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Qu'est-ce que le verrou opérateur, ou SIM-lock ?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "L'appareil n'accepte que les cartes SIM de son opérateur d'origine, souvent étranger. Le déblocage est parfois possible auprès de cet opérateur mais n'est jamais garanti. Insérez votre propre carte SIM avant de payer : c'est le test qui tranche en trente secondes."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Un iPhone acheté aux États-Unis fonctionne-t-il partout ?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Depuis l'iPhone 14, les modèles vendus aux États-Unis n'ont aucun tiroir SIM physique et fonctionnent uniquement en eSIM. Si votre opérateur ne propose pas l'eSIM, l'appareil ne captera jamais. Vérifiez ce point avant d'acheter."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Un rapport IMEI garantit-il l'état de l'appareil ?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Non. Un rapport porte sur l'identité et le statut administratif de l'appareil, pas sur son état physique : batterie usée, écran remplacé par une pièce non officielle ou dégât des eaux n'y apparaissent pas. Les informations proviennent de bases tierces qui peuvent être incomplètes. Un rapport propre est un feu vert, pas une garantie."
+          }
+        }
+      ]
+    }
+  ]
+}
+</script>
 <style>
   :root{
     --ink:#0A1028; --ink2:#16224E; --blue:#497AEA; --blue-l:#7EA5F5;
