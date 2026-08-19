@@ -318,19 +318,19 @@
     font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
     line-height:1.6; -webkit-font-smoothing:antialiased;
   }
-  .outil .wrap{max-width:560px; margin:0 auto; padding:26px 20px 70px}
+  .outil .o-wrap{max-width:560px; margin:0 auto; padding:26px 20px 70px}
   .outil a{color:var(--blue-l)}
 
-  .outil .brand{display:flex; align-items:center; gap:10px; text-decoration:none; color:var(--text); margin-bottom:26px}
-  .outil .brand svg{width:30px; height:30px; flex:none}
-  .outil .brand b{font-size:19px; font-weight:800; letter-spacing:-.3px}
-  .outil .brand b span{color:var(--blue)}
+  .outil .o-brand{display:flex; align-items:center; gap:10px; text-decoration:none; color:var(--text); margin-bottom:26px}
+  .outil .o-brand svg{width:30px; height:30px; flex:none}
+  .outil .o-brand b{font-size:19px; font-weight:800; letter-spacing:-.3px}
+  .outil .o-brand b span{color:var(--blue)}
 
   .outil h1{font-size:24px; letter-spacing:-.4px; margin:0 0 6px}
-  .outil .sub{color:var(--muted); font-size:15px; margin:0 0 22px}
+  .outil .o-sub{color:var(--muted); font-size:15px; margin:0 0 22px}
 
-  .outil .card{background:var(--panel); border:1px solid var(--line); border-radius:14px; padding:18px}
-  .outil .card + .card{margin-top:14px}
+  .outil .o-card{background:var(--panel); border:1px solid var(--line); border-radius:14px; padding:18px}
+  .outil .o-card + .o-card{margin-top:14px}
 
   .outil label{display:block; font-size:13px; color:var(--muted); margin:0 0 6px}
   .outil input, .outil select{
@@ -377,15 +377,15 @@
   .outil dl > :nth-last-child(-n+2){border-bottom:0}
   .outil .ok-v{color:var(--green-l)} .outil .ko-v{color:#FFB4B4}
 
-  .outil .packs{display:grid; gap:10px}
-  .outil .pack{
+  .outil .o-packs{display:grid; gap:10px}
+  .outil .o-pack{
     display:flex; align-items:center; justify-content:space-between; gap:12px;
     padding:14px; border:1px solid var(--line); border-radius:11px; cursor:pointer;
     background:rgba(10,16,40,.4);
   }
-  .outil .pack:hover{border-color:var(--blue-l)}
-  .outil .pack .n{font-weight:700}
-  .outil .pack .p{color:var(--green-l); font-weight:700}
+  .outil .o-pack:hover{border-color:var(--blue-l)}
+  .outil .o-pack .o-n{font-weight:700}
+  .outil .o-pack .p{color:var(--green-l); font-weight:700}
   .outil .hint{color:var(--muted); font-size:13px; margin-top:12px}
   .outil .hidden{display:none}
   .outil .spin{display:inline-block; width:15px; height:15px; border:2px solid rgba(255,255,255,.3);
@@ -404,7 +404,9 @@
     background:none; min-height:0;
     text-align:left; max-width:520px; margin:34px auto 0;
   }
-  .outil .sub{text-align:center}
+  /* Seule l accroche d inscription est centree. Le sous-titre de Recharger,
+     lui, se lit a gauche comme le reste des cartes. */
+  .outil #vue-auth .o-sub{text-align:center}
   /* L accueil borde et espace ses <section> ; celles de l outil n en sont pas. */
   .outil section{border-top:0; padding:0}
 </style>
@@ -440,9 +442,9 @@
          alors qu'il en vient peut-etre n'a aucun sens. -->
     <div class="outil">
       <section id="vue-auth" class="hidden">
-          <p class="sub">Créez un compte en quelques secondes — puis vérifiez un appareil.</p>
+          <p class="o-sub">Créez un compte en quelques secondes — puis vérifiez un appareil.</p>
       
-          <div class="card">
+          <div class="o-card">
             <div class="field">
               <label for="email">Adresse e-mail</label>
               <input id="email" type="email" autocomplete="email" inputmode="email" placeholder="vous@exemple.com">
@@ -467,7 +469,7 @@
       
         <!-- ================= VERIFICATION ================= -->
         <section id="vue-app" class="hidden">
-          <div class="card">
+          <div class="o-card">
             <div class="row">
               <div class="solde">Solde : <b id="solde">—</b> pièce(s)</div>
               <button id="btn-deconnexion" class="ghost" style="width:auto; margin:0; padding:8px 14px; font-size:13px">Déconnexion</button>
@@ -475,7 +477,7 @@
             <p class="hint" id="courriel"></p>
           </div>
       
-          <div class="card">
+          <div class="o-card">
             <div class="seg">
               <button type="button" id="t-iphone" aria-pressed="true">iPhone — 1 pièce</button>
               <button type="button" id="t-macbook" aria-pressed="false">MacBook — 2 pièces</button>
@@ -488,24 +490,24 @@
             <div id="msg-verif" class="msg"></div>
           </div>
       
-          <div id="rapport" class="card hidden"></div>
+          <div id="rapport" class="o-card hidden"></div>
       
-          <div class="card">
+          <div class="o-card">
             <h1 style="font-size:18px; margin:0 0 4px">Recharger</h1>
-            <p class="sub" style="font-size:14px; margin-bottom:14px">
+            <p class="o-sub" style="font-size:14px; margin-bottom:14px">
               Paiement par mobile money — Orange Money, MTN, Moov, Wave.
             </p>
-            <div class="packs">
-              <div class="pack" data-pack="decouverte" role="button" tabindex="0">
-                <span class="n">Découverte<br><span style="color:var(--muted);font-weight:400;font-size:13px">1 pièce</span></span>
+            <div class="o-packs">
+              <div class="o-pack" data-pack="decouverte" role="button" tabindex="0">
+                <span class="o-n">Découverte<br><span style="color:var(--muted);font-weight:400;font-size:13px">1 pièce</span></span>
                 <span class="p">700 FCFA</span>
               </div>
-              <div class="pack" data-pack="standard" role="button" tabindex="0">
-                <span class="n">Standard<br><span style="color:var(--muted);font-weight:400;font-size:13px">3 pièces</span></span>
+              <div class="o-pack" data-pack="standard" role="button" tabindex="0">
+                <span class="o-n">Standard<br><span style="color:var(--muted);font-weight:400;font-size:13px">3 pièces</span></span>
                 <span class="p">2 000 FCFA</span>
               </div>
-              <div class="pack" data-pack="revendeur" role="button" tabindex="0">
-                <span class="n">Revendeur<br><span style="color:var(--muted);font-weight:400;font-size:13px">10 pièces · 30 j d'accès revendeur</span></span>
+              <div class="o-pack" data-pack="revendeur" role="button" tabindex="0">
+                <span class="o-n">Revendeur<br><span style="color:var(--muted);font-weight:400;font-size:13px">10 pièces · 30 j d'accès revendeur</span></span>
                 <span class="p">6 700 FCFA</span>
               </div>
             </div>
@@ -1034,10 +1036,10 @@ function afficherRapport(r) {
 
 /* ---------------- achat ---------------- */
 
-for (const el of document.querySelectorAll('.pack')) {
+for (const el of document.querySelectorAll('.o-pack')) {
   const lancer = async () => {
     effacer($('msg-achat'));
-    const pack_id = el.dataset.pack;
+    const pack_id = el.dataset.o-pack;
     el.style.opacity = '.6';
 
     const { data, error } = await supabase.functions.invoke('create-payment', { body: { pack_id } });
