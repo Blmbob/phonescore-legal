@@ -1,0 +1,74 @@
+/* Sorti de confidentialite.html : script-src et style-src valent 'self'. */
+
+  :root{
+    --bg:#0D1117; --panel:#161B22; --text:#E6EDF3; --muted:#8B949E;
+    --green:#2EA043; --blue:#2563EB; --border:#30363D;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;line-height:1.7;font-size:16px}
+  .wrap{max-width:760px;margin:0 auto;padding:32px 20px 80px}
+  header{padding:28px 0 20px;border-bottom:1px solid var(--border);margin-bottom:32px}
+  .brand{display:flex;align-items:center;gap:10px;margin-bottom:14px}
+  .shield{width:34px;height:34px;flex:none}
+  .brand h1{font-size:1.5rem;font-weight:800;letter-spacing:-0.02em}
+  .doc-title{font-size:1.9rem;font-weight:800;letter-spacing:-0.02em;line-height:1.25}
+  .updated{color:var(--muted);font-size:.9rem;margin-top:10px}
+  .opt{color:var(--muted);font-weight:400;font-size:.85em;white-space:nowrap}
+  h2{font-size:1.15rem;font-weight:700;margin:36px 0 12px;padding-left:14px;border-left:3px solid var(--green)}
+  p{margin-bottom:14px}
+  ul{margin:0 0 14px 22px}
+  li{margin-bottom:8px}
+  .card{background:var(--panel);border:1px solid var(--border);border-radius:12px;padding:18px 20px;margin:16px 0}
+  table{width:100%;border-collapse:collapse;margin:16px 0;font-size:.95rem}
+  th,td{text-align:left;padding:10px 12px;border-bottom:1px solid var(--border);vertical-align:top}
+  th{color:var(--muted);font-weight:600;font-size:.85rem;text-transform:uppercase;letter-spacing:.04em}
+  a{color:var(--blue);text-decoration:none}
+  a:hover{text-decoration:underline}
+  footer{margin-top:56px;padding-top:20px;border-top:1px solid var(--border);color:var(--muted);font-size:.9rem}
+
+  /* Politique en couches : chaque section s'ouvre sur un resume en langage
+     courant, toujours visible. Le texte complet reste a un clic -- et surtout
+     present dans le document, jamais charge dynamiquement : un examinateur ou
+     un regulateur doit pouvoir le trouver par une recherche dans la page. */
+  .brief{
+    background:var(--panel); border:1px solid var(--border);
+    border-left:3px solid var(--green); border-radius:12px;
+    padding:16px 20px; margin:0 0 28px;
+  }
+  .brief h3{
+    font-size:.78rem; letter-spacing:.09em; text-transform:uppercase;
+    color:var(--muted); margin-bottom:10px; font-weight:700;
+  }
+  .brief ul{margin:0 0 0 20px}
+  .brief li{margin-bottom:7px}
+
+  details.sec{
+    border:1px solid var(--border); border-radius:12px;
+    margin-bottom:12px; background:var(--panel);
+  }
+  details.sec > summary{
+    list-style:none; cursor:pointer; padding:15px 17px;
+    display:grid; grid-template-columns:auto 1fr auto; gap:3px 13px; align-items:start;
+  }
+  details.sec > summary::-webkit-details-marker{display:none}
+  details.sec > summary:hover .sec-t{color:var(--green)}
+  .sec-n{
+    grid-row:1 / span 2; width:27px; height:27px; border-radius:8px;
+    background:rgba(46,160,67,.15); color:var(--green);
+    font-size:.78rem; font-weight:700;
+    display:flex; align-items:center; justify-content:center;
+  }
+  .sec-t{
+    margin:0; padding:0; border:0; font-size:1.04rem; font-weight:700;
+    grid-column:2; grid-row:1;
+  }
+  .chev{grid-row:1 / span 2; color:var(--muted); font-size:1.4rem; line-height:1; transition:transform .18s}
+  details.sec[open] .chev{transform:rotate(90deg)}
+  .sec-r{grid-column:2; grid-row:2; color:var(--muted); font-size:.93rem; line-height:1.5; margin:0}
+  .sec-body{padding:2px 17px 17px}
+  .sec-body > :last-child{margin-bottom:0}
+
+/* Anciens attributs style="" de la page. La CSP refuse
+   desormais le style en ligne ; la declaration est reprise
+   telle quelle pour que le rendu ne bouge pas. */
+.u-font-size-92rem{font-size:.92rem !important}

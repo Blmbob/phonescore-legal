@@ -1,0 +1,28 @@
+/* Sorti de 404.html : script-src et style-src valent 'self'. */
+
+  :root{
+    --ink:#0A1028; --ink2:#16224E; --blue:#497AEA; --blue-l:#7EA5F5;
+    --green:#55AE60; --text:#E8ECF6; --muted:#A8B4CC; --line:rgba(168,180,204,.22);
+  }
+  *{box-sizing:border-box}
+  body{
+    margin:0; min-height:100vh; display:flex; align-items:center; justify-content:center;
+    background:linear-gradient(180deg,#16224E 0%,#0A1028 100%);
+    background-attachment:fixed; color:var(--text);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    line-height:1.65; -webkit-font-smoothing:antialiased; padding:24px;
+  }
+  .wrap{max-width:520px; text-align:center}
+  .shield{width:64px; height:64px; margin-bottom:18px}
+  .mark{font-size:30px; font-weight:800; letter-spacing:-.5px; margin:0 0 6px}
+  .mark span{color:var(--blue)}
+  .code{color:var(--muted); font-size:14px; letter-spacing:.08em; text-transform:uppercase; margin:0 0 22px}
+  h1{font-size:22px; margin:0 0 10px; letter-spacing:-.2px}
+  p{color:var(--muted); margin:0 0 26px}
+  .links a{
+    display:inline-block; margin:6px 8px; padding:11px 18px; border-radius:10px;
+    border:1px solid var(--line); color:var(--text); text-decoration:none; font-size:15px;
+  }
+  .links a.primary{background:rgba(73,122,234,.18); border-color:rgba(73,122,234,.45); color:#fff}
+  .links a:hover{border-color:var(--blue-l)}
+

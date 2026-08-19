@@ -1,0 +1,314 @@
+/* Sorti de index.html : script-src et style-src valent 'self'. */
+
+  :root{
+    --ink:#0A1028; --ink2:#16224E; --blue:#497AEA; --blue-l:#7EA5F5;
+    --green:#55AE60; --green-l:#7ED08A; --red:#E5484D;
+    --text:#E8ECF6; --muted:#A8B4CC; --line:rgba(168,180,204,.22);
+    --panel:rgba(24,38,88,.55);
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    margin:0; background:linear-gradient(180deg,#16224E 0%,#0A1028 55%,#0A1028 100%);
+    background-attachment:fixed; color:var(--text);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    line-height:1.65; -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:940px; margin:0 auto; padding:0 22px}
+  .narrow{max-width:680px; margin:0 auto}
+  a{color:var(--blue-l)}
+
+  /* ---------- barre ---------- */
+  .nav{
+    display:flex; align-items:center; justify-content:space-between;
+    padding:20px 0; border-bottom:1px solid var(--line);
+  }
+  .brand{display:flex; align-items:center; gap:10px; text-decoration:none; color:var(--text)}
+  .brand svg{width:30px; height:30px; flex:none}
+  .brand b{font-size:19px; font-weight:800; letter-spacing:-.3px}
+  .brand b span{color:var(--blue)}
+  .nav a.link{color:var(--muted); text-decoration:none; font-size:15px}
+  .nav a.link:hover{color:var(--text)}
+
+  /* ---------- menu deroulant ---------- */
+  .menu-zone{position:relative; display:flex; align-items:center; gap:14px}
+  .menu-bouton{
+    display:flex; flex-direction:column; justify-content:center; gap:5px;
+    width:40px; height:40px; padding:0 9px; flex:none;
+    background:transparent; border:1px solid var(--line);
+    border-radius:10px; cursor:pointer;
+  }
+  .menu-bouton span{
+    display:block; height:2px; border-radius:2px; background:var(--muted);
+    transition:transform .18s ease, opacity .18s ease, background .18s ease;
+  }
+  .menu-bouton:hover span{background:var(--text)}
+  /* Deplie, les trois traits deviennent une croix : le meme bouton referme,
+     sans avoir a viser ailleurs. */
+  .menu-bouton[aria-expanded="true"] span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+  .menu-bouton[aria-expanded="true"] span:nth-child(2){opacity:0}
+  .menu-bouton[aria-expanded="true"] span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+
+  .menu{
+    position:absolute; right:0; top:calc(100% + 12px); z-index:40;
+    min-width:236px; display:flex; flex-direction:column; padding:8px;
+    /* Fond opaque, pas var(--panel) : le panneau passe au-dessus du texte
+       de la page, qui transparaitrait a travers. */
+    background:#101B3C; border:1px solid var(--line); border-radius:14px;
+    box-shadow:0 20px 44px rgba(0,0,0,.5);
+  }
+  /* display:flex l emporterait sur la regle [hidden] du navigateur. */
+  .menu[hidden]{display:none}
+  .menu a{
+    color:var(--muted); text-decoration:none; font-size:14.5px;
+    padding:10px 12px; border-radius:9px; line-height:1.4;
+  }
+  .menu a:hover{background:rgba(255,255,255,.07); color:var(--text)}
+  .menu a[aria-current="page"]{color:var(--text); font-weight:700}
+
+  /* ---------- hero ---------- */
+  .hero{position:relative; overflow:hidden; padding:64px 0 56px; text-align:center}
+  .hero .wrap{position:relative; z-index:1}
+
+  /* Fond anime : uniquement transform et opacity, donc compose par le GPU.
+     Aucun filter:blur -- le degrade radial est deja doux et ne coute rien
+     a chaque image. Important sur les appareils modestes. */
+  .aurora{position:absolute; inset:-20% -10%; z-index:0; pointer-events:none}
+  .aurora i{position:absolute; display:block; border-radius:50%; opacity:.85}
+  .aurora i:nth-child(1){
+    width:620px; height:620px; left:-8%; top:-16%;
+    background:radial-gradient(circle at 50% 50%, rgba(73,122,234,.72), rgba(73,122,234,0) 70%);
+    animation:drift1 26s ease-in-out infinite;
+  }
+  .aurora i:nth-child(2){
+    width:540px; height:540px; right:-10%; top:4%;
+    background:radial-gradient(circle at 50% 50%, rgba(85,174,96,.55), rgba(85,174,96,0) 70%);
+    animation:drift2 32s ease-in-out infinite;
+  }
+  .aurora i:nth-child(3){
+    width:470px; height:470px; left:34%; bottom:-26%;
+    background:radial-gradient(circle at 50% 50%, rgba(126,165,245,.46), rgba(126,165,245,0) 72%);
+    animation:drift3 38s ease-in-out infinite;
+  }
+  @keyframes drift1{ 0%,100%{transform:translate3d(0,0,0) scale(1)} 50%{transform:translate3d(60px,40px,0) scale(1.12)} }
+  @keyframes drift2{ 0%,100%{transform:translate3d(0,0,0) scale(1)} 50%{transform:translate3d(-50px,55px,0) scale(1.08)} }
+  @keyframes drift3{ 0%,100%{transform:translate3d(0,0,0) scale(1)} 50%{transform:translate3d(40px,-45px,0) scale(1.15)} }
+
+  /* Balayage : rappel du scan, volontairement lent et rare. */
+  .sweepline{
+    position:absolute; left:0; right:0; height:180px; z-index:0; pointer-events:none;
+    background:linear-gradient(180deg, rgba(126,165,245,0), rgba(126,165,245,.24), rgba(126,165,245,0));
+    animation:sweepDown 11s ease-in-out infinite;
+  }
+  @keyframes sweepDown{
+    0%{transform:translateY(-160px); opacity:0}
+    10%{opacity:1} 70%{opacity:1}
+    100%{transform:translateY(760px); opacity:0}
+  }
+
+  /* Trame de points en derive, sous la section des situations. */
+  @keyframes dotShift{ to{background-position:26px 26px} }
+  .hero h1{
+    font-size:clamp(30px,5.4vw,46px); line-height:1.15; letter-spacing:-.8px;
+    margin:0 0 16px; font-weight:800;
+  }
+  .hero h1 em{font-style:normal; color:var(--blue-l)}
+  .hero .lead{color:var(--muted); font-size:18px; max-width:560px; margin:0 auto 30px}
+  .cta-note{color:var(--muted); font-size:14px; margin:12px 0 0}
+
+  /* Respect du reglage systeme : tout se fige sur l'etat final. */
+  @media (prefers-reduced-motion: reduce){
+    /* Les fonds restent en place, sans mouvement. Le balayage disparait :
+       une bande claire figee sur le heros n'aurait aucun sens. */
+    .aurora i{animation:none !important}
+    .sweepline{display:none}
+  }
+
+  /* ---------- sections ---------- */
+  section{padding:56px 0; border-top:1px solid var(--line)}
+  h2{font-size:clamp(21px,3.2vw,27px); margin:0 0 8px; letter-spacing:-.4px}
+  .sub{color:var(--muted); margin:0 0 28px}
+  h3{font-size:16px; margin:26px 0 4px; color:var(--blue-l)}
+  p{margin:8px 0}
+
+  .grid{display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:16px}
+
+  /* Liste des controles : une ligne par point, puce coloree, pas de carte.
+     Sept cartes prenaient un ecran entier pour la meme information. */
+  .controles{list-style:none; margin:22px 0 0; padding:0; display:grid; gap:11px}
+  .controles li{
+    position:relative; padding-left:20px; color:var(--muted); font-size:15px;
+  }
+  .controles li::before{
+    content:""; position:absolute; left:2px; top:10px;
+    width:7px; height:7px; border-radius:50%; background:var(--blue-l);
+  }
+  .controles b{color:var(--text); font-weight:700}
+  .card{
+    background:var(--panel); border:1px solid var(--line);
+    border-radius:14px; padding:18px 20px;
+  }
+  .card h4{margin:0 0 6px; font-size:16px}
+  .card p{margin:0; color:var(--muted); font-size:14.5px}
+
+  .steps{counter-reset:s; display:grid; gap:14px}
+  .step{display:flex; gap:14px; align-items:flex-start}
+  .step .n{
+    flex:none; width:30px; height:30px; border-radius:50%; display:flex;
+    align-items:center; justify-content:center; font-weight:700; font-size:14px;
+    background:rgba(73,122,234,.2); border:1px solid rgba(73,122,234,.4); color:#fff;
+  }
+  .step p{margin:0; color:var(--muted); font-size:15px}
+  .step b{color:var(--text); display:block; font-size:15.5px}
+
+  code{
+    background:rgba(73,122,234,.16); border:1px solid rgba(73,122,234,.35);
+    padding:2px 8px; border-radius:6px; font-size:15px; color:#fff;
+  }
+  ul{padding-left:20px; margin:8px 0}
+  li{margin:5px 0}
+
+  footer{
+    padding:34px 0 56px; border-top:1px solid var(--line);
+    color:var(--muted); font-size:14px; text-align:center;
+  }
+  footer a{margin:0 10px; display:inline-block}
+
+
+  :root{
+    --ink:#0A1028; --ink2:#16224E; --blue:#497AEA; --blue-l:#7EA5F5;
+    --green:#55AE60; --green-l:#7ED08A; --red:#E5484D; --amber:#D4A72C;
+    --text:#E8ECF6; --muted:#A8B4CC; --line:rgba(168,180,204,.22);
+    --panel:rgba(24,38,88,.55);
+  }
+  *{box-sizing:border-box}
+  .outil{
+    margin:0; background:linear-gradient(180deg,#16224E 0%,#0A1028 60%,#0A1028 100%);
+    background-attachment:fixed; color:var(--text); min-height:100vh;
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    line-height:1.6; -webkit-font-smoothing:antialiased;
+  }
+  .outil a{color:var(--blue-l)}
+
+  .outil h1{font-size:24px; letter-spacing:-.4px; margin:0 0 6px}
+  .outil .o-sub{color:var(--muted); font-size:15px; margin:0 0 22px}
+
+  .outil .o-card{background:var(--panel); border:1px solid var(--line); border-radius:14px; padding:18px}
+  .outil .o-card + .o-card{margin-top:14px}
+
+  .outil label{display:block; font-size:13px; color:var(--muted); margin:0 0 6px}
+  .outil input, .outil select{
+    width:100%; padding:13px 14px; border-radius:10px; font-size:16px;
+    background:rgba(10,16,40,.6); border:1px solid var(--line); color:var(--text);
+  }
+  .outil input:focus, .outil select:focus{outline:none; border-color:var(--blue-l)}
+  .outil .field + .field{margin-top:13px}
+
+  .outil button{
+    width:100%; padding:14px; border-radius:11px; font-size:16px; font-weight:600;
+    border:1px solid rgba(73,122,234,.45); background:rgba(73,122,234,.22);
+    color:#fff; cursor:pointer; margin-top:15px;
+  }
+  .outil button:hover:not(:disabled){background:rgba(73,122,234,.34)}
+  .outil button:disabled{opacity:.55; cursor:default}
+  .outil button.ghost{background:transparent; border-color:var(--line); color:var(--muted); font-weight:500}
+
+  .outil .row{display:flex; align-items:center; justify-content:space-between; gap:12px}
+  .outil .solde{font-size:15px}
+  .outil .solde b{color:var(--green-l); font-size:19px}
+
+  .outil .seg{display:flex; gap:8px; margin-bottom:13px}
+  .outil .seg button{margin:0; flex:1; font-size:14px; padding:11px}
+  .outil .seg button[aria-pressed="true"]{border-color:var(--green); background:rgba(85,174,96,.18)}
+
+  .outil .msg{margin-top:14px; font-size:14.5px; padding:12px 14px; border-radius:10px; display:none}
+  .outil .msg.err{display:block; color:#FFD9D9; background:rgba(229,72,77,.15); border:1px solid rgba(229,72,77,.4)}
+  .outil .msg.ok{display:block; color:var(--green-l); background:rgba(85,174,96,.14); border:1px solid rgba(85,174,96,.4)}
+
+  .outil .verdict{border-radius:12px; padding:15px 16px; margin-bottom:14px; border:1px solid}
+  .outil .verdict.safe{color:var(--green-l); background:rgba(85,174,96,.13); border-color:rgba(85,174,96,.45)}
+  .outil .verdict.warning{color:#F0D68A; background:rgba(212,167,44,.13); border-color:rgba(212,167,44,.45)}
+  .outil .verdict.danger{color:#FFB4B4; background:rgba(229,72,77,.13); border-color:rgba(229,72,77,.45)}
+  .outil .verdict b{display:block; font-size:17px; margin-bottom:2px}
+  .outil .avert-sim{margin-top:12px; border-radius:12px; padding:12px 14px; font-size:13.5px; line-height:1.5;
+    color:#F0D68A; background:rgba(212,167,44,.13); border:1px solid rgba(212,167,44,.45)}
+  .outil .verdict span{color:var(--muted); font-size:13.5px}
+
+  .outil dl{margin:0; display:grid; grid-template-columns:1fr auto; gap:0}
+  .outil dt, .outil dd{margin:0; padding:10px 0; border-bottom:1px solid rgba(168,180,204,.14); font-size:14.5px}
+  .outil dt{color:var(--muted)}
+  .outil dd{text-align:right; font-weight:600}
+  .outil dl > :nth-last-child(-n+2){border-bottom:0}
+  .outil .ok-v{color:var(--green-l)} .outil .ko-v{color:#FFB4B4}
+
+  .outil .hint{color:var(--muted); font-size:13px; margin-top:12px}
+  .outil .hidden{display:none}
+  .outil .spin{display:inline-block; width:15px; height:15px; border:2px solid rgba(255,255,255,.3);
+        border-top-color:#fff; border-radius:50%; animation:sp .7s linear infinite; vertical-align:-2px}
+  @keyframes sp{to{transform:rotate(360deg)}}
+  .outil footer{margin-top:34px; color:var(--muted); font-size:13px; text-align:center}
+
+  /* La regle body de l outil, devenue .outil, lui donnait un fond et une
+     hauteur d ecran entiere : dans le bandeau, cela dessinait un rectangle. */
+  .outil{
+    background:none; min-height:0;
+    text-align:left; max-width:520px; margin:34px auto 0;
+  }
+  /* Seule l accroche d inscription est centree. Le sous-titre de Recharger,
+     lui, se lit a gauche comme le reste des cartes. */
+  .outil #vue-auth .o-sub{text-align:center}
+  /* L accueil borde et espace ses <section> ; celles de l outil n en sont pas. */
+  .outil section{border-top:0; padding:0}
+
+  /* Identite reprise de l'application : logo, nom, slogan. */
+  .marque{display:flex; align-items:center; justify-content:center; gap:12px}
+  .marque svg{width:52px; height:52px; flex:none}
+  .marque h1{margin:0; font-size:clamp(30px,5.4vw,42px); letter-spacing:-.8px}
+
+  /* Trois chiffres, comme sur l'ecran d'accueil de l'application. */
+  .outil .stats{display:grid; grid-template-columns:repeat(3,1fr); gap:10px; margin-bottom:14px}
+  .outil .stat{
+    display:flex; flex-direction:column; align-items:center; gap:4px;
+    background:var(--panel); border:1px solid var(--line);
+    border-radius:12px; padding:13px 8px;
+  }
+  .outil .stat svg{width:30px; height:30px}
+  .outil .stat b{font-size:19px; font-weight:800}
+  .outil .stat span{color:var(--muted); font-size:12px}
+
+  /* Le ton suit la valeur : une coche verte sur « 0 % » affirmerait le
+     contraire du chiffre affiche juste en dessous. */
+  #stat-fiable .tiret, #stat-fiable .alerte{display:none}
+  #stat-fiable .jauge{fill:url(#tNeutre)}
+  #stat-fiable .anneau{stroke:#CBD5E1}
+  #stat-fiable[data-ton="neutral"] .coche{display:none}
+  #stat-fiable[data-ton="neutral"] .tiret{display:block}
+  #stat-fiable[data-ton="good"] .jauge{fill:url(#tGood)}
+  #stat-fiable[data-ton="good"] .anneau{stroke:#BBF7D0}
+  #stat-fiable[data-ton="warn"] .jauge{fill:url(#tWarn)}
+  #stat-fiable[data-ton="warn"] .anneau{stroke:#FDE68A}
+  #stat-fiable[data-ton="bad"]  .jauge{fill:url(#tBad)}
+  #stat-fiable[data-ton="bad"]  .anneau{stroke:#FECACA}
+  /* Un taux faible s'annonce par un point d'exclamation, pas par une coche :
+     une coche affirmerait le contraire du chiffre juste en dessous. */
+  #stat-fiable[data-ton="warn"] .coche,
+  #stat-fiable[data-ton="bad"]  .coche{display:none}
+  #stat-fiable[data-ton="warn"] .alerte,
+  #stat-fiable[data-ton="bad"]  .alerte{display:block}
+  #stat-fiable[data-ton="good"] b{color:#4ADE80}
+  #stat-fiable[data-ton="warn"] b{color:#FBBF24}
+  #stat-fiable[data-ton="bad"]  b{color:#F87171}
+
+  .outil .solde{display:flex; align-items:center; gap:10px; font-size:16px}
+  .outil .porte-monnaie{width:24px; height:24px; flex:none}
+  /* Le rechargement a sa propre page : la majorite des visites ne recharge
+     pas, les trois packs n'ont pas a occuper un tiers de l'ecran. */
+  .outil .recharge{text-align:center; margin:16px 0 0}
+  .outil .recharge a{font-size:14.5px; font-weight:600}
+
+/* Anciens attributs style="" de la page. La CSP refuse
+   desormais le style en ligne ; la declaration est reprise
+   telle quelle pour que le rendu ne bouge pas. */
+.u-margin-18px-0-0{margin:18px 0 0 !important}
+.u-margin-top-14px{margin-top:14px !important}
+.u-margin-top-26px{margin-top:26px !important}
