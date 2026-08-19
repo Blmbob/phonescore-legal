@@ -165,19 +165,6 @@
     .sweepline{display:none}
   }
 
-  .shots{
-    display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
-    gap:26px; margin-top:8px;
-  }
-  .shot{text-align:center}
-  .shot .frame{
-    border-radius:26px; padding:8px; background:#0B142F;
-    border:1px solid var(--line); box-shadow:0 14px 34px rgba(0,0,0,.38);
-  }
-  .shot img{display:block; width:100%; height:auto; border-radius:19px}
-  .shot p{color:var(--muted); font-size:14px; margin:14px 4px 0}
-  .shot b{display:block; color:var(--text); font-size:15px; margin-bottom:2px}
-
   /* ---------- sections ---------- */
   section{padding:56px 0; border-top:1px solid var(--line)}
   h2{font-size:clamp(21px,3.2vw,27px); margin:0 0 8px; letter-spacing:-.4px}
@@ -228,8 +215,6 @@
     background:rgba(73,122,234,.16); border:1px solid rgba(73,122,234,.35);
     padding:2px 8px; border-radius:6px; font-size:15px; color:#fff;
   }
-  .contact{border-color:rgba(85,174,96,.45); background:rgba(85,174,96,.10)}
-  .contact a{color:var(--green); font-weight:700; text-decoration:none; font-size:18px}
   ul{padding-left:20px; margin:8px 0}
   li{margin:5px 0}
 
@@ -355,7 +340,10 @@
       </svg>
       <b>Phone<span>Score</span></b>
     </a>
-    <a class="link" href="/assistance.html">Assistance</a>
+    <!-- L'outil occupe le haut de page : ce que le visiteur cherche dans la
+         barre, c'est son compte. Le lien vise le bloc de l'outil, qui affiche
+         son solde s'il est connecte, le formulaire sinon. -->
+    <a class="link" href="#compte">Profil</a>
   </div>
 </div>
 
@@ -373,7 +361,7 @@
     <!-- L'outil, pas une brochure. Le visiteur type arrive d'un lien
          partage sur les reseaux : lui proposer de telecharger l'app
          alors qu'il en vient peut-etre n'a aucun sens. -->
-    <div class="outil">
+    <div class="outil" id="compte">
       <section id="vue-auth" class="hidden">
           <p class="o-sub">Créez un compte en quelques secondes — puis vérifiez un appareil.</p>
       
@@ -535,41 +523,6 @@
   </section>
 </div>
 
-<!-- ---------------- CAPTURES ---------------- -->
-<div class="wrap">
-  <section>
-    <h2>L'application</h2>
-    <p class="sub">Captures réelles, prises sur iPhone.</p>
-    <div class="shots">
-
-      <div class="shot">
-        <div class="frame">
-          <img src="/captures/historique.png" width="414" height="896" loading="lazy"
-               alt="Écran Historique : la liste des vérifications passées, avec le modèle de l'appareil, la fin de son IMEI et un indicateur de verdict.">
-        </div>
-        <p><b>Historique</b>Vos vérifications passées restent consultables, avec leur verdict.</p>
-      </div>
-
-      <div class="shot">
-        <div class="frame">
-          <img src="/captures/stock.png" width="414" height="896" loading="lazy"
-               alt="Écran Stock : nombre d'appareils en stock, valeur totale en FCFA, ventes du mois, et liste des modèles regroupés par référence.">
-        </div>
-        <p><b>Stock</b>Vos appareils, leur valeur et vos ventes du mois, en un écran.</p>
-      </div>
-
-      <div class="shot">
-        <div class="frame">
-          <img src="/captures/packs.png" width="414" height="896" loading="lazy"
-               alt="Écran Pièces : les trois packs Découverte, Standard et Revendeur, avec leur nombre de pièces et un bouton Acheter.">
-        </div>
-        <p><b>Pièces</b>Trois packs, achetés par l'App Store. Pas d'abonnement.</p>
-      </div>
-
-    </div>
-  </section>
-</div>
-
 <!-- ---------------- REVENDEURS ---------------- -->
 <div class="wrap">
   <section>
@@ -629,37 +582,11 @@
   </section>
 </div>
 
-<!-- ---------------- ASSISTANCE ---------------- -->
-<div class="wrap">
-  <section id="assistance">
-    <div class="narrow">
-      <h2>Une question&nbsp;?</h2>
-      <p class="sub">
-        Les réponses aux questions les plus fréquentes — trouver un IMEI, comprendre
-        un verdict, supprimer son compte — sont rassemblées sur une page dédiée.
-      </p>
-
-      <div class="card contact">
-        <p style="margin:0 0 6px; color:var(--muted); font-size:14px">
-          Assistance, réclamations et suppression de compte
-        </p>
-        <a href="mailto:phonescore.support@gmail.com">phonescore.support@gmail.com</a>
-        <p style="margin:10px 0 0; color:var(--muted); font-size:14px">
-          Réponse sous 48&nbsp;heures ouvrées. Écrivez en français ou en anglais.
-        </p>
-      </div>
-
-      <p style="margin-top:18px">
-        <a href="/assistance.html">Consulter les questions fréquentes &rsaquo;</a>
-      </p>
-    </div>
-  </section>
-</div>
-
 <footer>
   <div class="wrap">
     <p>
       <a href="rapport.html">Comprendre le rapport</a>
+      <a href="assistance.html">Assistance</a>
       <a href="revendeurs.html">Badge boutique</a>
       <a href="cgu.html">Conditions générales d'utilisation</a>
       <a href="confidentialite.html">Politique de confidentialité</a>
