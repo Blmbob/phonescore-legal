@@ -2,7 +2,7 @@
 <html lang="fr">
 <head>
 <meta charset="utf-8">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self' https://bvriicetjcnxrbhelokh.supabase.co; base-uri 'none'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self' https://bvriicetjcnxrbhelokh.supabase.co; base-uri 'none'; form-action 'none'">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Assistance — PhoneScore</title>
 <link rel="icon" href="/favicon.png" type="image/png">
@@ -551,36 +551,6 @@
   </div>
 </footer>
 
-<script>
-/* Menu de la barre. Volontairement sans dependance et en fin de page :
-   la navigation doit tenir meme si le reste du script echoue. */
-(function () {
-  var bouton = document.getElementById('menu-bouton');
-  var menu = document.getElementById('menu');
-  if (!bouton || !menu) return;
-
-  function afficher(ouvert) {
-    bouton.setAttribute('aria-expanded', String(ouvert));
-    menu.hidden = !ouvert;
-  }
-
-  bouton.addEventListener('click', function (e) {
-    e.stopPropagation();
-    afficher(menu.hidden);
-  });
-
-  /* Un panneau qui ne se referme qu'en revenant sur le bouton gene sur
-     mobile, ou il couvre justement ce qu'on voulait lire. */
-  document.addEventListener('click', function (e) {
-    if (!menu.hidden && !menu.contains(e.target)) afficher(false);
-  });
-  document.addEventListener('keydown', function (e) {
-    if (e.key === 'Escape' && !menu.hidden) {
-      afficher(false);
-      bouton.focus();
-    }
-  });
-})();
-</script>
+<script src="/js/menu.js"></script>
 </body>
 </html>

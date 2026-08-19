@@ -2,7 +2,7 @@
 <html lang="fr">
 <head>
 <meta charset="utf-8">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self' https://bvriicetjcnxrbhelokh.supabase.co; base-uri 'none'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self' https://bvriicetjcnxrbhelokh.supabase.co; base-uri 'none'; form-action 'none'">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Vérifier un appareil — PhoneScore</title>
 <link rel="icon" href="/favicon.png" type="image/png">
@@ -11,11 +11,10 @@
      arrive d'un lien partagé et doit pouvoir agir tout de suite, sans page
      intermédiaire. Cette adresse est conservée en redirection parce qu'elle a
      pu être partagée — GitHub Pages ne sait pas faire de redirection serveur,
-     d'où la balise refresh doublée d'une redirection JavaScript. -->
+     d'où la balise refresh, qui n'a besoin d'aucun script. -->
 <link rel="canonical" href="https://phonescore.app/">
 <meta name="robots" content="noindex, follow">
 <meta http-equiv="refresh" content="0; url=/">
-<script>location.replace('/');</script>
 
 <style>
   body{
