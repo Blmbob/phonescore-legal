@@ -133,6 +133,42 @@
   .nav a.link{color:var(--muted); text-decoration:none; font-size:15px}
   .nav a.link:hover{color:var(--text)}
 
+  /* ---------- menu deroulant ---------- */
+  .menu-zone{position:relative; display:flex; align-items:center; gap:14px}
+  .menu-bouton{
+    display:flex; flex-direction:column; justify-content:center; gap:5px;
+    width:40px; height:40px; padding:0 9px; flex:none;
+    background:transparent; border:1px solid var(--line);
+    border-radius:10px; cursor:pointer;
+  }
+  .menu-bouton span{
+    display:block; height:2px; border-radius:2px; background:var(--muted);
+    transition:transform .18s ease, opacity .18s ease, background .18s ease;
+  }
+  .menu-bouton:hover span{background:var(--text)}
+  /* Deplie, les trois traits deviennent une croix : le meme bouton referme,
+     sans avoir a viser ailleurs. */
+  .menu-bouton[aria-expanded="true"] span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+  .menu-bouton[aria-expanded="true"] span:nth-child(2){opacity:0}
+  .menu-bouton[aria-expanded="true"] span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+
+  .menu{
+    position:absolute; right:0; top:calc(100% + 12px); z-index:40;
+    min-width:236px; display:flex; flex-direction:column; padding:8px;
+    /* Fond opaque, pas var(--panel) : le panneau passe au-dessus du texte
+       de la page, qui transparaitrait a travers. */
+    background:#101B3C; border:1px solid var(--line); border-radius:14px;
+    box-shadow:0 20px 44px rgba(0,0,0,.5);
+  }
+  /* display:flex l emporterait sur la regle [hidden] du navigateur. */
+  .menu[hidden]{display:none}
+  .menu a{
+    color:var(--muted); text-decoration:none; font-size:14.5px;
+    padding:10px 12px; border-radius:9px; line-height:1.4;
+  }
+  .menu a:hover{background:rgba(255,255,255,.07); color:var(--text)}
+  .menu a[aria-current="page"]{color:var(--text); font-weight:700}
+
   /* ---------- hero ---------- */
   .hero{position:relative; overflow:hidden; padding:64px 0 56px; text-align:center}
   .hero .wrap{position:relative; z-index:1}
@@ -374,13 +410,47 @@
 <div class="wrap">
   <div class="nav">
     <a class="brand" href="/">
-      <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
-        <path d="M12 2L4 5.5V11c0 5 3.4 9.4 8 10.5 4.6-1.1 8-5.5 8-10.5V5.5L12 2z" fill="#497AEA"/>
-        <path d="M8.5 12l2.4 2.4 4.6-4.8" stroke="#55AE60" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+      <svg aria-hidden="true" viewBox="0 0 200 200">
+        <defs>
+          <linearGradient id="mSh" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#3B82F6"/><stop offset="1" stop-color="#1D4ED8"/>
+          </linearGradient>
+          <linearGradient id="mShIn" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#1E3A8A"/><stop offset="1" stop-color="#172B63"/>
+          </linearGradient>
+          <linearGradient id="mPh" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0" stop-color="#1F2937"/><stop offset="1" stop-color="#0B1220"/>
+          </linearGradient>
+          <linearGradient id="mCk" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#4ADE80"/><stop offset="1" stop-color="#16A34A"/>
+          </linearGradient>
+        </defs>
+        <path d="M100 10 C120 24 146 30 166 31 C166 86 149 128 100 150 C51 128 34 86 34 31 C54 30 80 24 100 10 Z" fill="url(#mSh)"/>
+        <path d="M100 22 C117 33 138 38 154 39.4 C154 84 139.5 119 100 138 C60.5 119 46 84 46 39.4 C62 38 83 33 100 22 Z" fill="url(#mShIn)"/>
+        <rect x="70" y="34" width="60" height="104" rx="14" fill="url(#mPh)" stroke="#374151" stroke-width="3"/>
+        <rect x="76" y="42" width="48" height="88" rx="9" fill="#0D1526"/>
+        <rect x="88" y="38" width="24" height="6" rx="3" fill="#1F2937"/>
+        <path d="M78 44 L108 44 L84 126 L78 126 Z" fill="#FFFFFF" opacity=".05"/>
+        <circle cx="124" cy="128" r="34" fill="url(#mCk)" stroke="#0D1117" stroke-width="6"/>
+        <path d="M108 128 L120 140 L142 114" fill="none" stroke="#FFFFFF" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/>
       </svg>
       <b>Phone<span>Score</span></b>
     </a>
-    <a class="link" href="/">Accueil</a>
+    <div class="menu-zone">
+      <a class="link" href="/">Accueil</a>
+      <button type="button" class="menu-bouton" id="menu-bouton"
+              aria-expanded="false" aria-controls="menu" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
+      <nav class="menu" id="menu" hidden>
+        <a href="/profil.html">Profil</a>
+        <a href="/assistance.html">Assistance</a>
+        <a href="/rapport.html" aria-current="page">Comprendre le rapport</a>
+        <a href="/revendeurs.html">Badge boutique</a>
+        <a href="/cgu.html">Conditions générales d'utilisation</a>
+        <a href="/confidentialite.html">Politique de confidentialité</a>
+      </nav>
+    </div>
   </div>
 </div>
 
@@ -601,5 +671,36 @@
   </div>
 </footer>
 
+<script>
+/* Menu de la barre. Volontairement sans dependance et en fin de page :
+   la navigation doit tenir meme si le reste du script echoue. */
+(function () {
+  var bouton = document.getElementById('menu-bouton');
+  var menu = document.getElementById('menu');
+  if (!bouton || !menu) return;
+
+  function afficher(ouvert) {
+    bouton.setAttribute('aria-expanded', String(ouvert));
+    menu.hidden = !ouvert;
+  }
+
+  bouton.addEventListener('click', function (e) {
+    e.stopPropagation();
+    afficher(menu.hidden);
+  });
+
+  /* Un panneau qui ne se referme qu'en revenant sur le bouton gene sur
+     mobile, ou il couvre justement ce qu'on voulait lire. */
+  document.addEventListener('click', function (e) {
+    if (!menu.hidden && !menu.contains(e.target)) afficher(false);
+  });
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape' && !menu.hidden) {
+      afficher(false);
+      bouton.focus();
+    }
+  });
+})();
+</script>
 </body>
 </html>

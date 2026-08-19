@@ -104,6 +104,42 @@
   .nav a.link{color:var(--muted); text-decoration:none; font-size:15px}
   .nav a.link:hover{color:var(--text)}
 
+  /* ---------- menu deroulant ---------- */
+  .menu-zone{position:relative; display:flex; align-items:center; gap:14px}
+  .menu-bouton{
+    display:flex; flex-direction:column; justify-content:center; gap:5px;
+    width:40px; height:40px; padding:0 9px; flex:none;
+    background:transparent; border:1px solid var(--line);
+    border-radius:10px; cursor:pointer;
+  }
+  .menu-bouton span{
+    display:block; height:2px; border-radius:2px; background:var(--muted);
+    transition:transform .18s ease, opacity .18s ease, background .18s ease;
+  }
+  .menu-bouton:hover span{background:var(--text)}
+  /* Deplie, les trois traits deviennent une croix : le meme bouton referme,
+     sans avoir a viser ailleurs. */
+  .menu-bouton[aria-expanded="true"] span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+  .menu-bouton[aria-expanded="true"] span:nth-child(2){opacity:0}
+  .menu-bouton[aria-expanded="true"] span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+
+  .menu{
+    position:absolute; right:0; top:calc(100% + 12px); z-index:40;
+    min-width:236px; display:flex; flex-direction:column; padding:8px;
+    /* Fond opaque, pas var(--panel) : le panneau passe au-dessus du texte
+       de la page, qui transparaitrait a travers. */
+    background:#101B3C; border:1px solid var(--line); border-radius:14px;
+    box-shadow:0 20px 44px rgba(0,0,0,.5);
+  }
+  /* display:flex l emporterait sur la regle [hidden] du navigateur. */
+  .menu[hidden]{display:none}
+  .menu a{
+    color:var(--muted); text-decoration:none; font-size:14.5px;
+    padding:10px 12px; border-radius:9px; line-height:1.4;
+  }
+  .menu a:hover{background:rgba(255,255,255,.07); color:var(--text)}
+  .menu a[aria-current="page"]{color:var(--text); font-weight:700}
+
   /* ---------- hero ---------- */
   .hero{position:relative; overflow:hidden; padding:64px 0 56px; text-align:center}
   .hero .wrap{position:relative; z-index:1}
@@ -401,9 +437,20 @@
       </svg>
       <b>Phone<span>Score</span></b>
     </a>
-    <!-- Le profil a sa propre page : l'accueil sert a verifier un appareil,
-         pas a gerer son compte. -->
-    <a class="link" href="/profil.html">Profil</a>
+    <div class="menu-zone">
+      <button type="button" class="menu-bouton" id="menu-bouton"
+              aria-expanded="false" aria-controls="menu" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
+      <nav class="menu" id="menu" hidden>
+        <a href="/profil.html">Profil</a>
+        <a href="/assistance.html">Assistance</a>
+        <a href="/rapport.html">Comprendre le rapport</a>
+        <a href="/revendeurs.html">Badge boutique</a>
+        <a href="/cgu.html">Conditions générales d'utilisation</a>
+        <a href="/confidentialite.html">Politique de confidentialité</a>
+      </nav>
+    </div>
   </div>
 </div>
 
@@ -948,5 +995,36 @@ function afficherRapport(r) {
 }
 </script>
 
+<script>
+/* Menu de la barre. Volontairement sans dependance et en fin de page :
+   la navigation doit tenir meme si le reste du script echoue. */
+(function () {
+  var bouton = document.getElementById('menu-bouton');
+  var menu = document.getElementById('menu');
+  if (!bouton || !menu) return;
+
+  function afficher(ouvert) {
+    bouton.setAttribute('aria-expanded', String(ouvert));
+    menu.hidden = !ouvert;
+  }
+
+  bouton.addEventListener('click', function (e) {
+    e.stopPropagation();
+    afficher(menu.hidden);
+  });
+
+  /* Un panneau qui ne se referme qu'en revenant sur le bouton gene sur
+     mobile, ou il couvre justement ce qu'on voulait lire. */
+  document.addEventListener('click', function (e) {
+    if (!menu.hidden && !menu.contains(e.target)) afficher(false);
+  });
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape' && !menu.hidden) {
+      afficher(false);
+      bouton.focus();
+    }
+  });
+})();
+</script>
 </body>
 </html>
