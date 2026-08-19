@@ -861,9 +861,9 @@ const LIBELLE = {
 };
 
 /* Les valeurs viennent de Sickw : elles sont affichees, jamais interpretees. */
+const ENTITES = { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' };
 function echapper(valeur) {
-  return String(valeur).replace(/[&<>"]/g, c => ([c]
-  ));
+  return String(valeur).replace(/[&<>"']/g, c => ENTITES[c]);
 }
 
 function ligne(cle, valeur, ton) {
@@ -935,8 +935,12 @@ function afficherRapport(r) {
       + 'Vérifiez que votre opérateur propose l’eSIM avant d’acheter.</div>'
     : '';
 
+  /* Le verdict vient du serveur, mais il finit dans un attribut : on ne pose
+     que l'une des trois valeurs connues, jamais la chaine recue telle quelle. */
+  const ton = ['safe', 'warning', 'danger'].includes(r.verdict) ? r.verdict : 'warning';
+
   $('rapport').innerHTML =
-    `<div class="verdict ${r.verdict}"><b>${v.titre}</b><span>${v.detail}</span></div><dl>${lignes}</dl>${alerteSim}`;
+    `<div class="verdict ${ton}"><b>${v.titre}</b><span>${v.detail}</span></div><dl>${lignes}</dl>${alerteSim}`;
   $('rapport').classList.remove('hidden');
   $('rapport').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
 }
