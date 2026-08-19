@@ -1,0 +1,41 @@
+# En-tetes de securite, lus par Cloudflare Pages (et Netlify).
+#
+# GitHub Pages ignore ce fichier : tant que le site y est heberge, il ne fait
+# rien. C'est voulu — il est pose d'avance pour que la bascule n'ait qu'un
+# seul point de defaillance, le DNS.
+#
+# La balise <meta> Content-Security-Policy des pages reste en place : elle
+# couvre le cas ou le site est reservi depuis GitHub Pages. Les deux
+# politiques s'appliquent alors ensemble, et le navigateur retient la plus
+# stricte. Si tu modifies l'une, modifie l'autre.
+
+/*
+  # frame-ancestors est la raison d'etre de cette migration : une balise meta
+  # l'ignore, seul un vrai en-tete l'applique. Sans lui, n'importe qui peut
+  # afficher phonescore.app dans une iframe invisible et faire cliquer un
+  # visiteur a son insu.
+  Content-Security-Policy: default-src 'none'; script-src 'self'; style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src 'self' https://bvriicetjcnxrbhelokh.supabase.co; base-uri 'none'; form-action 'none'; frame-ancestors 'none'
+
+  # Meme interdiction, pour les navigateurs anterieurs a frame-ancestors.
+  X-Frame-Options: DENY
+
+  # Le TLD .app est deja precharge en HSTS : les navigateurs refusent HTTP
+  # sur ce domaine quoi qu'il arrive. L'en-tete est donc une ceinture de
+  # plus, pas la protection principale. Sans `preload` : le soumettre a la
+  # liste est un engagement long a defaire, et inutile ici.
+  Strict-Transport-Security: max-age=31536000; includeSubDomains
+
+  # Interdit au navigateur de deviner un type MIME : un fichier servi en
+  # texte ne peut pas etre reinterprete comme du script.
+  X-Content-Type-Options: nosniff
+
+  # L'adresse complete n'est jamais transmise a un site tiers. Aucun IMEI ne
+  # transite par une URL, mais la regle vaut pour tout ce qui viendrait apres.
+  Referrer-Policy: strict-origin-when-cross-origin
+
+  # Le site ne demande aucune de ces permissions — verifie dans le code.
+  # Les refuser ferme la porte a un script injecte qui les reclamerait.
+  Permissions-Policy: accelerometer=(), camera=(), geolocation=(), gyroscope=(), magnetometer=(), microphone=(), payment=(), usb=()
+
+  # Isole la page des fenetres ouvertes vers d'autres origines.
+  Cross-Origin-Opener-Policy: same-origin
