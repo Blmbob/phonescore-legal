@@ -325,26 +325,6 @@
   /* L accueil borde et espace ses <section> ; celles de l outil n en sont pas. */
   .outil section{border-top:0; padding:0}
 
-  /* Profil : reprend la hierarchie de l'ecran Profil de l'application. */
-  .outil .p-ligne{
-    display:flex; align-items:center; justify-content:space-between; gap:12px;
-    padding:11px 0; border-top:1px solid var(--line); font-size:14px;
-  }
-  .outil .p-ligne span{color:var(--muted)}
-  .outil .p-ligne b{font-weight:700}
-  .outil .p-code{
-    letter-spacing:3px; font-size:20px; font-weight:800; color:var(--green-l);
-  }
-  .outil .p-liens{
-    padding-top:12px; border-top:1px solid var(--line);
-    font-size:13px; color:var(--muted);
-  }
-  /* .outil button.ghost est plus specifique : il faut viser le bouton, pas
-     seulement la classe, sinon l avertissement rouge ne s applique pas. */
-  .outil button.p-supprimer{
-    margin-top:12px; color:#FFB4B4; border-color:rgba(229,72,77,.45);
-    background:rgba(229,72,77,.10);
-  }
 </style>
 </head>
 <body>
@@ -358,10 +338,9 @@
       </svg>
       <b>Phone<span>Score</span></b>
     </a>
-    <!-- L'outil occupe le haut de page : ce que le visiteur cherche dans la
-         barre, c'est son compte. Le lien vise le bloc de l'outil, qui affiche
-         son solde s'il est connecte, le formulaire sinon. -->
-    <a class="link" href="#compte">Profil</a>
+    <!-- Le profil a sa propre page : l'accueil sert a verifier un appareil,
+         pas a gerer son compte. -->
+    <a class="link" href="/profil.html">Profil</a>
   </div>
 </div>
 
@@ -379,7 +358,7 @@
     <!-- L'outil, pas une brochure. Le visiteur type arrive d'un lien
          partage sur les reseaux : lui proposer de telecharger l'app
          alors qu'il en vient peut-etre n'a aucun sens. -->
-    <div class="outil" id="compte">
+    <div class="outil">
       <section id="vue-auth" class="hidden">
           <p class="o-sub">Créez un compte en quelques secondes — puis vérifiez un appareil.</p>
       
@@ -415,28 +394,6 @@
             </div>
             <p class="hint" id="courriel"></p>
 
-            <div class="p-ligne">
-              <span>Accès revendeur</span>
-              <b id="p-revendeur">—</b>
-            </div>
-            <div class="p-ligne">
-              <span>Code de parrainage</span>
-              <b class="p-code" id="p-code">—</b>
-            </div>
-            <div class="p-ligne">
-              <span>Filleuls récompensés</span>
-              <b id="p-filleuls">—</b>
-            </div>
-
-            <p class="p-liens">
-              <a href="/assistance.html">Assistance</a> ·
-              <a href="/rapport.html">Comprendre le rapport</a> ·
-              <a href="/cgu.html">Conditions</a> ·
-              <a href="/confidentialite.html">Confidentialité</a>
-            </p>
-
-            <button id="btn-supprimer" class="ghost p-supprimer">Supprimer mon compte</button>
-            <div id="msg-profil" class="msg"></div>
           </div>
       
           <div class="o-card">
@@ -671,7 +628,6 @@ async function rendre(session) {
     $('vue-app').classList.remove('hidden');
     $('courriel').textContent = session.user.email ?? '';
     await rafraichirSolde();
-    rafraichirProfil();
   } else {
     $('vue-app').classList.add('hidden');
     $('vue-auth').classList.remove('hidden');
@@ -716,62 +672,6 @@ $('btn-inscription').addEventListener('click', async () => {
 });
 
 $('btn-deconnexion').addEventListener('click', () => supabase.auth.signOut());
-
-/* ---------------- profil ---------------- */
-
-/* Les trois requetes sont independantes : une seule qui echoue ne doit pas
-   priver l'utilisateur des deux autres, d'ou allSettled plutot que all. */
-async function rafraichirProfil() {
-  const { data: { session } } = await supabase.auth.getSession();
-  if (!session) return;
-  const uid = session.user.id;
-
-  const [profil, code, filleuls] = await Promise.allSettled([
-    supabase.from('profiles').select('role, pro_until').eq('id', uid).single(),
-    supabase.rpc('ensure_referral_code'),
-    supabase.from('referrals')
-      .select('id', { count: 'exact', head: true })
-      .eq('referrer_user_id', uid).eq('status', 'rewarded'),
-  ]);
-
-  if (profil.status === 'fulfilled' && profil.value.data) {
-    /* pro_until fait foi : `role` peut rester a 'reseller' apres expiration. */
-    const jusqua = profil.value.data.pro_until;
-    const actif = jusqua && new Date(jusqua) > new Date();
-    $('p-revendeur').textContent = actif
-      ? 'actif jusqu’au ' + new Date(jusqua).toLocaleDateString('fr-FR',
-          { day: 'numeric', month: 'long', year: 'numeric' })
-      : 'aucun';
-    $('p-revendeur').style.color = actif ? 'var(--green-l)' : '';
-  }
-
-  if (code.status === 'fulfilled' && typeof code.value.data === 'string') {
-    $('p-code').textContent = code.value.data;
-  }
-
-  if (filleuls.status === 'fulfilled') {
-    $('p-filleuls').textContent = filleuls.value.count ?? 0;
-  }
-}
-
-/* Double confirmation : l'action est irreversible et detruit des pieces
-   payees. Meme exigence que dans l'application. */
-$('btn-supprimer').addEventListener('click', async () => {
-  if (!confirm('Supprimer ton compte ?\n\nTes pièces, ton historique de vérifications et tes boutiques seront définitivement effacés.')) return;
-  if (!confirm('Dernière confirmation.\n\nTes pièces non utilisées seront perdues et ne seront pas remboursées.')) return;
-
-  const msg = $('msg-profil');
-  msg.textContent = 'Suppression en cours…';
-  msg.className = 'msg';
-  try {
-    const { data, error } = await supabase.functions.invoke('delete-account');
-    if (error || !data?.success) throw error ?? new Error('echec');
-    await supabase.auth.signOut();
-  } catch {
-    msg.textContent = 'La suppression a échoué. Réessaie, ou écris à phonescore.support@gmail.com.';
-    msg.className = 'msg err';
-  }
-});
 
 /* ---------------- verification ---------------- */
 
