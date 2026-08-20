@@ -14,7 +14,13 @@
   # l'ignore, seul un vrai en-tete l'applique. Sans lui, n'importe qui peut
   # afficher phonescore.app dans une iframe invisible et faire cliquer un
   # visiteur a son insu.
-  Content-Security-Policy: default-src 'none'; script-src 'self'; style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src 'self' https://bvriicetjcnxrbhelokh.supabase.co; base-uri 'none'; form-action 'none'; frame-ancestors 'none'
+  # static.cloudflareinsights.com sert le script d'analyse d'audience que
+  # Cloudflare injecte dans les pages, et cloudflareinsights.com recoit ses
+  # mesures. Sans ces deux exceptions le script est refuse et les
+  # statistiques restent vides. C'est un tiers autorise a s'executer ici :
+  # la seule raison de l'accepter est qu'il ne pose pas de cookie et ne
+  # piste pas entre sites.
+  Content-Security-Policy: default-src 'none'; script-src 'self' https://static.cloudflareinsights.com; style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src 'self' https://bvriicetjcnxrbhelokh.supabase.co https://cloudflareinsights.com; base-uri 'none'; form-action 'none'; frame-ancestors 'none'
 
   # Meme interdiction, pour les navigateurs anterieurs a frame-ancestors.
   X-Frame-Options: DENY
