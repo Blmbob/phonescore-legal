@@ -27,3 +27,7 @@
   .erreur{color:var(--red)}
   .succes{color:var(--green)}
 
+  /* display:flex sur body ne s'applique pas ici, mais [hidden] doit
+     l'emporter quoi qu'il arrive : un etat visible en trop montrerait
+     deux formulaires a la fois. */
+  [hidden]{display:none !important}

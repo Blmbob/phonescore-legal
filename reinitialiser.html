@@ -56,12 +56,28 @@
     <span>PhoneScore</span>
   </div>
 
-  <h1>Nouveau mot de passe</h1>
-  <p class="intro">Choisis un mot de passe d'au moins 8 caractères, puis retourne dans l'application PhoneScore pour te connecter.</p>
+  <!-- Deux etats. Sans jeton dans l'URL, la page demande le lien ; avec
+       jeton, elle prend le nouveau mot de passe. Le choix est fait avant
+       toute chose dans js/reinitialiser.js, parce que le client Supabase
+       efface le fragment des qu'il l'a lu. -->
 
-  <input id="motDePasse" type="password" placeholder="Nouveau mot de passe" autocomplete="new-password">
-  <input id="confirmation" type="password" placeholder="Confirmer le mot de passe" autocomplete="new-password">
-  <button id="valider">Enregistrer</button>
+  <section id="etat-demande" hidden>
+    <h1>Mot de passe oublié</h1>
+    <p class="intro">Saisis ton adresse e-mail : tu recevras un lien pour choisir un nouveau mot de passe.</p>
+
+    <input id="courriel" type="email" placeholder="vous@exemple.com" autocomplete="email" inputmode="email">
+    <button id="envoyer">Envoyer le lien</button>
+  </section>
+
+  <section id="etat-nouveau" hidden>
+    <h1>Nouveau mot de passe</h1>
+    <p class="intro">Choisis un mot de passe d'au moins 8 caractères, puis retourne te connecter.</p>
+
+    <input id="motDePasse" type="password" placeholder="Nouveau mot de passe" autocomplete="new-password">
+    <input id="confirmation" type="password" placeholder="Confirmer le mot de passe" autocomplete="new-password">
+    <button id="valider">Enregistrer</button>
+  </section>
+
   <div id="message" class="message"></div>
 </div>
 
