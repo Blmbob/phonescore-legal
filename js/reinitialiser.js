@@ -18,7 +18,7 @@ const SUPABASE_PUBLISHABLE_KEY = "sb_publishable_p35a312TC0qA8YDdw_fWAQ_b0AUrfqf
    Redirect URLs, sinon Supabase ignore la valeur et renvoie vers le Site URL.
    C'est la meme adresse que celle utilisee par l'application
    (constants/legal.ts), pour n'avoir qu'une entree a maintenir. */
-const RETOUR = "https://phonescore.app/reinitialiser.html";
+const RETOUR = "https://phonescore.app/reinitialiser";
 
 const supabase = createClient(SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY);
 
