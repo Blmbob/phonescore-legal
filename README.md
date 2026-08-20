@@ -13,10 +13,10 @@ dérivent.
 | Fichier | URL | Rôle |
 |---|---|---|
 | `index.html` | `/` | Présentation du produit **et** page d'assistance (ancre `#assistance`) |
-| `cgu.html` | `/cgu.html` | Conditions générales d'utilisation |
-| `confidentialite.html` | `/confidentialite.html` | Politique de confidentialité |
-| `reinitialiser.html` | `/reinitialiser.html` | Réinitialisation de mot de passe (lien Supabase) — `noindex` |
-| `payment-result.html` | `/payment-result.html` | Retour de paiement GeniusPay — `noindex` |
+| `cgu.html` | `/cgu` | Conditions générales d'utilisation |
+| `confidentialite.html` | `/confidentialite` | Politique de confidentialité |
+| `reinitialiser.html` | `/reinitialiser` | Réinitialisation de mot de passe (lien Supabase) — `noindex` |
+| `payment-result.html` | `/payment-result` | Retour de paiement GeniusPay — `noindex` |
 | `404.html` | — | Page d'erreur, servie automatiquement par GitHub Pages |
 
 ## Contraintes à respecter
