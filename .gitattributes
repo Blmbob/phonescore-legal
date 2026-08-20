@@ -1,3 +1,13 @@
 # Le fichier vendu doit rester octet pour octet celui dont l'empreinte est
 # enregistree dans vendor/SHA256SUMS.txt : aucune conversion de fin de ligne.
 vendor/** -text
+
+# Meme raison pour js/ et css/ : outils/versionner-assets.py hache les octets
+# du fichier tel qu'il est sur le disque, et colle le resultat dans l'adresse
+# (menu.js?v=88bca18d). Sous Windows, core.autocrlf=true posait ces fichiers en
+# CRLF alors que Cloudflare Pages construit depuis le depot, en LF : le script
+# calculait donc des empreintes que le site ne servirait jamais, et reecrivait
+# les 11 pages a chaque lancement. Sans conversion, la meme empreinte sort de
+# n'importe quelle machine.
+js/** -text
+css/** -text
