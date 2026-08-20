@@ -1,0 +1,18 @@
+# Redirections serveur, lues par Cloudflare Pages (et Netlify).
+#
+# /verifier etait une vraie page, avec une balise <meta http-equiv="refresh">
+# pour tout renvoyer vers l'accueil. C'etait un pis-aller : GitHub Pages ne
+# sait pas rediriger cote serveur, et la balise etait la seule solution sans
+# script. Depuis la bascule sur Cloudflare Pages, une vraie 301 est possible
+# — elle est definitive pour un moteur de recherche la ou un refresh reste un
+# signal mou, et elle epargne au visiteur le chargement complet d'une page
+# qu'il ne fait que traverser.
+#
+# L'adresse est conservee parce qu'elle a pu etre partagee. Rien sur le site
+# n'y renvoie plus.
+#
+# Les deux formes sont ecrites : le fichier verifier.html n'existant plus,
+# Cloudflare n'a plus de raison de rediriger /verifier.html vers /verifier au
+# prealable, et un ancien lien porte peut-etre encore l'extension.
+/verifier       /  301
+/verifier.html  /  301

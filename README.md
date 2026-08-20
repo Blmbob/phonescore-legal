@@ -25,7 +25,6 @@ exacte de l'adresse courante, un lien absolu non.
 | `confidentialite.html` | `/confidentialite` | Politique de confidentialité |
 | `profil.html` | `/profil` | Compte : solde, accès revendeur, parrainage — `noindex` |
 | `recharger.html` | `/recharger` | Recharge de pièces par mobile money — `noindex` |
-| `verifier.html` | `/verifier` | Vérification d'un appareil depuis le web — `noindex` |
 | `reinitialiser.html` | `/reinitialiser` | Réinitialisation de mot de passe (lien Supabase) — `noindex` |
 | `payment-result.html` | `/payment-result` | Retour de paiement GeniusPay — `noindex` |
 | `404.html` | — | Page d'erreur, servie automatiquement par Cloudflare Pages |
@@ -64,6 +63,9 @@ canal reproduirait le rejet 3.1.1 du 4 août 2026.
 - `_headers` — en-têtes de sécurité, lus par Cloudflare Pages. C'est le seul
   endroit où `frame-ancestors` s'applique vraiment ; la balise `<meta>` CSP de
   chaque page reprend le reste. **Modifier l'un, c'est modifier l'autre.**
+- `_redirects` — redirections serveur, lues par Cloudflare Pages. Y mettre
+  toute adresse retirée qui a pu être partagée, plutôt qu'une page qui
+  redirige elle-même. Contient `/verifier`, ancienne page de vérification.
 - `outils/versionner-assets.py` — colle une empreinte de contenu aux adresses
   de `js/` et `css/`.
 
