@@ -77,7 +77,7 @@ $('btn-supprimer').addEventListener('click', async () => {
     await supabase.auth.signOut();
     location.replace('/');
   } catch {
-    msg.textContent = 'La suppression a échoué. Réessayez, ou écrivez à phonescore.support@gmail.com.';
+    msg.textContent = 'La suppression a échoué. Réessayez, ou écrivez à support@phonescore.app.';
     msg.className = 'msg err';
   }
 });

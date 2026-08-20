@@ -45,6 +45,14 @@ suppression « sur demande par e-mail » est un motif de rejet. Le texte doit
 rester cohérent avec `confidentialite.html` et avec le comportement réel de
 l'app (écran Profil → « Supprimer mon compte »).
 
+**L'adresse de contact doit rester en service.** `support@phonescore.app` est
+l'adresse déclarée dans les CGU et dans la politique de confidentialité, où
+elle est le canal d'exercice des droits prévus par la loi ivoirienne
+n° 2013-450 — délai de réponse annoncé : 30 jours. Elle est aussi le seul
+contact de la page d'assistance vue par Apple. Elle apparaît à dix endroits,
+dont le schéma `Organization` de l'accueil et une chaîne de `js/profil.js` :
+la changer impose de relancer `versionner-assets.py`.
+
 **Les moyens de paiement décrits doivent rester exacts.** Sur iOS, les pièces
 sont vendues par achat intégré App Store. Décrire le mobile money comme unique
 canal reproduirait le rejet 3.1.1 du 4 août 2026.
@@ -96,6 +104,11 @@ pouvoir poser de vrais en-têtes HTTP.
 
 ## À faire
 
+- **Créer la boîte `support@phonescore.app` AVANT de déployer.** Le site ne
+  cite plus `phonescore.support@gmail.com` nulle part : déployer avant que la
+  boîte reçoive couperait le support, les réclamations et les demandes RGPD
+  d'un coup. Le DNS étant déjà chez Cloudflare, Email Routing fait suivre vers
+  une boîte existante gratuitement, sans serveur à tenir.
 - **App Store Connect : remplacer l'URL d'assistance par
   `https://phonescore.app/assistance`**, avant toute nouvelle soumission.
   Reste ouvert depuis le déplacement de la FAQ hors de la racine (`da7dc7e`) ;
