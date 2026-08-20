@@ -43,23 +43,14 @@
 # ---------------------------------------------------------------------------
 # Duree de cache.
 #
-# Par defaut Cloudflare Pages garde le JS et la CSS 4 heures dans le
-# navigateur, alors que le HTML est revalide a chaque visite. Apres un
-# deploiement qui touche les deux, un visiteur deja venu recoit donc du HTML
-# neuf avec du script perime — et la page casse en silence. C'est arrive sur
-# /reinitialiser : les deux sections restaient masquees, la carte etait vide.
+# Cloudflare Pages impose 4 heures de cache navigateur aux ressources
+# statiques et REFUSE qu'on raccourcisse ce delai ici — verifie : une valeur
+# plus longue est acceptee, max-age=0 est ignore. Inutile donc d'essayer pour
+# js/ et css/ ; leur fraicheur est assuree autrement, par une empreinte dans
+# l'adresse (voir outils/versionner-assets.py).
 #
-# Les noms de ces fichiers ne changent pas d'une version a l'autre : ils
-# doivent donc etre revalides a chaque fois. La revalidation coute un 304,
-# pas un telechargement.
-/js/*
-  Cache-Control: public, max-age=0, must-revalidate
-
-/css/*
-  Cache-Control: public, max-age=0, must-revalidate
-
-# Celui-ci porte sa version dans son nom : son contenu ne changera jamais.
-# Une nouvelle version aura une nouvelle adresse, donc on peut le garder
-# longtemps sans risque.
+# Ici on ne fait que l'inverse, qui lui fonctionne : allonger. Ce fichier
+# porte sa version dans son nom, son contenu ne changera jamais, et c'est le
+# seul qui pese vraiment (207 Ko).
 /vendor/*
   Cache-Control: public, max-age=31536000, immutable
