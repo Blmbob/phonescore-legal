@@ -1,11 +1,12 @@
 # En-tetes de securite, lus par Cloudflare Pages (et Netlify).
 #
-# GitHub Pages ignore ce fichier : tant que le site y est heberge, il ne fait
-# rien. C'est voulu — il est pose d'avance pour que la bascule n'ait qu'un
-# seul point de defaillance, le DNS.
+# Le site est servi par Cloudflare Pages depuis le 20 aout 2026 : ce fichier
+# est donc actif, et il est la seule source des en-tetes du site. Il avait ete
+# pose d'avance, du temps de GitHub Pages qui l'ignorait, pour que la bascule
+# n'ait qu'un seul point de defaillance — le DNS.
 #
 # La balise <meta> Content-Security-Policy des pages reste en place : elle
-# couvre le cas ou le site est reservi depuis GitHub Pages. Les deux
+# couvre un retour vers un hebergeur qui ignore ce fichier. Les deux
 # politiques s'appliquent alors ensemble, et le navigateur retient la plus
 # stricte. Si tu modifies l'une, modifie l'autre.
 

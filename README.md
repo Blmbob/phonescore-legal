@@ -1,7 +1,7 @@
 # phonescore-legal
 
-Site public de **PhoneScore**, servi par GitHub Pages sur **https://phonescore.app**
-(domaine personnalisé, voir `CNAME`).
+Site public de **PhoneScore**, servi par Cloudflare Pages sur
+**https://phonescore.app** (domaine personnalisé, voir `CNAME`).
 
 Ce dépôt est la **source de vérité** du site. L'application mobile vit dans un
 dépôt séparé (`phonescore54`), qui contient un dossier `docs/` avec d'anciennes
@@ -10,23 +10,35 @@ dérivent.
 
 ## Pages
 
+Les fichiers gardent leur extension, **les adresses non** : Cloudflare Pages
+sert `/cgu` et redirige `/cgu.html` en 308. Écrire les liens internes en
+absolu et sans extension (`href="/cgu"`) — un lien relatif dépend de la forme
+exacte de l'adresse courante, un lien absolu non.
+
 | Fichier | URL | Rôle |
 |---|---|---|
-| `index.html` | `/` | Présentation du produit **et** page d'assistance (ancre `#assistance`) |
+| `index.html` | `/` | Présentation du produit et lien de téléchargement |
+| `assistance.html` | `/assistance` | FAQ, suppression de compte, contact — **c'est l'URL d'assistance Apple** |
+| `rapport.html` | `/rapport` | Ce que chaque ligne du rapport signifie |
+| `revendeurs.html` | `/revendeurs` | Badge boutique « Certifiée » |
 | `cgu.html` | `/cgu` | Conditions générales d'utilisation |
 | `confidentialite.html` | `/confidentialite` | Politique de confidentialité |
+| `profil.html` | `/profil` | Compte : solde, accès revendeur, parrainage — `noindex` |
+| `recharger.html` | `/recharger` | Recharge de pièces par mobile money — `noindex` |
+| `verifier.html` | `/verifier` | Vérification d'un appareil depuis le web — `noindex` |
 | `reinitialiser.html` | `/reinitialiser` | Réinitialisation de mot de passe (lien Supabase) — `noindex` |
 | `payment-result.html` | `/payment-result` | Retour de paiement GeniusPay — `noindex` |
-| `404.html` | — | Page d'erreur, servie automatiquement par GitHub Pages |
+| `404.html` | — | Page d'erreur, servie automatiquement par Cloudflare Pages |
 
 ## Contraintes à respecter
 
-**L'assistance doit rester à la racine.** `https://phonescore.app` est l'URL
-d'assistance déclarée dans App Store Connect, et la guideline Apple 1.5 exige
-qu'elle serve des informations d'assistance. Une soumission a déjà été rejetée
-le 4 août 2026 sur ce motif, l'ancienne URL `blmbob.github.io` renvoyant une
-erreur. Ne pas déplacer la FAQ vers une page séparée sans changer l'URL dans
-App Store Connect au préalable.
+**L'URL d'assistance déclarée à Apple doit servir de l'assistance.** La
+guideline 1.5 l'exige, et une soumission a déjà été rejetée le 4 août 2026 sur
+ce motif, l'ancienne URL `blmbob.github.io` renvoyant une erreur. La FAQ a
+depuis quitté la racine pour `assistance.html` : l'URL à déclarer est
+`https://phonescore.app/assistance`. Tant qu'App Store Connect n'a pas été
+mis à jour (voir « À faire »), **ne pas soumettre de nouvelle version** — la
+racine ne contient plus que le renvoi vers la page dédiée.
 
 **La description de la suppression de compte doit rester en libre-service.**
 La guideline 5.1.1(v) impose une suppression depuis l'application ; décrire une
@@ -43,18 +55,33 @@ canal reproduirait le rejet 3.1.1 du 4 août 2026.
 - `og-image.png` — 1024×1024, opaque, reprise de l'icône de l'app. Utilisée pour
   les aperçus de liens (WhatsApp, réseaux sociaux).
 - `favicon.png` — 256×256.
-- `robots.txt`, `sitemap.xml` — indexation.
+- `robots.txt`, `sitemap.xml` — indexation. Les pages `noindex` sont laissées
+  au crawl : les interdire dans `robots.txt` annulerait leur balise.
+- `css/`, `js/` — un fichier par page. Aucun style ni script en ligne, la CSP
+  les refuse.
+- `vendor/supabase-2.112.3.js` — client Supabase servi par le site, en version
+  fixe. Empreinte dans `vendor/SHA256SUMS.txt`.
+- `_headers` — en-têtes de sécurité, lus par Cloudflare Pages. C'est le seul
+  endroit où `frame-ancestors` s'applique vraiment ; la balise `<meta>` CSP de
+  chaque page reprend le reste. **Modifier l'un, c'est modifier l'autre.**
+- `outils/versionner-assets.py` — colle une empreinte de contenu aux adresses
+  de `js/` et `css/`.
 
 ## Déploiement
 
-Pousser sur `main` suffit. GitHub Pages reconstruit en une à deux minutes :
+Pousser sur `main` suffit, Cloudflare Pages reconstruit.
+
+**Si le poussé touche un fichier de `js/` ou `css/`, lancer d'abord :**
 
 ```bash
-gh api repos/Blmbob/phonescore-legal/pages/builds/latest --jq .status
+python outils/versionner-assets.py
 ```
 
-Attendre `built` avant de vérifier l'URL en ligne — sinon on lit l'ancienne
-version.
+Cloudflare impose 4 heures de cache navigateur aux ressources statiques et
+refuse qu'on raccourcisse ce délai ; le HTML, lui, est revalidé à chaque
+visite. Sans nouvelle empreinte, un visiteur déjà venu reçoit du HTML neuf
+avec du script périmé, et la page casse sans la moindre erreur. Le script est
+idempotent : le lancer pour rien ne change rien.
 
 ## État
 
@@ -62,5 +89,13 @@ L'app est **publiée** depuis le 13 août 2026 :
 <https://apps.apple.com/app/id6795897093> (version 1.0, gratuite).
 Le lien de téléchargement est en place sur l'accueil.
 
+Le site a quitté GitHub Pages pour Cloudflare Pages le 20 août 2026, pour
+pouvoir poser de vrais en-têtes HTTP.
+
 ## À faire
 
+- **App Store Connect : remplacer l'URL d'assistance par
+  `https://phonescore.app/assistance`**, avant toute nouvelle soumission.
+  Reste ouvert depuis le déplacement de la FAQ hors de la racine (`da7dc7e`) ;
+  l'adresse a perdu son `.html` depuis, c'est la forme ci-dessus qu'il faut
+  déclarer.
