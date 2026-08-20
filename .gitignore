@@ -1,0 +1,6 @@
+# Le depot est servi tel quel par Cloudflare Pages : tout fichier suivi finit
+# en ligne. Les patchs et bundles deposes ici pour transferer du travail d'une
+# session a l'autre n'ont rien a y faire, et un `git add .` distrait suffirait
+# a les publier.
+*.patch
+*.bundle
