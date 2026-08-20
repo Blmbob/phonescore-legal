@@ -107,8 +107,23 @@ pouvoir poser de vrais en-têtes HTTP.
 - **Créer la boîte `support@phonescore.app` AVANT de déployer.** Le site ne
   cite plus `phonescore.support@gmail.com` nulle part : déployer avant que la
   boîte reçoive couperait le support, les réclamations et les demandes RGPD
-  d'un coup. Le DNS étant déjà chez Cloudflare, Email Routing fait suivre vers
-  une boîte existante gratuitement, sans serveur à tenir.
+  d'un coup.
+
+  Le DNS étant déjà chez Cloudflare, **Email Routing** fait suivre vers une
+  boîte existante gratuitement, sans serveur à tenir : onglet Email du
+  domaine → adresse de destination (un lien de confirmation part dessus, sans
+  ce clic rien ne route) → adresse personnalisée `support` → accepter que
+  Cloudflare pose les enregistrements.
+
+  **Cela ne casse pas l'envoi déjà en place.** `phonescore.app` est vérifié
+  chez Resend depuis le 3 août 2026 pour l'expédition, mais son MX est posé
+  sur le sous-domaine `send.phonescore.app`, pas sur la racine — vérifié. Le
+  MX de la racine est donc libre, et c'est celui qu'Email Routing réclame.
+  Les deux cohabitent.
+
+  Resend sait aussi recevoir (`Receiving` y est désactivé). À éviter ici :
+  cela prendrait le MX de la racine, et le courrier atterrirait dans un
+  magasin d'API plutôt que dans une boîte qu'on ouvre le matin.
 - **App Store Connect : remplacer l'URL d'assistance par
   `https://phonescore.app/assistance`**, avant toute nouvelle soumission.
   Reste ouvert depuis le déplacement de la FAQ hors de la racine (`da7dc7e`) ;
