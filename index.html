@@ -73,7 +73,7 @@
   ]
 }
 </script>
-<link rel="stylesheet" href="/css/index.css?v=c711b5cb">
+<link rel="stylesheet" href="/css/index.css?v=84402d28">
 
 <!-- Outil de verification, isole par .outil : sa feuille et celle de
      l'accueil partagent sept noms de classe (card, pack, sub, wrap...). -->
@@ -298,7 +298,14 @@
           </div>
       
           <div id="rapport" class="o-card hidden"></div>
-      
+
+          <div class="o-card">
+            <p class="hist-titre">Historique</p>
+            <div id="historique-liste"></div>
+            <p class="hint hidden" id="historique-vide">Aucune vérification pour l’instant. Tes rapports apparaîtront ici.</p>
+            <button type="button" class="ghost hidden" id="historique-plus">Voir plus</button>
+          </div>
+
           <p class="recharge">
             <a href="/recharger">Recharger mes pièces</a>
           </p>
@@ -399,7 +406,7 @@
      depuis un CDN ne peut pas etre verifie par integrity.
      Empreinte dans vendor/SHA256SUMS.txt. -->
 <script src="/vendor/supabase-2.112.3.js"></script>
-<script type="module" src="/js/accueil.js?v=572b8d9c"></script>
+<script type="module" src="/js/accueil.js?v=afb54e53"></script>
 
 <script src="/js/menu.js?v=88bca18d"></script>
 </body>
