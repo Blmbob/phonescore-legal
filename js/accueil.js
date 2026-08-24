@@ -34,17 +34,19 @@ async function rendre(session) {
     $('courriel').textContent = session.user.email ?? '';
     await rafraichirSolde();
     rafraichirStats();
-    chargerHistorique(true);
   } else {
     $('vue-app').classList.add('hidden');
     $('vue-auth').classList.remove('hidden');
-    // Efface la liste pour qu'une session suivante, sur le meme appareil, ne
-    // parte pas d'un historique deja rempli avant son propre chargement.
+    // Replie et efface la liste pour qu'une session suivante, sur le meme
+    // appareil, ne parte pas d'un historique deja rempli et deplie.
+    $('historique-toggle').setAttribute('aria-expanded', 'false');
+    $('historique-corps').classList.add('hidden');
     $('historique-liste').innerHTML = '';
     $('historique-vide').classList.add('hidden');
     $('historique-plus').classList.add('hidden');
     decalageHistorique = 0;
     historiqueTermine = false;
+    historiqueCharge = false;
   }
 }
 
@@ -148,6 +150,7 @@ async function rafraichirStats() {
 const TAILLE_PAGE_HISTORIQUE = 10;
 let decalageHistorique = 0;
 let historiqueTermine = false;
+let historiqueCharge = false;
 
 function ilYA(iso) {
   const diffSec = Math.floor((Date.now() - new Date(iso).getTime()) / 1000);
@@ -217,6 +220,18 @@ async function chargerHistorique(reinitialiser) {
 }
 
 $('historique-plus').addEventListener('click', () => chargerHistorique(false));
+
+// Repliee par defaut : la liste ne se charge qu'a la premiere ouverture,
+// pas a chaque connexion.
+$('historique-toggle').addEventListener('click', () => {
+  const ouvert = $('historique-toggle').getAttribute('aria-expanded') === 'true';
+  $('historique-toggle').setAttribute('aria-expanded', String(!ouvert));
+  $('historique-corps').classList.toggle('hidden', ouvert);
+  if (!ouvert && !historiqueCharge) {
+    historiqueCharge = true;
+    chargerHistorique(true);
+  }
+});
 
 /* ---------------- verification ---------------- */
 
