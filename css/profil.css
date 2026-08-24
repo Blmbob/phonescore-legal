@@ -2,7 +2,7 @@
 
   :root{
     --ink:#0A1028; --ink2:#16224E; --blue:#497AEA; --blue-l:#7EA5F5;
-    --green:#55AE60; --green-l:#7ED08A; --red:#E5484D;
+    --green:#55AE60; --green-l:#7ED08A; --red:#E5484D; --amber:#D4A72C;
     --text:#E8ECF6; --muted:#A8B4CC; --line:rgba(168,180,204,.22);
     --panel:rgba(24,38,88,.55);
   }
@@ -312,6 +312,72 @@
   .msg.err{color:#FFB4B4}
   .attente{text-align:center; color:var(--muted); padding:40px 0}
   .hidden{display:none !important}
+  .hint{color:var(--muted); font-size:13px; margin:8px 0 0}
+
+  /* ---------- historique ---------- */
+  .historique{padding-top:14px; border-top:1px solid var(--line)}
+  .hist-toggle{width:100%; display:flex; align-items:center; justify-content:space-between; text-align:left}
+  .hist-toggle::after{content:'▾'; font-size:11px; color:var(--muted); transition:transform .15s}
+  .hist-toggle[aria-expanded="true"]::after{transform:rotate(180deg)}
+  #historique-corps{margin-top:14px}
+  .hist-item{display:flex; align-items:flex-start; gap:10px; padding:11px 0; border-top:1px solid var(--line); cursor:pointer}
+  .hist-item:first-child{border-top:0}
+  .hist-item:hover{opacity:.8}
+  .hist-point{flex:none; width:9px; height:9px; border-radius:50%; margin-top:6px}
+  .hist-safe{background:var(--green)}
+  .hist-warning{background:var(--amber)}
+  .hist-danger{background:var(--red)}
+  .hist-corps{flex:1; min-width:0}
+  .hist-modele{display:block; font-size:14px; font-weight:600; white-space:nowrap; overflow:hidden; text-overflow:ellipsis}
+  .hist-meta{display:block; color:var(--muted); font-size:12px; margin-top:2px}
+  #historique-plus{display:block; margin:12px auto 0}
+
+  /* Detail d'un element de l'historique : meme rendu (js/rapport-commun.js)
+     que le resultat d'une nouvelle verification sur l'accueil, avec les
+     memes regles reprises de css/index.css (feuille .outil, non partagee
+     ici faute d'etape de build). Scope sous l'id du conteneur plutot que
+     sur des balises nues (dl/dt/dd) : cette feuille s'applique a toute
+     la page, pas a une section isolee comme .outil sur l'accueil. */
+  #historique-rapport{margin-top:14px}
+  #historique-rapport .verdict{border-radius:12px; padding:15px 16px; margin:0 0 14px; border:1px solid}
+  #historique-rapport .verdict.safe{color:var(--green-l); background:rgba(85,174,96,.13); border-color:rgba(85,174,96,.45)}
+  #historique-rapport .verdict.warning{color:#F0D68A; background:rgba(212,167,44,.13); border-color:rgba(212,167,44,.45)}
+  #historique-rapport .verdict.danger{color:#FFB4B4; background:rgba(229,72,77,.13); border-color:rgba(229,72,77,.45)}
+  #historique-rapport .verdict b{display:block; font-size:17px; margin-bottom:2px}
+  #historique-rapport .verdict span{color:var(--muted); font-size:13.5px}
+
+  #historique-rapport .consequence{font-size:15px; font-weight:600; text-align:center; margin:0 0 14px; line-height:1.4}
+
+  #historique-rapport .decompte{display:flex; align-items:center; gap:12px; margin-bottom:14px}
+  #historique-rapport .decompte-barre{flex:1; display:flex; gap:4px; height:6px}
+  #historique-rapport .decompte-segment{flex:1; border-radius:99px; background:var(--line)}
+  #historique-rapport .decompte-segment-ok{background:var(--green)}
+  #historique-rapport .decompte-segment-attention{background:var(--amber)}
+  #historique-rapport .decompte-segment-danger{background:var(--red)}
+  #historique-rapport .decompte-texte{color:var(--muted); font-size:13px; font-weight:700; white-space:nowrap}
+
+  #historique-rapport .grille{display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-bottom:14px}
+  #historique-rapport .pilier{background:rgba(10,16,40,.4); border:1px solid var(--line); border-radius:12px; padding:12px}
+  #historique-rapport .pilier-ok{border-color:rgba(85,174,96,.4)}
+  #historique-rapport .pilier-attention{border-color:rgba(212,167,44,.45); background:rgba(212,167,44,.10)}
+  #historique-rapport .pilier-danger{border-color:rgba(229,72,77,.5); background:rgba(229,72,77,.10)}
+  #historique-rapport .pilier-haut{display:flex; align-items:center; justify-content:space-between; gap:6px; margin-bottom:6px}
+  #historique-rapport .pilier-nom{font-size:10.5px; font-weight:700; letter-spacing:.4px; text-transform:uppercase; color:var(--muted)}
+  #historique-rapport .pilier-rond{flex:none; width:22px; height:22px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:12px; font-weight:800; background:var(--line); color:var(--muted)}
+  #historique-rapport .pilier-rond-ok{background:rgba(85,174,96,.22); color:var(--green-l)}
+  #historique-rapport .pilier-rond-attention{background:rgba(212,167,44,.22); color:var(--amber)}
+  #historique-rapport .pilier-rond-danger{background:rgba(229,72,77,.22); color:#FFB4B4}
+  #historique-rapport .pilier-etat{font-size:14.5px; font-weight:800; margin-bottom:3px}
+  #historique-rapport .pilier-quoi{font-size:12px; line-height:1.4; color:var(--muted)}
+
+  #historique-rapport .avert-sim{margin-top:12px; border-radius:12px; padding:12px 14px; font-size:13.5px; line-height:1.5;
+    color:#F0D68A; background:rgba(212,167,44,.13); border:1px solid rgba(212,167,44,.45)}
+
+  #historique-rapport dl{margin:0; display:grid; grid-template-columns:1fr auto; gap:0}
+  #historique-rapport dt, #historique-rapport dd{margin:0; padding:10px 0; border-bottom:1px solid rgba(168,180,204,.14); font-size:14.5px}
+  #historique-rapport dt{color:var(--muted)}
+  #historique-rapport dd{text-align:right; font-weight:600}
+  #historique-rapport dl > :nth-last-child(-n+2){border-bottom:0}
 
 /* Anciens attributs style="" de la page. La CSP refuse
    desormais le style en ligne ; la declaration est reprise

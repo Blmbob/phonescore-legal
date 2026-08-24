@@ -73,7 +73,7 @@
   ]
 }
 </script>
-<link rel="stylesheet" href="/css/index.css?v=a720a69b">
+<link rel="stylesheet" href="/css/index.css?v=c711b5cb">
 
 <!-- Outil de verification, isole par .outil : sa feuille et celle de
      l'accueil partagent sept noms de classe (card, pack, sub, wrap...). -->
@@ -299,17 +299,6 @@
       
           <div id="rapport" class="o-card hidden"></div>
 
-          <div class="o-card">
-            <button type="button" class="ghost hist-toggle" id="historique-toggle" aria-expanded="false" aria-controls="historique-corps">
-              Historique
-            </button>
-            <div id="historique-corps" class="hidden">
-              <div id="historique-liste"></div>
-              <p class="hint hidden" id="historique-vide">Aucune vérification pour l’instant. Tes rapports apparaîtront ici.</p>
-              <button type="button" class="ghost hidden" id="historique-plus">Voir plus</button>
-            </div>
-          </div>
-
           <p class="recharge">
             <a href="/recharger">Recharger mes pièces</a>
           </p>
@@ -410,7 +399,10 @@
      depuis un CDN ne peut pas etre verifie par integrity.
      Empreinte dans vendor/SHA256SUMS.txt. -->
 <script src="/vendor/supabase-2.112.3.js"></script>
-<script type="module" src="/js/accueil.js?v=95dcd5d4"></script>
+<!-- Script classique (pas de type="module") : ses fonctions doivent rester
+     visibles comme identifiants globaux pour accueil.js, charge apres lui. -->
+<script src="/js/rapport-commun.js?v=fce92cf6"></script>
+<script type="module" src="/js/accueil.js?v=d670f14c"></script>
 
 <script src="/js/menu.js?v=88bca18d"></script>
 </body>

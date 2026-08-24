@@ -13,7 +13,7 @@
      moteur. Le `follow` laisse suivre les liens legaux qu'elle contient. -->
 <meta name="robots" content="noindex, follow">
 <meta name="theme-color" content="#0A1028">
-<link rel="stylesheet" href="/css/profil.css?v=a9133381">
+<link rel="stylesheet" href="/css/profil.css?v=c23531a1">
 </head>
 <body>
 
@@ -96,6 +96,18 @@
         <b id="filleuls">—</b>
       </div>
 
+      <div class="historique">
+        <button type="button" class="bouton hist-toggle" id="historique-toggle" aria-expanded="false" aria-controls="historique-corps">
+          Historique
+        </button>
+        <div id="historique-corps" class="hidden">
+          <div id="historique-liste"></div>
+          <p class="hint hidden" id="historique-vide">Aucune vérification pour l’instant. Tes rapports apparaîtront ici.</p>
+          <button type="button" class="bouton hidden" id="historique-plus">Voir plus</button>
+          <div id="historique-rapport" class="hidden"></div>
+        </div>
+      </div>
+
       <p class="liens">
         <a href="/assistance">Assistance</a> ·
         <a href="/rapport">Comprendre le rapport</a> ·
@@ -127,7 +139,10 @@
      depuis un CDN ne peut pas etre verifie par integrity.
      Empreinte dans vendor/SHA256SUMS.txt. -->
 <script src="/vendor/supabase-2.112.3.js"></script>
-<script type="module" src="/js/profil.js?v=320342b8"></script>
+<!-- Script classique (pas de type="module") : ses fonctions doivent rester
+     visibles comme identifiants globaux pour profil.js, charge apres lui. -->
+<script src="/js/rapport-commun.js?v=fce92cf6"></script>
+<script type="module" src="/js/profil.js?v=68aff943"></script>
 
 <script src="/js/menu.js?v=88bca18d"></script>
 </body>
