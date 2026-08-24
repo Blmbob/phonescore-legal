@@ -20,17 +20,6 @@ supabase.auth.getSession().then(({ data }) => rendre(data.session));
 async function rendre(session) {
   if (!session) {
     montrer('deconnecte');
-    // Replie et efface l'historique pour qu'une session suivante, sur le
-    // meme appareil, ne parte pas d'une liste deja rempli et depliee.
-    $('historique-toggle').setAttribute('aria-expanded', 'false');
-    $('historique-corps').classList.add('hidden');
-    $('historique-liste').innerHTML = '';
-    $('historique-vide').classList.add('hidden');
-    $('historique-plus').classList.add('hidden');
-    $('historique-rapport').classList.add('hidden');
-    decalageHistorique = 0;
-    historiqueTermine = false;
-    historiqueCharge = false;
     return;
   }
   montrer('compte');
@@ -70,97 +59,6 @@ async function charger(uid) {
     $('filleuls').textContent = filleuls.value.count ?? 0;
   }
 }
-
-/* ---------------- historique ---------------- */
-
-const TAILLE_PAGE_HISTORIQUE = 10;
-let decalageHistorique = 0;
-let historiqueTermine = false;
-let historiqueCharge = false;
-
-function ilYA(iso) {
-  const diffSec = Math.floor((Date.now() - new Date(iso).getTime()) / 1000);
-  if (diffSec < 60) return "à l'instant";
-  const diffMin = Math.floor(diffSec / 60);
-  if (diffMin < 60) return `il y a ${diffMin} min`;
-  const diffH = Math.floor(diffMin / 60);
-  if (diffH < 24) return `il y a ${diffH} h`;
-  const diffJ = Math.floor(diffH / 24);
-  if (diffJ < 30) return `il y a ${diffJ} j`;
-  const diffMois = Math.floor(diffJ / 30);
-  return `il y a ${diffMois} mois`;
-}
-
-function masquer(valeur) {
-  if (!valeur || valeur.length <= 4) return valeur || '';
-  return '•'.repeat(valeur.length - 4) + valeur.slice(-4);
-}
-
-async function chargerHistorique(reinitialiser) {
-  const { data: { session } } = await supabase.auth.getSession();
-  if (!session) return;
-
-  if (reinitialiser) {
-    decalageHistorique = 0;
-    historiqueTermine = false;
-    $('historique-liste').innerHTML = '';
-    $('historique-rapport').classList.add('hidden');
-  }
-  if (historiqueTermine) return;
-
-  $('historique-plus').disabled = true;
-  const { data, error } = await supabase
-    .from('checks')
-    .select('id, device_type, imei_or_serial, verdict, report_data, created_at')
-    .eq('user_id', session.user.id)
-    .order('created_at', { ascending: false })
-    .range(decalageHistorique, decalageHistorique + TAILLE_PAGE_HISTORIQUE - 1);
-  $('historique-plus').disabled = false;
-
-  if (error || !data) return;
-
-  if (decalageHistorique === 0 && data.length === 0) {
-    $('historique-vide').classList.remove('hidden');
-    return;
-  }
-  $('historique-vide').classList.add('hidden');
-
-  decalageHistorique += data.length;
-  // Une page pleine signifie qu'il y en a peut-etre d'autres ; une page
-  // incomplete signifie qu'on a atteint le bout (meme logique que l'app).
-  historiqueTermine = data.length < TAILLE_PAGE_HISTORIQUE;
-  $('historique-plus').classList.toggle('hidden', historiqueTermine);
-
-  for (const item of data) {
-    const ton = ['safe', 'warning', 'danger'].includes(item.verdict) ? item.verdict : 'warning';
-    const div = document.createElement('div');
-    div.className = 'hist-item';
-    div.innerHTML =
-      `<span class="hist-point hist-${ton}"></span>`
-      + '<div class="hist-corps">'
-      + `<span class="hist-modele">${echapper(item.report_data?.model || (item.device_type === 'iphone' ? 'iPhone' : 'MacBook'))}</span>`
-      + `<span class="hist-meta">${echapper(masquer(item.imei_or_serial))} · ${ilYA(item.created_at)}</span>`
-      + '</div>';
-    // Rendu partage avec le resultat d'une nouvelle verification (index.html) :
-    // voir js/rapport-commun.js, charge avant ce script.
-    div.addEventListener('click', () => afficherRapportDans('historique-rapport', item.report_data));
-    $('historique-liste').appendChild(div);
-  }
-}
-
-$('historique-plus').addEventListener('click', () => chargerHistorique(false));
-
-// Repliee par defaut : la liste ne se charge qu'a la premiere ouverture,
-// pas a chaque connexion.
-$('historique-toggle').addEventListener('click', () => {
-  const ouvert = $('historique-toggle').getAttribute('aria-expanded') === 'true';
-  $('historique-toggle').setAttribute('aria-expanded', String(!ouvert));
-  $('historique-corps').classList.toggle('hidden', ouvert);
-  if (!ouvert && !historiqueCharge) {
-    historiqueCharge = true;
-    chargerHistorique(true);
-  }
-});
 
 $('btn-deconnexion').addEventListener('click', () => supabase.auth.signOut());
 

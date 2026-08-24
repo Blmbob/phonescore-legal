@@ -4,16 +4,16 @@
 <meta charset="utf-8">
 <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self' https://static.cloudflareinsights.com; style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src 'self' https://bvriicetjcnxrbhelokh.supabase.co https://cloudflareinsights.com; base-uri 'none'; form-action 'none'">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Mon profil — PhoneScore</title>
+<title>Historique — PhoneScore</title>
 <link rel="icon" href="/favicon.png" type="image/png">
 <link rel="apple-touch-icon" href="/favicon.png">
-<link rel="canonical" href="https://phonescore.app/profil">
-<meta name="description" content="Votre compte PhoneScore : solde de pièces, accès revendeur, code de parrainage.">
+<link rel="canonical" href="https://phonescore.app/historique">
+<meta name="description" content="Vos vérifications PhoneScore précédentes, avec le rapport complet de chacune.">
 <!-- Page personnelle : rien a indexer, et rien qui puisse etre utile a un
      moteur. Le `follow` laisse suivre les liens legaux qu'elle contient. -->
 <meta name="robots" content="noindex, follow">
 <meta name="theme-color" content="#0A1028">
-<link rel="stylesheet" href="/css/profil.css?v=a9133381">
+<link rel="stylesheet" href="/css/historique.css?v=dc6debc1">
 </head>
 <body>
 
@@ -53,8 +53,8 @@
         <span></span><span></span><span></span>
       </button>
       <nav class="menu" id="menu" hidden>
-        <a href="/profil" aria-current="page">Profil</a>
-        <a href="/historique">Historique</a>
+        <a href="/profil">Profil</a>
+        <a href="/historique" aria-current="page">Historique</a>
         <a href="/assistance">Assistance</a>
         <a href="/rapport">Comprendre le rapport</a>
         <a href="/revendeurs">Badge boutique</a>
@@ -68,7 +68,7 @@
 <div class="wrap">
   <section class="u-border-top-0">
 
-    <h2 class="u-text-align-center">Mon profil</h2>
+    <h2 class="u-text-align-center">Historique</h2>
 
     <div id="attente" class="attente">Chargement…</div>
 
@@ -78,35 +78,9 @@
     </div>
 
     <div id="compte" class="compte hidden">
-      <div class="entete">
-        <div class="solde">Solde : <b id="solde">—</b> pièce(s)</div>
-        <button type="button" class="bouton" id="btn-deconnexion">Déconnexion</button>
-      </div>
-      <p class="courriel" id="courriel"></p>
-
-      <div class="ligne">
-        <span>Accès revendeur</span>
-        <b id="revendeur">—</b>
-      </div>
-      <div class="ligne">
-        <span>Code de parrainage</span>
-        <b class="code" id="code">—</b>
-      </div>
-      <div class="ligne">
-        <span>Filleuls récompensés</span>
-        <b id="filleuls">—</b>
-      </div>
-
-      <p class="liens">
-        <a href="/assistance">Assistance</a> ·
-        <a href="/rapport">Comprendre le rapport</a> ·
-        <a href="/revendeurs">Badge boutique</a><br>
-        <a href="/cgu">Conditions d’utilisation</a> ·
-        <a href="/confidentialite">Politique de confidentialité</a>
-      </p>
-
-      <div id="msg" class="msg"></div>
-      <button type="button" class="supprimer" id="btn-supprimer">Supprimer mon compte</button>
+      <div id="historique-liste"></div>
+      <p class="hint hidden" id="historique-vide">Aucune vérification pour l’instant. Tes rapports apparaîtront ici.</p>
+      <button type="button" class="bouton hidden" id="historique-plus">Voir plus</button>
     </div>
 
   </section>
@@ -128,7 +102,10 @@
      depuis un CDN ne peut pas etre verifie par integrity.
      Empreinte dans vendor/SHA256SUMS.txt. -->
 <script src="/vendor/supabase-2.112.3.js"></script>
-<script type="module" src="/js/profil.js?v=320342b8"></script>
+<!-- Script classique (pas de type="module") : ses fonctions doivent rester
+     visibles comme identifiants globaux pour historique.js, charge apres lui. -->
+<script src="/js/rapport-commun.js?v=fce92cf6"></script>
+<script type="module" src="/js/historique.js?v=7f5db5a0"></script>
 
 <script src="/js/menu.js?v=88bca18d"></script>
 </body>
