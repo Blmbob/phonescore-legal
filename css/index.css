@@ -248,6 +248,30 @@
     color:#F0D68A; background:rgba(212,167,44,.13); border:1px solid rgba(212,167,44,.45)}
   .outil .verdict span{color:var(--muted); font-size:13.5px}
 
+  .outil .consequence{font-size:15px; font-weight:600; text-align:center; margin:0 0 14px; line-height:1.4}
+
+  .outil .decompte{display:flex; align-items:center; gap:12px; margin-bottom:14px}
+  .outil .decompte-barre{flex:1; display:flex; gap:4px; height:6px}
+  .outil .decompte-segment{flex:1; border-radius:99px; background:var(--line)}
+  .outil .decompte-segment-ok{background:var(--green)}
+  .outil .decompte-segment-attention{background:var(--amber)}
+  .outil .decompte-segment-danger{background:var(--red)}
+  .outil .decompte-texte{color:var(--muted); font-size:13px; font-weight:700; white-space:nowrap}
+
+  .outil .grille{display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-bottom:14px}
+  .outil .pilier{background:rgba(10,16,40,.4); border:1px solid var(--line); border-radius:12px; padding:12px}
+  .outil .pilier-ok{border-color:rgba(85,174,96,.4)}
+  .outil .pilier-attention{border-color:rgba(212,167,44,.45); background:rgba(212,167,44,.10)}
+  .outil .pilier-danger{border-color:rgba(229,72,77,.5); background:rgba(229,72,77,.10)}
+  .outil .pilier-haut{display:flex; align-items:center; justify-content:space-between; gap:6px; margin-bottom:6px}
+  .outil .pilier-nom{font-size:10.5px; font-weight:700; letter-spacing:.4px; text-transform:uppercase; color:var(--muted)}
+  .outil .pilier-rond{flex:none; width:22px; height:22px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:12px; font-weight:800; background:var(--line); color:var(--muted)}
+  .outil .pilier-rond-ok{background:rgba(85,174,96,.22); color:var(--green-l)}
+  .outil .pilier-rond-attention{background:rgba(212,167,44,.22); color:var(--amber)}
+  .outil .pilier-rond-danger{background:rgba(229,72,77,.22); color:#FFB4B4}
+  .outil .pilier-etat{font-size:14.5px; font-weight:800; margin-bottom:3px}
+  .outil .pilier-quoi{font-size:12px; line-height:1.4; color:var(--muted)}
+
   .outil dl{margin:0; display:grid; grid-template-columns:1fr auto; gap:0}
   .outil dt, .outil dd{margin:0; padding:10px 0; border-bottom:1px solid rgba(168,180,204,.14); font-size:14.5px}
   .outil dt{color:var(--muted)}

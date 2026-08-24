@@ -235,18 +235,151 @@ function configurationSim(r) {
   return { doubleSim, esimSeuleProbable };
 }
 
+/* Grille de quatre controles (verrou iCloud, blacklist, operateur,
+   historique) + phrase de consequence, en remplacement de la liste plate.
+   Doublon volontaire de lib/imei-advice.ts et de la logique de
+   components/imei-report.tsx cote app : ce site est du JS brut sans etape de
+   build, donc pas d'import possible depuis le depot phonescore54. Ne garder
+   que les libelles COURTS ("short") : la version longue ("full") depend de
+   l'appareil (iPhone/iPad/Mac/Watch) et n'est affichee nulle part ici. */
+const CONSEQUENCE = {
+  fmiOn: "Verrou d'activation ACTIF — n'achète pas avant déconnexion du vendeur.",
+  fmiUnknown: "Verrou non confirmé — vérifie sur l'appareil (Réglages → Localiser).",
+  fmiOffConfirm: "Confirme sur l'appareil que Localiser est désactivé.",
+  blacklist: "N'achète pas : appareil déclaré volé ou perdu.",
+  simlock: "Bloqué à l'étranger — vérifie la compatibilité SIM.",
+  clean: "Bon signal — vérifie aussi l'état physique.",
+  partial: 'Infos incomplètes — redouble de prudence.',
+};
+// Le plus grave l'emporte : un appareil volé mais desimlocke doit annoncer
+// le vol, pas la compatibilite SIM.
+const GRAVITE_CONSEQUENCE = ['fmiOn', 'blacklist', 'fmiUnknown', 'simlock', 'partial', 'fmiOffConfirm', 'clean'];
+
+function clesConsequence(r) {
+  const cles = [];
+  if (r.fmiOn === true) cles.push('fmiOn');
+  else if (r.fmiOn === null) cles.push('fmiUnknown');
+  else cles.push('fmiOffConfirm');
+  if (r.blacklisted === true) cles.push('blacklist');
+  if (r.simLockStatus === 'locked') cles.push('simlock');
+  if (r.blacklisted === null) cles.push('partial');
+  if (r.fmiOn === false && r.blacklisted === false && r.simLockStatus !== 'locked') cles.push('clean');
+  return cles;
+}
+
+function consequence(r) {
+  const cles = clesConsequence(r);
+  const cle = GRAVITE_CONSEQUENCE.find(k => cles.includes(k)) ?? cles[0];
+  return CONSEQUENCE[cle];
+}
+
+function estOui(valeur) {
+  return /^(yes|oui)$/i.test(String(valeur ?? '').trim());
+}
+
+function statutIcloud(fmiOn) {
+  if (fmiOn === true) return 'danger';
+  if (fmiOn === false) return 'ok';
+  return 'inconnu';
+}
+function statutBlacklist(blacklisted) {
+  if (blacklisted === true) return 'danger';
+  if (blacklisted === false) return 'ok';
+  return 'inconnu';
+}
+function statutOperateur(simLockStatus) {
+  if (simLockStatus === 'locked') return 'attention';
+  if (simLockStatus === 'unlocked') return 'ok';
+  return 'inconnu';
+}
+// "Attention" des qu'un seul signal est positif : un appareil reconditionne
+// n'est pas forcement un probleme, mais merite d'etre su avant d'acheter.
+function statutHistorique(r) {
+  const champs = [r.refurbished, r.replaced, r.loanerDevice, r.demoUnit];
+  if (champs.some(estOui)) return 'attention';
+  if (champs.some(v => v !== undefined && v !== null)) return 'ok';
+  return 'inconnu';
+}
+function detailsHistorique(r) {
+  const signale = [];
+  if (estOui(r.refurbished)) signale.push('reconditionné');
+  if (estOui(r.replaced)) signale.push('remplacé');
+  if (estOui(r.loanerDevice)) signale.push('appareil de prêt');
+  if (estOui(r.demoUnit)) signale.push('appareil de démo');
+  return signale.length ? `Signalé comme : ${signale.join(', ')}.` : '';
+}
+
+function piliers(r) {
+  const histoire = statutHistorique(r);
+  return [
+    {
+      nom: 'Verrou iCloud', statut: statutIcloud(r.fmiOn),
+      etat: r.fmiOn === true ? 'Activé' : r.fmiOn === false ? 'Désactivé' : 'Non disponible',
+      quoi: r.fmiOn === true
+        ? "Le compte du vendeur verrouille l'appareil."
+        : r.fmiOn === false
+          ? "S'active sans le compte du vendeur."
+          : 'Vérifie directement sur l\'appareil.',
+    },
+    {
+      nom: 'Vol / blacklist', statut: statutBlacklist(r.blacklisted),
+      etat: r.blacklisted === true ? 'Signalé' : r.blacklisted === false ? 'Non signalé' : 'Non disponible',
+      quoi: r.blacklisted === true
+        ? 'Peut être coupé du réseau à tout moment.'
+        : r.blacklisted === false
+          ? 'Aucune déclaration de perte ou de vol.'
+          : "Le fournisseur n'a rien renvoyé sur ce point.",
+    },
+    {
+      nom: 'Opérateur', statut: statutOperateur(r.simLockStatus),
+      etat: r.simLockStatus === 'locked' ? `Bloqué${r.carrier ? ` sur ${r.carrier}` : ''}`
+        : r.simLockStatus === 'unlocked' ? 'Désimlocké' : 'Non disponible',
+      quoi: r.simLockStatus === 'locked'
+        ? "Vérifie qu'il accepte une carte SIM locale."
+        : r.simLockStatus === 'unlocked'
+          ? 'Fonctionne avec toutes les cartes SIM.'
+          : "Le fournisseur n'a rien renvoyé sur ce point.",
+    },
+    {
+      nom: 'Historique', statut: histoire,
+      etat: histoire === 'attention' ? 'À vérifier' : histoire === 'ok' ? 'Rien à signaler' : 'Non disponible',
+      quoi: histoire === 'attention' ? detailsHistorique(r)
+        : histoire === 'ok' ? 'Ni reconditionné, ni remplacé, ni prêt ou démo.'
+          : "Le fournisseur n'a rien renvoyé sur ce point.",
+    },
+  ];
+}
+
+function decompteTexte(liste) {
+  const nOk = liste.filter(p => p.statut === 'ok').length;
+  const nDanger = liste.filter(p => p.statut === 'danger').length;
+  return nDanger > 0
+    ? `${nDanger} contrôle${nDanger > 1 ? 's' : ''} bloquant${nDanger > 1 ? 's' : ''}`
+    : `${nOk} contrôle${nOk > 1 ? 's' : ''} sur 4 au vert`;
+}
+
+const SYMBOLE_STATUT = { ok: '✓', attention: '!', danger: '✕', inconnu: '–' };
+
+function pilierHtml(p) {
+  return `<div class="pilier pilier-${p.statut}">`
+    + '<div class="pilier-haut">'
+    + `<span class="pilier-nom">${echapper(p.nom)}</span>`
+    + `<span class="pilier-rond pilier-rond-${p.statut}">${SYMBOLE_STATUT[p.statut]}</span>`
+    + '</div>'
+    + `<div class="pilier-etat">${echapper(p.etat)}</div>`
+    + (p.quoi ? `<div class="pilier-quoi">${echapper(p.quoi)}</div>` : '')
+    + '</div>';
+}
+
 function afficherRapport(r) {
   const v = LIBELLE[r.verdict] ?? LIBELLE.warning;
   const sim = configurationSim(r);
+  const liste = piliers(r);
+
   const lignes = [
     ligne('Modèle', r.model),
     ligne('Capacité', r.capacity),
     ligne('Numéro de série', r.serialNumber),
-    r.fmiOn === null ? '' : ligne('Verrou iCloud', r.fmiOn ? 'Activé' : 'Désactivé', r.fmiOn ? 'ko-v' : 'ok-v'),
-    r.blacklisted === null ? '' : ligne('Liste noire', r.blacklisted ? 'Signalé' : 'Non signalé', r.blacklisted ? 'ko-v' : 'ok-v'),
-    r.simLockStatus ? ligne('Verrou opérateur', r.simLockStatus === 'locked' ? 'Verrouillé' : 'Désimlocké',
-                            r.simLockStatus === 'locked' ? 'ko-v' : 'ok-v') : '',
-    ligne('Opérateur', r.carrier),
     ligne('Pays d\'achat', r.purchaseCountry),
     sim ? ligne('Cartes SIM', sim.doubleSim ? 'Double SIM (deux lignes)' : 'SIM unique') : '',
     ligne('Garantie', r.warranty),
@@ -262,8 +395,15 @@ function afficherRapport(r) {
      que l'une des trois valeurs connues, jamais la chaine recue telle quelle. */
   const ton = ['safe', 'warning', 'danger'].includes(r.verdict) ? r.verdict : 'warning';
 
+  const barre = liste.map(p => `<span class="decompte-segment decompte-segment-${p.statut}"></span>`).join('');
+
   $('rapport').innerHTML =
-    `<div class="verdict ${ton}"><b>${v.titre}</b><span>${v.detail}</span></div><dl>${lignes}</dl>${alerteSim}`;
+    `<div class="verdict ${ton}"><b>${v.titre}</b><span>${v.detail}</span></div>`
+    + `<p class="consequence">${echapper(consequence(r))}</p>`
+    + `<div class="decompte"><div class="decompte-barre">${barre}</div>`
+    + `<span class="decompte-texte">${decompteTexte(liste)}</span></div>`
+    + `<div class="grille">${liste.map(pilierHtml).join('')}</div>`
+    + `<dl>${lignes}</dl>${alerteSim}`;
   $('rapport').classList.remove('hidden');
   $('rapport').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
 }
