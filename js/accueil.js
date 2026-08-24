@@ -63,6 +63,25 @@ $('btn-connexion').addEventListener('click', async () => {
   if (error) afficher($('msg-auth'), 'Connexion refusée. Vérifiez vos identifiants.', 'err');
 });
 
+// `occupe()` remplace tout le contenu du bouton par le libelle donne : garder
+// l'icone sous la main pour la restaurer si la tentative echoue, plutot que
+// de laisser le bouton perdre son logo Apple apres une erreur.
+const CONTENU_BTN_APPLE = $('btn-apple').innerHTML;
+
+$('btn-apple').addEventListener('click', async () => {
+  effacer($('msg-auth'));
+  occupe($('btn-apple'), true);
+  const { error } = await supabase.auth.signInWithOAuth({
+    provider: 'apple',
+    options: { redirectTo: 'https://phonescore.app/' },
+  });
+  // Pas de reactivation du bouton en cas de succes : la page part vers Apple.
+  if (error) {
+    occupe($('btn-apple'), false, CONTENU_BTN_APPLE);
+    afficher($('msg-auth'), "La connexion avec Apple n'a pas pu démarrer. Réessayez dans un instant.", 'err');
+  }
+});
+
 $('btn-inscription').addEventListener('click', async () => {
   const email = $('email').value.trim().toLowerCase();
   const password = $('mdp').value;

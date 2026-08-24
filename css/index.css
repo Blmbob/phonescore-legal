@@ -213,6 +213,20 @@
   .outil button:disabled{opacity:.55; cursor:default}
   .outil button.ghost{background:transparent; border-color:var(--line); color:var(--muted); font-weight:500}
 
+  /* Noir, comme l'exige la charte Apple pour "Continue with Apple" sur fond
+     clair ou sombre — les seules couleurs de bouton autorisees sont noir,
+     blanc, ou gris, jamais la couleur de marque du site. */
+  .outil button.apple{
+    background:#000; border-color:#000; margin-top:0;
+    display:flex; align-items:center; justify-content:center; gap:9px;
+  }
+  .outil button.apple:hover:not(:disabled){background:#1a1a1a}
+  .outil button.apple svg{width:18px; height:18px; flex:0 0 auto}
+
+  .outil .separateur{display:flex; align-items:center; gap:12px; margin:16px 0}
+  .outil .separateur::before, .outil .separateur::after{content:''; flex:1; height:1px; background:var(--line)}
+  .outil .separateur span{color:var(--muted); font-size:13px}
+
   .outil .row{display:flex; align-items:center; justify-content:space-between; gap:12px}
   .outil .solde{font-size:15px}
   .outil .solde b{color:var(--green-l); font-size:19px}
