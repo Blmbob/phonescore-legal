@@ -86,6 +86,7 @@ $('btn-inscription').addEventListener('click', async () => {
   const email = $('email').value.trim().toLowerCase();
   const password = $('mdp').value;
   if (password.length < 8) return afficher($('msg-auth'), 'Le mot de passe doit contenir au moins 8 caractères.', 'err');
+  if (password !== $('mdp-confirmation').value) return afficher($('msg-auth'), 'Les mots de passe ne correspondent pas.', 'err');
 
   occupe($('btn-inscription'), true);
   const { data, error } = await supabase.auth.signUp({ email, password });
