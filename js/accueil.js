@@ -52,6 +52,30 @@ async function rafraichirSolde() {
 
 /* ---------------- authentification ---------------- */
 
+// Connexion par defaut : c'est le cas le plus frequent (un compte deja cree),
+// l'inscription reste a un clic derriere "Créer un nouveau compte" plutot
+// que d'etre l'ecran d'accueil. Meme bascule que components/auth-screen.tsx
+// cote app.
+let modeInscription = false;
+
+function basculerModeAuth(inscription) {
+  modeInscription = inscription;
+  $('champ-confirmation').classList.toggle('hidden', !modeInscription);
+  $('btn-connexion').classList.toggle('hidden', modeInscription);
+  $('btn-inscription').classList.toggle('hidden', !modeInscription);
+  $('btn-basculer').textContent = modeInscription ? 'J’ai déjà un compte' : 'Créer un nouveau compte';
+  $('hint-connexion').classList.toggle('hidden', modeInscription);
+  $('hint-inscription').classList.toggle('hidden', !modeInscription);
+  $('sous-titre-auth').textContent = modeInscription
+    ? 'Créez un compte en quelques secondes — puis vérifiez un appareil.'
+    : 'Connectez-vous pour vérifier un appareil.';
+  $('mdp').setAttribute('autocomplete', modeInscription ? 'new-password' : 'current-password');
+  $('mdp-confirmation').value = '';
+  effacer($('msg-auth'));
+}
+
+$('btn-basculer').addEventListener('click', () => basculerModeAuth(!modeInscription));
+
 $('btn-connexion').addEventListener('click', async () => {
   const email = $('email').value.trim().toLowerCase();
   const password = $('mdp').value;
@@ -93,8 +117,13 @@ $('btn-inscription').addEventListener('click', async () => {
   occupe($('btn-inscription'), false, 'Créer un compte');
 
   if (error) return afficher($('msg-auth'), "Inscription impossible. Cette adresse est peut-être déjà utilisée.", 'err');
-  // Selon le reglage de confirmation d'e-mail, la session peut etre nulle.
-  if (!data.session) afficher($('msg-auth'), 'Compte créé. Vérifiez votre boîte mail pour confirmer votre adresse.', 'ok');
+  // Selon le reglage de confirmation d'e-mail, la session peut etre nulle :
+  // le compte existe mais rien n'est encore signe. On repasse sur l'ecran de
+  // connexion, ou l'utilisateur atterrira de toute facon apres avoir confirme.
+  if (!data.session) {
+    basculerModeAuth(false);
+    afficher($('msg-auth'), 'Compte créé. Vérifiez votre boîte mail pour confirmer votre adresse.', 'ok');
+  }
 });
 
 /* Trois comptages serveur : aucune ligne transferee, seulement des totaux.
