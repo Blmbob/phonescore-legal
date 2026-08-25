@@ -29,6 +29,24 @@ async function rendre(session) {
 const TAILLE_PAGE = 15;
 let decalage = 0;
 let termine = false;
+let rechercheAppliquee = '';
+
+// Caracteres reserves de la grammaire de filtre PostgREST (le "," separe les
+// conditions d'un .or(), les parentheses groupent) : retires plutot
+// qu'echappes, une recherche IMEI/modele n'en a de toute facon pas besoin.
+function pourFiltrePostgrest(terme) {
+  return terme.replace(/[,()]/g, '');
+}
+
+// Debounce : evite une requete a chaque frappe.
+let minuteurRecherche;
+$('historique-recherche').addEventListener('input', () => {
+  clearTimeout(minuteurRecherche);
+  minuteurRecherche = setTimeout(() => {
+    rechercheAppliquee = $('historique-recherche').value.trim();
+    chargerHistorique(true);
+  }, 350);
+});
 
 function ilYA(iso) {
   const diffSec = Math.floor((Date.now() - new Date(iso).getTime()) / 1000);
@@ -101,17 +119,31 @@ async function chargerHistorique(reinitialiser) {
   if (termine) return;
 
   $('historique-plus').disabled = true;
-  const { data, error } = await supabase
+  let requete = supabase
     .from('checks')
     .select('id, device_type, imei_or_serial, verdict, report_data, created_at')
     .eq('user_id', session.user.id)
     .order('created_at', { ascending: false })
     .range(decalage, decalage + TAILLE_PAGE - 1);
+
+  // Recherche cote serveur, pas seulement sur les pages deja chargees : un
+  // revendeur actif peut avoir des centaines de verifications, la plupart
+  // jamais atteintes par "Voir plus". Le modele vit dans le rapport JSON
+  // (report_data), l'IMEI/numero de serie dans sa propre colonne.
+  if (rechercheAppliquee) {
+    const terme = pourFiltrePostgrest(rechercheAppliquee);
+    requete = requete.or(`imei_or_serial.ilike.%${terme}%,report_data->>model.ilike.%${terme}%`);
+  }
+
+  const { data, error } = await requete;
   $('historique-plus').disabled = false;
 
   if (error || !data) return;
 
   if (decalage === 0 && data.length === 0) {
+    $('historique-vide').textContent = rechercheAppliquee
+      ? 'Aucun résultat pour cette recherche.'
+      : 'Aucune vérification pour l’instant. Tes rapports apparaîtront ici.';
     $('historique-vide').classList.remove('hidden');
     return;
   }

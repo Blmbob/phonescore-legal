@@ -13,7 +13,7 @@
      moteur. Le `follow` laisse suivre les liens legaux qu'elle contient. -->
 <meta name="robots" content="noindex, follow">
 <meta name="theme-color" content="#0A1028">
-<link rel="stylesheet" href="/css/historique.css?v=dc6debc1">
+<link rel="stylesheet" href="/css/historique.css?v=350e01a2">
 </head>
 <body>
 
@@ -78,6 +78,8 @@
     </div>
 
     <div id="compte" class="compte hidden">
+      <input type="search" id="historique-recherche" class="recherche"
+             placeholder="Rechercher par modèle, IMEI ou n° de série" autocomplete="off">
       <div id="historique-liste"></div>
       <p class="hint hidden" id="historique-vide">Aucune vérification pour l’instant. Tes rapports apparaîtront ici.</p>
       <button type="button" class="bouton hidden" id="historique-plus">Voir plus</button>
@@ -105,7 +107,7 @@
 <!-- Script classique (pas de type="module") : ses fonctions doivent rester
      visibles comme identifiants globaux pour historique.js, charge apres lui. -->
 <script src="/js/rapport-commun.js?v=fce92cf6"></script>
-<script type="module" src="/js/historique.js?v=7f5db5a0"></script>
+<script type="module" src="/js/historique.js?v=10619cf8"></script>
 
 <script src="/js/menu.js?v=88bca18d"></script>
 </body>
