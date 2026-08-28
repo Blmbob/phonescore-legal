@@ -184,6 +184,40 @@ async function messageErreur(error, defaut) {
   return defaut;
 }
 
+// Etapes qui s'enchainent pendant l'attente (jusqu'a une minute) plutot
+// qu'une simple animation decorative. Rythme simule cote client -- aucun
+// signal de progression reel ne vient du backend (une seule requete, pas de
+// flux) -- mais reste sur la derniere etape (toujours active) si la reponse
+// tarde, sans jamais boucler : ce n'est pas une demo, une seule verification
+// tourne a la fois.
+const ETAPES_INTERVALLE_MS = 4000;
+let minuteurEtapes = null;
+
+function demarrerEtapesVerif() {
+  const etapes = [...document.querySelectorAll('#etapes-verif .etape')];
+  let i = 0;
+  const jouer = () => {
+    etapes.forEach((e, idx) => {
+      e.classList.remove('actif', 'fait');
+      if (idx < i) e.classList.add('fait');
+      if (idx === i) e.classList.add('actif');
+    });
+    if (i >= etapes.length - 1) {
+      clearInterval(minuteurEtapes);
+      minuteurEtapes = null;
+      return;
+    }
+    i += 1;
+  };
+  jouer();
+  minuteurEtapes = setInterval(jouer, ETAPES_INTERVALLE_MS);
+}
+
+function arreterEtapesVerif() {
+  clearInterval(minuteurEtapes);
+  minuteurEtapes = null;
+}
+
 $('btn-verifier').addEventListener('click', async () => {
   const imei = $('imei').value.trim();
   effacer($('msg-verif'));
@@ -192,8 +226,12 @@ $('btn-verifier').addEventListener('click', async () => {
   if (imei.length < 8) return afficher($('msg-verif'), 'Saisissez un IMEI ou un numéro de série valide.', 'err');
 
   occupe($('btn-verifier'), true);
+  $('chargement-verif').classList.remove('hidden');
+  demarrerEtapesVerif();
   const { data, error } = await supabase.functions.invoke('check-imei', { body: { imei, type } });
+  arreterEtapesVerif();
   occupe($('btn-verifier'), false, 'Vérifier maintenant');
+  $('chargement-verif').classList.add('hidden');
 
   if (error) {
     return afficher($('msg-verif'), await messageErreur(error, "La vérification n'a pas pu aboutir. Réessayez dans un instant."), 'err');

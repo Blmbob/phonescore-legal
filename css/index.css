@@ -178,7 +178,7 @@
   :root{
     --ink:#0A1028; --ink2:#16224E; --blue:#497AEA; --blue-l:#7EA5F5;
     --green:#55AE60; --green-l:#7ED08A; --red:#E5484D; --amber:#D4A72C;
-    --text:#E8ECF6; --muted:#A8B4CC; --line:rgba(168,180,204,.22);
+    --text:#E8ECF6; --muted:#A8B4CC; --faint:#5C6889; --line:rgba(168,180,204,.22);
     --panel:rgba(24,38,88,.55);
   }
   *{box-sizing:border-box}
@@ -284,6 +284,44 @@
   .outil .spin{display:inline-block; width:15px; height:15px; border:2px solid rgba(255,255,255,.3);
         border-top-color:#fff; border-radius:50%; animation:sp .7s linear infinite; vertical-align:-2px}
   @keyframes sp{to{transform:rotate(360deg)}}
+
+  /* Etapes qui s'enchainent pendant l'attente, plutot qu'une animation
+     purement decorative : reprend une idee retenue d'un prototype abandonne
+     (voir memoire projet), jamais implementee jusqu'ici. Le rythme est
+     simule cote client (aucun signal de progression reel du backend) --
+     mais les quatre libelles decrivent ce qui se passe reellement. */
+  .outil .chargement-verif{margin-top:16px; padding:4px 6px}
+
+  .outil .etapes{display:flex; flex-direction:column; gap:4px}
+  .outil .etape{
+    display:flex; align-items:center; gap:12px; padding:9px 0;
+    color:var(--faint); font-size:14px; transition:color .3s ease;
+  }
+  .outil .etape.actif{color:var(--text); font-weight:600}
+  .outil .etape.fait{color:var(--muted)}
+
+  .outil .etape .point{
+    flex:none; width:20px; height:20px; border-radius:50%;
+    border:2px solid var(--line); position:relative;
+  }
+  .outil .etape.actif .point{
+    border-color:transparent;
+    border-top:2px solid var(--blue-l);
+    border-right:2px solid var(--blue-l);
+    animation:tourne .8s linear infinite;
+  }
+  .outil .etape.fait .point{
+    border-color:rgba(85,174,96,.5); background:rgba(85,174,96,.18);
+  }
+  .outil .etape.fait .point::after{
+    content:""; position:absolute; left:5px; top:4px; width:7px; height:11px;
+    border-right:2px solid var(--green-l); border-bottom:2px solid var(--green-l);
+    transform:rotate(45deg);
+  }
+  @keyframes tourne{to{transform:rotate(360deg)}}
+  @media (prefers-reduced-motion: reduce){
+    .outil .etape.actif .point{animation:none}
+  }
   .outil footer{margin-top:34px; color:var(--muted); font-size:13px; text-align:center}
 
   /* La regle body de l outil, devenue .outil, lui donnait un fond et une
