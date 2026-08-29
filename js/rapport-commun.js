@@ -74,12 +74,16 @@ const CONSEQUENCE = {
   fmiOffConfirm: "Confirme sur l'appareil que Localiser est désactivé.",
   blacklist: "N'achète pas : appareil déclaré volé ou perdu.",
   simlock: "Bloqué à l'étranger — vérifie la compatibilité SIM.",
+  esim: 'Modèle américain, eSIM uniquement — vérifie que ton opérateur la propose.',
   clean: "Bon signal — vérifie aussi l'état physique.",
   partial: 'Infos incomplètes — redouble de prudence.',
 };
 // Le plus grave l'emporte : un appareil vole mais desimlocke doit annoncer
-// le vol, pas la compatibilite SIM.
-const GRAVITE_CONSEQUENCE = ['fmiOn', 'blacklist', 'fmiUnknown', 'simlock', 'partial', 'fmiOffConfirm', 'clean'];
+// le vol, pas la compatibilite SIM. eSIM est une question de compatibilite,
+// pas de securite : elle passe apres simlock mais reste devant "infos
+// incompletes" et "bon signal" -- sur un appareil par ailleurs sain, c'est
+// l'info la plus utile a mettre en avant.
+const GRAVITE_CONSEQUENCE = ['fmiOn', 'blacklist', 'fmiUnknown', 'simlock', 'esim', 'partial', 'fmiOffConfirm', 'clean'];
 
 function clesConsequence(r) {
   const cles = [];
@@ -88,6 +92,7 @@ function clesConsequence(r) {
   else cles.push('fmiOffConfirm');
   if (r.blacklisted === true) cles.push('blacklist');
   if (r.simLockStatus === 'locked') cles.push('simlock');
+  if (configurationSim(r)?.esimSeuleProbable) cles.push('esim');
   if (r.blacklisted === null) cles.push('partial');
   if (r.fmiOn === false && r.blacklisted === false && r.simLockStatus !== 'locked') cles.push('clean');
   return cles;
