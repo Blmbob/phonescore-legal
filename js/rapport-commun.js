@@ -74,10 +74,13 @@ const CONSEQUENCE = {
   fmiOffConfirm: "Confirme sur l'appareil que Localiser est désactivé.",
   blacklist: "N'achète pas : appareil déclaré volé ou perdu.",
   simlock: "Bloqué à l'étranger — vérifie la compatibilité SIM.",
-  esim: 'Modèle américain, eSIM uniquement — vérifie que ton opérateur la propose.',
+  esim: "Modèle américain, eSIM uniquement — méfie-toi d'un lecteur SIM bricolé, vérifie l'eSIM avant d'acheter.",
   clean: "Bon signal — vérifie aussi l'état physique.",
   partial: 'Infos incomplètes — redouble de prudence.',
 };
+// Meme table de tons que ADVICE_TEXT cote app (lib/imei-advice.ts) : colore
+// la phrase de consequence comme les autres conseils graves.
+const TON_CONSEQUENCE = { fmiOn: 'danger', blacklist: 'danger', esim: 'danger', fmiUnknown: 'warning', partial: 'warning' };
 // Le plus grave l'emporte : un appareil vole mais desimlocke doit annoncer
 // le vol, pas la compatibilite SIM. eSIM est une question de compatibilite,
 // pas de securite : elle passe apres simlock mais reste devant "infos
@@ -101,7 +104,7 @@ function clesConsequence(r) {
 function consequence(r) {
   const cles = clesConsequence(r);
   const cle = GRAVITE_CONSEQUENCE.find(k => cles.includes(k)) ?? cles[0];
-  return CONSEQUENCE[cle];
+  return { texte: CONSEQUENCE[cle], ton: TON_CONSEQUENCE[cle] };
 }
 
 function estOui(valeur) {
@@ -230,8 +233,14 @@ function construireRapportHtml(r) {
 
   const barre = liste.map(p => `<span class="decompte-segment decompte-segment-${p.statut}"></span>`).join('');
 
+  // Un avertissement grave (vol, verrou actif, eSIM + risque de lecteur SIM
+  // bricole) doit se voir en rouge des la phrase d'accroche, pas seulement
+  // plus bas dans la grille.
+  const cons = consequence(r);
+  const classeConsequence = cons.ton ? ` ${cons.ton}` : '';
+
   return `<div class="verdict ${ton}"><b>${v.titre}</b><span>${v.detail}</span></div>`
-    + `<p class="consequence">${echapper(consequence(r))}</p>`
+    + `<p class="consequence${classeConsequence}">${echapper(cons.texte)}</p>`
     + `<div class="decompte"><div class="decompte-barre">${barre}</div>`
     + `<span class="decompte-texte">${decompteTexte(liste)}</span></div>`
     + `<div class="grille">${liste.map(pilierHtml).join('')}</div>`

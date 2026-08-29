@@ -128,6 +128,8 @@
   .hist-detail .verdict span{color:var(--muted); font-size:13.5px}
 
   .hist-detail .consequence{font-size:15px; font-weight:600; text-align:center; margin:0 0 14px; line-height:1.4}
+  .hist-detail .consequence.danger{color:var(--red)}
+  .hist-detail .consequence.warning{color:var(--amber)}
 
   .hist-detail .decompte{display:flex; align-items:center; gap:12px; margin-bottom:14px}
   .hist-detail .decompte-barre{flex:1; display:flex; gap:4px; height:6px}
