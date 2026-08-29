@@ -327,7 +327,14 @@
   /* La regle body de l outil, devenue .outil, lui donnait un fond et une
      hauteur d ecran entiere : dans le bandeau, cela dessinait un rectangle. */
   .outil{
-    background:none; min-height:0;
+    background:none;
+    /* Reserve la place avant que la session Supabase (async) ne revele
+       #vue-auth ou #vue-app : sans ca, .hero grandit d'un coup une fois
+       la session resolue, et .aurora (inset en % de .hero) se redimensionne
+       avec -- gros CLS sur un element pourtant purement decoratif. Les deux
+       etats mesurent ~510px quel que soit le viewport : une seule valeur
+       couvre les deux sans espace vide notable. */
+    min-height:512px;
     text-align:left; max-width:520px; margin:34px auto 0;
   }
   /* Seule l accroche d inscription est centree. Le sous-titre de Recharger,
