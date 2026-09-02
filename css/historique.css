@@ -61,15 +61,32 @@
   .menu a[aria-current="page"]{color:var(--text); font-weight:700}
 
   .menu-langues{
-    display:flex; gap:6px; margin-top:6px; padding-top:8px;
+    margin-top:6px; padding-top:8px;
     border-top:1px solid var(--line);
   }
-  .menu-langues button{
-    flex:1; background:transparent; border:1px solid var(--line); border-radius:8px;
+  .menu-langues summary{
+    display:flex; align-items:center; justify-content:space-between;
+    list-style:none; cursor:pointer;
+    color:var(--muted); font-size:14.5px;
+    padding:10px 12px; border-radius:9px; line-height:1.4;
+  }
+  .menu-langues summary::-webkit-details-marker{display:none}
+  .menu-langues summary::after{
+    content:"›"; color:var(--muted); font-size:16px;
+    transform:rotate(90deg); transition:transform .15s;
+  }
+  .menu-langues[open] summary::after{transform:rotate(-90deg)}
+  .menu-langues summary:hover{background:rgba(255,255,255,.07); color:var(--text)}
+  .menu-langues[open] summary{color:var(--text)}
+  .menu-langues-options{display:flex; gap:6px; padding:6px 6px 2px}
+  .menu-langues-options button{
+    flex:1; display:flex; align-items:center; justify-content:center; gap:6px;
+    background:transparent; border:1px solid var(--line); border-radius:8px;
     color:var(--muted); font-size:13px; padding:7px 0; cursor:pointer;
   }
-  .menu-langues button:hover{color:var(--text)}
-  .menu-langues button.actif{color:var(--text); border-color:var(--text); font-weight:700}
+  .menu-langues-options button:hover{color:var(--text)}
+  .menu-langues-options button.actif{color:var(--text); border-color:var(--text); font-weight:700}
+  .menu-langues .drapeau{font-size:14px; line-height:1}
 
   /* ---------- section ---------- */
   section{padding:56px 0; border-top:1px solid var(--line)}

@@ -14,6 +14,7 @@ const TRADUCTIONS = {
       profil: 'Profil', historique: 'Historique', assistance: 'Assistance',
       rapport: 'Comprendre le rapport', revendeurs: 'Badge boutique',
       cgu: "Conditions générales d'utilisation", confidentialite: 'Politique de confidentialité',
+      langue: 'Langue',
     },
     commun: { chargement: 'Chargement…', seConnecter: 'Se connecter' },
     revendeursPage: {
@@ -423,6 +424,7 @@ const TRADUCTIONS = {
       profil: 'Profile', historique: 'History', assistance: 'Support',
       rapport: 'Understanding the report', revendeurs: 'Shop badge',
       cgu: 'Terms of Service', confidentialite: 'Privacy Policy',
+      langue: 'Language',
     },
     commun: { chargement: 'Loading…', seConnecter: 'Sign in' },
     revendeursPage: {
@@ -877,7 +879,11 @@ function appliquerTraductions() {
 // a executer du JS sur cette page.
 document.addEventListener('DOMContentLoaded', () => {
   document.querySelectorAll('[data-langue]').forEach(btn => {
-    btn.addEventListener('click', () => definirLangue(btn.getAttribute('data-langue')));
+    btn.addEventListener('click', () => {
+      definirLangue(btn.getAttribute('data-langue'));
+      // Referme le tiroir "Langue" une fois le choix fait, comme un vrai menu.
+      btn.closest('details.menu-langues')?.removeAttribute('open');
+    });
   });
 });
 

@@ -128,7 +128,7 @@
   ]
 }
 </script>
-<link rel="stylesheet" href="/css/assistance.css?v=1c4ae3af">
+<link rel="stylesheet" href="/css/assistance.css?v=bcc0d5c1">
 </head>
 <body>
 
@@ -175,10 +175,13 @@
         <a href="/revendeurs" data-i18n="nav.revendeurs">Badge boutique</a>
         <a href="/cgu" data-i18n="nav.cgu">Conditions générales d'utilisation</a>
         <a href="/confidentialite" data-i18n="nav.confidentialite">Politique de confidentialité</a>
-        <div class="menu-langues">
-          <button type="button" data-langue="fr" data-i18n-lang-actif="fr">Français</button>
-          <button type="button" data-langue="en" data-i18n-lang-actif="en">English</button>
-        </div>
+        <details class="menu-langues">
+          <summary data-i18n="nav.langue">Langue</summary>
+          <div class="menu-langues-options">
+            <button type="button" data-langue="fr" data-i18n-lang-actif="fr"><span class="drapeau" aria-hidden="true">🇫🇷</span> Français</button>
+            <button type="button" data-langue="en" data-i18n-lang-actif="en"><span class="drapeau" aria-hidden="true">🇬🇧</span> English</button>
+          </div>
+        </details>
       </nav>
     </div>
   </div>
@@ -294,7 +297,7 @@
   </div>
 </footer>
 
-<script src="/js/i18n.js?v=164b4709"></script>
+<script src="/js/i18n.js?v=77c6358e"></script>
 <script src="/js/menu.js?v=88bca18d"></script>
 </body>
 </html>

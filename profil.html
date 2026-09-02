@@ -13,7 +13,7 @@
      moteur. Le `follow` laisse suivre les liens legaux qu'elle contient. -->
 <meta name="robots" content="noindex, follow">
 <meta name="theme-color" content="#0A1028">
-<link rel="stylesheet" href="/css/profil.css?v=d0ca08d6">
+<link rel="stylesheet" href="/css/profil.css?v=cf5644cc">
 </head>
 <body>
 
@@ -60,10 +60,13 @@
         <a href="/revendeurs" data-i18n="nav.revendeurs">Badge boutique</a>
         <a href="/cgu" data-i18n="nav.cgu">Conditions générales d'utilisation</a>
         <a href="/confidentialite" data-i18n="nav.confidentialite">Politique de confidentialité</a>
-        <div class="menu-langues">
-          <button type="button" data-langue="fr" data-i18n-lang-actif="fr">Français</button>
-          <button type="button" data-langue="en" data-i18n-lang-actif="en">English</button>
-        </div>
+        <details class="menu-langues">
+          <summary data-i18n="nav.langue">Langue</summary>
+          <div class="menu-langues-options">
+            <button type="button" data-langue="fr" data-i18n-lang-actif="fr"><span class="drapeau" aria-hidden="true">🇫🇷</span> Français</button>
+            <button type="button" data-langue="en" data-i18n-lang-actif="en"><span class="drapeau" aria-hidden="true">🇬🇧</span> English</button>
+          </div>
+        </details>
       </nav>
     </div>
   </div>
@@ -132,7 +135,7 @@
      depuis un CDN ne peut pas etre verifie par integrity.
      Empreinte dans vendor/SHA256SUMS.txt. -->
 <script src="/vendor/supabase-2.112.3.js"></script>
-<script src="/js/i18n.js?v=164b4709"></script>
+<script src="/js/i18n.js?v=77c6358e"></script>
 <script type="module" src="/js/profil.js?v=604ed36f"></script>
 
 <script src="/js/menu.js?v=88bca18d"></script>
