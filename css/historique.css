@@ -60,6 +60,17 @@
   .menu a:hover{background:rgba(255,255,255,.07); color:var(--text)}
   .menu a[aria-current="page"]{color:var(--text); font-weight:700}
 
+  .menu-langues{
+    display:flex; gap:6px; margin-top:6px; padding-top:8px;
+    border-top:1px solid var(--line);
+  }
+  .menu-langues button{
+    flex:1; background:transparent; border:1px solid var(--line); border-radius:8px;
+    color:var(--muted); font-size:13px; padding:7px 0; cursor:pointer;
+  }
+  .menu-langues button:hover{color:var(--text)}
+  .menu-langues button.actif{color:var(--text); border-color:var(--text); font-weight:700}
+
   /* ---------- section ---------- */
   section{padding:56px 0; border-top:1px solid var(--line)}
   h2{font-size:clamp(21px,3.2vw,27px); margin:0 0 8px; letter-spacing:-.4px}

@@ -4,5 +4,5 @@ var status = new URLSearchParams(window.location.search).get('status') === 'succ
   var card = document.getElementById('card');
   card.className = status;
   card.innerHTML = status === 'success'
-    ? '<div class="icon">✅</div><h1>Paiement reçu</h1><p>Tu peux fermer cette fenêtre et retourner dans l\'application PhoneScore.</p>'
-    : '<div class="icon">❌</div><h1>Paiement annulé</h1><p>Le paiement a été annulé ou a échoué. Tu peux fermer cette fenêtre et réessayer dans l\'application.</p>';
+    ? `<div class="icon">✅</div><h1>${PSI18N.t('paiementResultat.succesTitre')}</h1><p>${PSI18N.t('paiementResultat.succesTexte')}</p>`
+    : `<div class="icon">❌</div><h1>${PSI18N.t('paiementResultat.erreurTitre')}</h1><p>${PSI18N.t('paiementResultat.erreurTexte')}</p>`;

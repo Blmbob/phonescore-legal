@@ -10,11 +10,13 @@
    ("short") : la version longue ("full") depend de l'appareil et n'est
    affichee nulle part ici. */
 
-const LIBELLE = {
-  safe:    { titre: 'Appareil sûr', detail: 'Aucun blocage détecté.' },
-  warning: { titre: 'Prudence', detail: 'Des points demandent votre attention.' },
-  danger:  { titre: 'Ne pas acheter', detail: 'Cet appareil présente un blocage.' },
-};
+function LIBELLE() {
+  return {
+    safe:    { titre: PSI18N.t('rapportCommun.verdictSafeTitre'), detail: PSI18N.t('rapportCommun.verdictSafeDetail') },
+    warning: { titre: PSI18N.t('rapportCommun.verdictWarningTitre'), detail: PSI18N.t('rapportCommun.verdictWarningDetail') },
+    danger:  { titre: PSI18N.t('rapportCommun.verdictDangerTitre'), detail: PSI18N.t('rapportCommun.verdictDangerDetail') },
+  };
+}
 
 /* Les valeurs viennent de Sickw : elles sont affichees, jamais interpretees. */
 const ENTITES = { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' };
@@ -68,16 +70,18 @@ function configurationSim(r) {
   return { doubleSim, esimSeuleProbable };
 }
 
-const CONSEQUENCE = {
-  fmiOn: "Verrou d'activation ACTIF — n'achète pas avant déconnexion du vendeur.",
-  fmiUnknown: "Verrou non confirmé — vérifie sur l'appareil (Réglages → Localiser).",
-  fmiOffConfirm: "Confirme sur l'appareil que Localiser est désactivé.",
-  blacklist: "N'achète pas : appareil déclaré volé ou perdu.",
-  simlock: "Bloqué à l'étranger — vérifie la compatibilité SIM.",
-  esim: "Modèle américain, eSIM uniquement — méfie-toi d'un lecteur SIM bricolé, vérifie l'eSIM avant d'acheter.",
-  clean: "Bon signal — vérifie aussi l'état physique.",
-  partial: 'Infos incomplètes — redouble de prudence.',
-};
+function CONSEQUENCE() {
+  return {
+    fmiOn: PSI18N.t('rapportCommun.consFmiOn'),
+    fmiUnknown: PSI18N.t('rapportCommun.consFmiUnknown'),
+    fmiOffConfirm: PSI18N.t('rapportCommun.consFmiOffConfirm'),
+    blacklist: PSI18N.t('rapportCommun.consBlacklist'),
+    simlock: PSI18N.t('rapportCommun.consSimlock'),
+    esim: PSI18N.t('rapportCommun.consEsim'),
+    clean: PSI18N.t('rapportCommun.consClean'),
+    partial: PSI18N.t('rapportCommun.consPartial'),
+  };
+}
 // Meme table de tons que ADVICE_TEXT cote app (lib/imei-advice.ts) : colore
 // la phrase de consequence comme les autres conseils graves.
 const TON_CONSEQUENCE = { fmiOn: 'danger', blacklist: 'danger', esim: 'danger', fmiUnknown: 'warning', partial: 'warning' };
@@ -104,7 +108,7 @@ function clesConsequence(r) {
 function consequence(r) {
   const cles = clesConsequence(r);
   const cle = GRAVITE_CONSEQUENCE.find(k => cles.includes(k)) ?? cles[0];
-  return { texte: CONSEQUENCE[cle], ton: TON_CONSEQUENCE[cle] };
+  return { texte: CONSEQUENCE()[cle], ton: TON_CONSEQUENCE[cle] };
 }
 
 function estOui(valeur) {
@@ -136,50 +140,51 @@ function statutHistorique(r) {
 }
 function detailsHistorique(r) {
   const signale = [];
-  if (estOui(r.refurbished)) signale.push('reconditionné');
-  if (estOui(r.replaced)) signale.push('remplacé');
-  if (estOui(r.loanerDevice)) signale.push('appareil de prêt');
-  if (estOui(r.demoUnit)) signale.push('appareil de démo');
-  return signale.length ? `Signalé comme : ${signale.join(', ')}.` : '';
+  if (estOui(r.refurbished)) signale.push(PSI18N.t('rapportCommun.histReconditionne'));
+  if (estOui(r.replaced)) signale.push(PSI18N.t('rapportCommun.histRemplace'));
+  if (estOui(r.loanerDevice)) signale.push(PSI18N.t('rapportCommun.histPret'));
+  if (estOui(r.demoUnit)) signale.push(PSI18N.t('rapportCommun.histDemo'));
+  return signale.length ? PSI18N.t('rapportCommun.histSignaleComme', { liste: signale.join(', ') }) : '';
 }
 
 function piliers(r) {
   const histoire = statutHistorique(r);
+  const t = PSI18N.t;
   return [
     {
-      nom: 'Verrou iCloud', statut: statutIcloud(r.fmiOn),
-      etat: r.fmiOn === true ? 'Activé' : r.fmiOn === false ? 'Désactivé' : 'Non disponible',
+      nom: t('rapportCommun.pilierIcloudNom'), statut: statutIcloud(r.fmiOn),
+      etat: r.fmiOn === true ? t('rapportCommun.pilierIcloudEtatActif') : r.fmiOn === false ? t('rapportCommun.pilierIcloudEtatInactif') : t('rapportCommun.pilierEtatNonDisponible'),
       quoi: r.fmiOn === true
-        ? "Le compte du vendeur verrouille l'appareil."
+        ? t('rapportCommun.pilierIcloudQuoiActif')
         : r.fmiOn === false
-          ? "S'active sans le compte du vendeur."
-          : 'Vérifie directement sur l\'appareil.',
+          ? t('rapportCommun.pilierIcloudQuoiInactif')
+          : t('rapportCommun.pilierIcloudQuoiInconnu'),
     },
     {
-      nom: 'Vol / blacklist', statut: statutBlacklist(r.blacklisted),
-      etat: r.blacklisted === true ? 'Signalé' : r.blacklisted === false ? 'Non signalé' : 'Non disponible',
+      nom: t('rapportCommun.pilierBlacklistNom'), statut: statutBlacklist(r.blacklisted),
+      etat: r.blacklisted === true ? t('rapportCommun.pilierBlacklistEtatSignale') : r.blacklisted === false ? t('rapportCommun.pilierBlacklistEtatNonSignale') : t('rapportCommun.pilierEtatNonDisponible'),
       quoi: r.blacklisted === true
-        ? 'Peut être coupé du réseau à tout moment.'
+        ? t('rapportCommun.pilierBlacklistQuoiSignale')
         : r.blacklisted === false
-          ? 'Aucune déclaration de perte ou de vol.'
-          : "Le fournisseur n'a rien renvoyé sur ce point.",
+          ? t('rapportCommun.pilierBlacklistQuoiNonSignale')
+          : t('rapportCommun.pilierQuoiNonDisponible'),
     },
     {
-      nom: 'Opérateur', statut: statutOperateur(r.simLockStatus),
-      etat: r.simLockStatus === 'locked' ? `Bloqué${r.carrier ? ` sur ${r.carrier}` : ''}`
-        : r.simLockStatus === 'unlocked' ? 'Désimlocké' : 'Non disponible',
+      nom: t('rapportCommun.pilierOperateurNom'), statut: statutOperateur(r.simLockStatus),
+      etat: r.simLockStatus === 'locked' ? (r.carrier ? t('rapportCommun.pilierOperateurEtatBloqueSur', { carrier: r.carrier }) : t('rapportCommun.pilierOperateurEtatBloque'))
+        : r.simLockStatus === 'unlocked' ? t('rapportCommun.pilierOperateurEtatDesimlocke') : t('rapportCommun.pilierEtatNonDisponible'),
       quoi: r.simLockStatus === 'locked'
-        ? "Vérifie qu'il accepte une carte SIM locale."
+        ? t('rapportCommun.pilierOperateurQuoiBloque')
         : r.simLockStatus === 'unlocked'
-          ? 'Fonctionne avec toutes les cartes SIM.'
-          : "Le fournisseur n'a rien renvoyé sur ce point.",
+          ? t('rapportCommun.pilierOperateurQuoiDesimlocke')
+          : t('rapportCommun.pilierQuoiNonDisponible'),
     },
     {
-      nom: 'Historique', statut: histoire,
-      etat: histoire === 'attention' ? 'À vérifier' : histoire === 'ok' ? 'Rien à signaler' : 'Non disponible',
+      nom: t('rapportCommun.pilierHistoriqueNom'), statut: histoire,
+      etat: histoire === 'attention' ? t('rapportCommun.pilierHistoriqueEtatAttention') : histoire === 'ok' ? t('rapportCommun.pilierHistoriqueEtatOk') : t('rapportCommun.pilierEtatNonDisponible'),
       quoi: histoire === 'attention' ? detailsHistorique(r)
-        : histoire === 'ok' ? 'Ni reconditionné, ni remplacé, ni prêt ou démo.'
-          : "Le fournisseur n'a rien renvoyé sur ce point.",
+        : histoire === 'ok' ? t('rapportCommun.pilierHistoriqueQuoiOk')
+          : t('rapportCommun.pilierQuoiNonDisponible'),
     },
   ];
 }
@@ -188,8 +193,8 @@ function decompteTexte(liste) {
   const nOk = liste.filter(p => p.statut === 'ok').length;
   const nDanger = liste.filter(p => p.statut === 'danger').length;
   return nDanger > 0
-    ? `${nDanger} contrôle${nDanger > 1 ? 's' : ''} bloquant${nDanger > 1 ? 's' : ''}`
-    : `${nOk} contrôle${nOk > 1 ? 's' : ''} sur 4 au vert`;
+    ? PSI18N.t(nDanger > 1 ? 'rapportCommun.decompteBloquantPlur' : 'rapportCommun.decompteBloquantSing', { n: nDanger })
+    : PSI18N.t(nOk > 1 ? 'rapportCommun.decompteOkPlur' : 'rapportCommun.decompteOkSing', { n: nOk });
 }
 
 const SYMBOLE_STATUT = { ok: '✓', attention: '!', danger: '✕', inconnu: '–' };
@@ -208,23 +213,22 @@ function pilierHtml(p) {
 /* Grille de quatre controles (verrou iCloud, blacklist, operateur,
    historique) + phrase de consequence, decompte plutot qu'indice sur 100. */
 function construireRapportHtml(r) {
-  const v = LIBELLE[r.verdict] ?? LIBELLE.warning;
+  const t = PSI18N.t;
+  const v = LIBELLE()[r.verdict] ?? LIBELLE().warning;
   const sim = configurationSim(r);
   const liste = piliers(r);
 
   const lignes = [
-    ligne('Modèle', r.model),
-    ligne('Capacité', r.capacity),
-    ligne('Numéro de série', r.serialNumber),
-    ligne('Pays d\'achat', r.purchaseCountry),
-    sim ? ligne('Cartes SIM', sim.doubleSim ? 'Double SIM (deux lignes)' : 'SIM unique') : '',
-    ligne('Garantie', r.warranty),
+    ligne(t('rapportCommun.champModele'), r.model),
+    ligne(t('rapportCommun.champCapacite'), r.capacity),
+    ligne(t('rapportCommun.champNumeroSerie'), r.serialNumber),
+    ligne(t('rapportCommun.champPaysAchat'), r.purchaseCountry),
+    sim ? ligne(t('rapportCommun.champCartesSim'), sim.doubleSim ? t('rapportCommun.doubleSim') : t('rapportCommun.simUnique')) : '',
+    ligne(t('rapportCommun.champGarantie'), r.warranty),
   ].join('');
 
   const alerteSim = sim && sim.esimSeuleProbable
-    ? '<div class="avert-sim">Modèle vendu aux États-Unis : depuis l’iPhone 14, ces '
-      + 'appareils n’ont pas de tiroir SIM et fonctionnent uniquement en eSIM. '
-      + 'Vérifiez que votre opérateur propose l’eSIM avant d’acheter.</div>'
+    ? `<div class="avert-sim">${echapper(t('rapportCommun.alerteSim'))}</div>`
     : '';
 
   /* Le verdict vient du serveur, mais il finit dans un attribut : on ne pose

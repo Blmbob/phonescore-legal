@@ -37,10 +37,7 @@ if (aUnJeton) {
 } else {
   etatDemande.hidden = false;
   if (lienRefuse) {
-    afficher(
-      "Ce lien a expiré ou a déjà été utilisé. Demande-en un nouveau ci-dessous.",
-      "erreur",
-    );
+    afficher(PSI18N.t("reinitialiser.lienExpire"), "erreur");
   }
 }
 
@@ -52,7 +49,7 @@ async function demanderLeLien() {
   const adresse = courriel.value.trim().toLowerCase();
 
   if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(adresse)) {
-    afficher("Saisis une adresse e-mail valide.", "erreur");
+    afficher(PSI18N.t("reinitialiser.emailInvalide"), "erreur");
     return;
   }
 
@@ -67,11 +64,7 @@ async function demanderLeLien() {
   if (error) {
     console.warn("resetPasswordForEmail", error.message);
   }
-  afficher(
-    "Si un compte existe avec cette adresse, le lien vient d'être envoyé. "
-    + "Pense à regarder les indésirables.",
-    "succes",
-  );
+  afficher(PSI18N.t("reinitialiser.lienEnvoye"), "succes");
   // Le bouton reste desactive : reappuyer n'enverrait qu'un doublon.
 }
 
@@ -96,11 +89,11 @@ valider.addEventListener("click", async () => {
   const confirmation = document.getElementById("confirmation").value;
 
   if (mdp.length < 8) {
-    afficher("Le mot de passe doit contenir au moins 8 caractères.", "erreur");
+    afficher(PSI18N.t("auth.mdpTropCourt"), "erreur");
     return;
   }
   if (mdp !== confirmation) {
-    afficher("Les deux mots de passe ne correspondent pas.", "erreur");
+    afficher(PSI18N.t("reinitialiser.mdpDifferents"), "erreur");
     return;
   }
   if (!sessionPrete) {
@@ -108,10 +101,7 @@ valider.addEventListener("click", async () => {
        visiteur vers l'application, qu'il n'a peut-etre pas installee. */
     etatNouveau.hidden = true;
     etatDemande.hidden = false;
-    afficher(
-      "Ce lien a expiré ou a déjà été utilisé. Demande-en un nouveau ci-dessous.",
-      "erreur",
-    );
+    afficher(PSI18N.t("reinitialiser.lienExpire"), "erreur");
     return;
   }
 
@@ -120,9 +110,9 @@ valider.addEventListener("click", async () => {
   valider.disabled = false;
 
   if (error) {
-    afficher("Échec de la mise à jour. Demande un nouveau lien.", "erreur");
+    afficher(PSI18N.t("reinitialiser.echecMaj"), "erreur");
     return;
   }
 
-  afficher("Mot de passe modifié ✓ Tu peux maintenant te connecter.", "succes");
+  afficher(PSI18N.t("reinitialiser.mdpModifie"), "succes");
 });

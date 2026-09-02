@@ -13,7 +13,7 @@
      moteur. Le `follow` laisse suivre les liens legaux qu'elle contient. -->
 <meta name="robots" content="noindex, follow">
 <meta name="theme-color" content="#0A1028">
-<link rel="stylesheet" href="/css/profil.css?v=a9133381">
+<link rel="stylesheet" href="/css/profil.css?v=d0ca08d6">
 </head>
 <body>
 
@@ -47,19 +47,23 @@
       <b>Phone<span>Score</span></b>
     </a>
     <div class="menu-zone">
-      <a class="link" href="/">Vérifier un appareil</a>
+      <a class="link" href="/" data-i18n="nav.verifierAppareil">Vérifier un appareil</a>
       <button type="button" class="menu-bouton" id="menu-bouton"
               aria-expanded="false" aria-controls="menu" aria-label="Menu">
         <span></span><span></span><span></span>
       </button>
       <nav class="menu" id="menu" hidden>
-        <a href="/profil" aria-current="page">Profil</a>
-        <a href="/historique">Historique</a>
-        <a href="/assistance">Assistance</a>
-        <a href="/rapport">Comprendre le rapport</a>
-        <a href="/revendeurs">Badge boutique</a>
-        <a href="/cgu">Conditions générales d'utilisation</a>
-        <a href="/confidentialite">Politique de confidentialité</a>
+        <a href="/profil" aria-current="page" data-i18n="nav.profil">Profil</a>
+        <a href="/historique" data-i18n="nav.historique">Historique</a>
+        <a href="/assistance" data-i18n="nav.assistance">Assistance</a>
+        <a href="/rapport" data-i18n="nav.rapport">Comprendre le rapport</a>
+        <a href="/revendeurs" data-i18n="nav.revendeurs">Badge boutique</a>
+        <a href="/cgu" data-i18n="nav.cgu">Conditions générales d'utilisation</a>
+        <a href="/confidentialite" data-i18n="nav.confidentialite">Politique de confidentialité</a>
+        <div class="menu-langues">
+          <button type="button" data-langue="fr" data-i18n-lang-actif="fr">Français</button>
+          <button type="button" data-langue="en" data-i18n-lang-actif="en">English</button>
+        </div>
       </nav>
     </div>
   </div>
@@ -68,45 +72,45 @@
 <div class="wrap">
   <section class="u-border-top-0">
 
-    <h2 class="u-text-align-center">Mon profil</h2>
+    <h2 class="u-text-align-center" data-i18n="profilPage.titre">Mon profil</h2>
 
-    <div id="attente" class="attente">Chargement…</div>
+    <div id="attente" class="attente" data-i18n="commun.chargement">Chargement…</div>
 
     <div id="deconnecte" class="compte hidden u-text-align-center">
-      <p class="u-margin-0-0-16px">Vous n’êtes pas connecté.</p>
-      <a class="bouton" href="/">Se connecter</a>
+      <p class="u-margin-0-0-16px" data-i18n="historique.deconnecte">Vous n’êtes pas connecté.</p>
+      <a class="bouton" href="/" data-i18n="commun.seConnecter">Se connecter</a>
     </div>
 
     <div id="compte" class="compte hidden">
       <div class="entete">
-        <div class="solde">Solde : <b id="solde">—</b> pièce(s)</div>
-        <button type="button" class="bouton" id="btn-deconnexion">Déconnexion</button>
+        <div class="solde"><span data-i18n="solde.prefixe">Solde : </span><b id="solde">—</b><span data-i18n="solde.suffixe"> pièce(s)</span></div>
+        <button type="button" class="bouton" id="btn-deconnexion" data-i18n="profilPage.deconnexion">Déconnexion</button>
       </div>
       <p class="courriel" id="courriel"></p>
 
       <div class="ligne">
-        <span>Accès revendeur</span>
+        <span data-i18n="profilPage.accesRevendeur">Accès revendeur</span>
         <b id="revendeur">—</b>
       </div>
       <div class="ligne">
-        <span>Code de parrainage</span>
+        <span data-i18n="profilPage.codeParrainage">Code de parrainage</span>
         <b class="code" id="code">—</b>
       </div>
       <div class="ligne">
-        <span>Filleuls récompensés</span>
+        <span data-i18n="profilPage.filleuls">Filleuls récompensés</span>
         <b id="filleuls">—</b>
       </div>
 
       <p class="liens">
-        <a href="/assistance">Assistance</a> ·
-        <a href="/rapport">Comprendre le rapport</a> ·
-        <a href="/revendeurs">Badge boutique</a><br>
-        <a href="/cgu">Conditions d’utilisation</a> ·
-        <a href="/confidentialite">Politique de confidentialité</a>
+        <a href="/assistance" data-i18n="nav.assistance">Assistance</a> ·
+        <a href="/rapport" data-i18n="nav.rapport">Comprendre le rapport</a> ·
+        <a href="/revendeurs" data-i18n="nav.revendeurs">Badge boutique</a><br>
+        <a href="/cgu" data-i18n="nav.cgu">Conditions d’utilisation</a> ·
+        <a href="/confidentialite" data-i18n="nav.confidentialite">Politique de confidentialité</a>
       </p>
 
       <div id="msg" class="msg"></div>
-      <button type="button" class="supprimer" id="btn-supprimer">Supprimer mon compte</button>
+      <button type="button" class="supprimer" id="btn-supprimer" data-i18n="profilPage.supprimerCompte">Supprimer mon compte</button>
     </div>
 
   </section>
@@ -115,10 +119,10 @@
 <footer>
   <div class="wrap">
     <p>
-      <a href="/">Vérifier un appareil</a>
-      <a href="/assistance">Assistance</a>
-      <a href="/cgu">Conditions générales d’utilisation</a>
-      <a href="/confidentialite">Politique de confidentialité</a>
+      <a href="/" data-i18n="nav.verifierAppareil">Vérifier un appareil</a>
+      <a href="/assistance" data-i18n="nav.assistance">Assistance</a>
+      <a href="/cgu" data-i18n="nav.cgu">Conditions générales d’utilisation</a>
+      <a href="/confidentialite" data-i18n="nav.confidentialite">Politique de confidentialité</a>
     </p>
     <p class="u-margin-top-14px">PhoneScore</p>
   </div>
@@ -128,7 +132,8 @@
      depuis un CDN ne peut pas etre verifie par integrity.
      Empreinte dans vendor/SHA256SUMS.txt. -->
 <script src="/vendor/supabase-2.112.3.js"></script>
-<script type="module" src="/js/profil.js?v=320342b8"></script>
+<script src="/js/i18n.js?v=164b4709"></script>
+<script type="module" src="/js/profil.js?v=604ed36f"></script>
 
 <script src="/js/menu.js?v=88bca18d"></script>
 </body>

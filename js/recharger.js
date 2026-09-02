@@ -46,7 +46,7 @@ for (const bouton of document.querySelectorAll('.offre')) {
     bouton.disabled = false;
 
     if (error || !data?.checkout_url) {
-      msg.textContent = "Le paiement n'a pas pu être lancé. Réessayez dans un instant.";
+      msg.textContent = PSI18N.t('rechargerPage.paiementEchec');
       msg.className = 'msg err';
       return;
     }

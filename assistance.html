@@ -128,7 +128,7 @@
   ]
 }
 </script>
-<link rel="stylesheet" href="/css/assistance.css?v=e96e23cb">
+<link rel="stylesheet" href="/css/assistance.css?v=1c4ae3af">
 </head>
 <body>
 
@@ -162,19 +162,23 @@
       <b>Phone<span>Score</span></b>
     </a>
     <div class="menu-zone">
-      <a class="link" href="/">Accueil</a>
+      <a class="link" href="/" data-i18n="nav.accueil">Accueil</a>
       <button type="button" class="menu-bouton" id="menu-bouton"
               aria-expanded="false" aria-controls="menu" aria-label="Menu">
         <span></span><span></span><span></span>
       </button>
       <nav class="menu" id="menu" hidden>
-        <a href="/profil">Profil</a>
-        <a href="/historique">Historique</a>
-        <a href="/assistance" aria-current="page">Assistance</a>
-        <a href="/rapport">Comprendre le rapport</a>
-        <a href="/revendeurs">Badge boutique</a>
-        <a href="/cgu">Conditions générales d'utilisation</a>
-        <a href="/confidentialite">Politique de confidentialité</a>
+        <a href="/profil" data-i18n="nav.profil">Profil</a>
+        <a href="/historique" data-i18n="nav.historique">Historique</a>
+        <a href="/assistance" aria-current="page" data-i18n="nav.assistance">Assistance</a>
+        <a href="/rapport" data-i18n="nav.rapport">Comprendre le rapport</a>
+        <a href="/revendeurs" data-i18n="nav.revendeurs">Badge boutique</a>
+        <a href="/cgu" data-i18n="nav.cgu">Conditions générales d'utilisation</a>
+        <a href="/confidentialite" data-i18n="nav.confidentialite">Politique de confidentialité</a>
+        <div class="menu-langues">
+          <button type="button" data-langue="fr" data-i18n-lang-actif="fr">Français</button>
+          <button type="button" data-langue="en" data-i18n-lang-actif="en">English</button>
+        </div>
       </nav>
     </div>
   </div>
@@ -184,32 +188,32 @@
   <section class="u-border-top-0">
     <div class="narrow">
 
-      <h2>Assistance</h2>
-      <p class="sub">Questions fréquentes, et comment nous joindre.</p>
+      <h2 data-i18n="assistance.titre">Assistance</h2>
+      <p class="sub" data-i18n="assistance.sub">Questions fréquentes, et comment nous joindre.</p>
 
-      <h3>Comment trouver l'IMEI d'un téléphone&nbsp;?</h3>
-      <p>
+      <h3 data-i18n="assistance.q1">Comment trouver l'IMEI d'un téléphone&nbsp;?</h3>
+      <p data-i18n-html="assistance.a1">
         Composez <code>*#06#</code> sur le clavier téléphonique de l'appareil.
         Les 15 chiffres s'affichent immédiatement. L'IMEI figure aussi dans
         Réglages → Général → Informations.
       </p>
 
-      <h3>Comment fonctionnent les pièces&nbsp;?</h3>
-      <p>
+      <h3 data-i18n="assistance.q2">Comment fonctionnent les pièces&nbsp;?</h3>
+      <p data-i18n="assistance.a2">
         Une pièce correspond à une vérification d'iPhone, deux pièces à une
         vérification de MacBook. Les pièces sont décomptées uniquement lorsque
         la vérification aboutit.
       </p>
 
-      <h3>Ma vérification a échoué, mes pièces sont-elles perdues&nbsp;?</h3>
-      <p>
+      <h3 data-i18n="assistance.q3">Ma vérification a échoué, mes pièces sont-elles perdues&nbsp;?</h3>
+      <p data-i18n="assistance.a3">
         Non. En cas d'échec technique, les pièces sont automatiquement restituées
         sur votre compte. Si ce n'est pas le cas, écrivez-nous avec la date et
         l'IMEI concerné, nous régularisons.
       </p>
 
-      <h3>Mon solde n'apparaît pas après un achat</h3>
-      <p>
+      <h3 data-i18n="assistance.q4">Mon solde n'apparaît pas après un achat</h3>
+      <p data-i18n="assistance.a4">
         Rouvrez l'application et patientez quelques secondes, le solde se
         synchronise avec nos serveurs. Si un achat a été interrompu, il reprend
         automatiquement au lancement suivant. S'il reste incorrect au bout de
@@ -217,8 +221,8 @@
         du paiement.
       </p>
 
-      <h3>Comment sont facturées les pièces&nbsp;?</h3>
-      <p>
+      <h3 data-i18n="assistance.q5">Comment sont facturées les pièces&nbsp;?</h3>
+      <p data-i18n-html="assistance.a5">
         Sur iPhone et iPad, les packs sont vendus par l'App Store, au prix affiché
         dans l'application au moment de l'achat. Une demande de remboursement se
         fait auprès d'Apple, sur
@@ -227,8 +231,8 @@
         achat App Store.
       </p>
 
-      <h3>Comment inscrire ma boutique&nbsp;?</h3>
-      <p>
+      <h3 data-i18n="assistance.q6">Comment inscrire ma boutique&nbsp;?</h3>
+      <p data-i18n-html="assistance.a6">
         L'inscription à l'annuaire est réservée aux détenteurs du
         <strong>Pack Revendeur</strong> (10 pièces). L'achat ouvre 30 jours
         d'accès revendeur, qui donnent droit à la boutique sur la carte, au
@@ -237,15 +241,15 @@
         entre-temps.
       </p>
 
-      <h3>Le verdict est rouge, que faire&nbsp;?</h3>
-      <p>
+      <h3 data-i18n="assistance.q7">Le verdict est rouge, que faire&nbsp;?</h3>
+      <p data-i18n="assistance.a7">
         Un verdict rouge signale un appareil verrouillé iCloud, blacklisté ou
         bloqué opérateur. Nous vous recommandons de ne pas conclure l'achat.
         Un appareil verrouillé ne peut pas être débloqué par un revendeur.
       </p>
 
-      <h3>Comment supprimer mon compte&nbsp;?</h3>
-      <p>
+      <h3 data-i18n="assistance.q8">Comment supprimer mon compte&nbsp;?</h3>
+      <p data-i18n-html="assistance.a8">
         Directement depuis l'application, sans passer par l'assistance&nbsp;:
         écran <strong>Profil</strong> → <strong>«&nbsp;Supprimer mon compte&nbsp;»</strong>.
         La suppression est immédiate et irréversible. Sont effacés votre compte,
@@ -254,26 +258,26 @@
       </p>
 
       <div class="card contact u-margin-top-30px">
-        <p class="u-margin-0-0-6px-color-var-muted-font-si">
+        <p class="u-margin-0-0-6px-color-var-muted-font-si" data-i18n="assistance.contactTitre">
           Assistance, réclamations et suppression de compte
         </p>
         <a href="mailto:support@phonescore.app">support@phonescore.app</a>
-        <p class="u-margin-10px-0-0-color-var-muted-font-s">
+        <p class="u-margin-10px-0-0-color-var-muted-font-s" data-i18n="assistance.contactDelai">
           Réponse sous 48&nbsp;heures ouvrées. Écrivez en français ou en anglais.
         </p>
       </div>
 
       <div class="card">
-        <p class="u-margin-0-color-var-muted-font-size-14p">
+        <p class="u-margin-0-color-var-muted-font-size-14p" data-i18n="assistance.reclamationIntro">
           Pour toute réclamation, indiquez si possible&nbsp;:
         </p>
         <ul class="u-color-var-muted-font-size-14px">
-          <li>l'adresse e-mail de votre compte&nbsp;;</li>
-          <li>la date et l'heure du problème&nbsp;;</li>
-          <li>l'IMEI concerné, le cas échéant.</li>
+          <li data-i18n="assistance.reclamation1">l'adresse e-mail de votre compte&nbsp;;</li>
+          <li data-i18n="assistance.reclamation2">la date et l'heure du problème&nbsp;;</li>
+          <li data-i18n="assistance.reclamation3">l'IMEI concerné, le cas échéant.</li>
         </ul>
       </div>
-    
+
     </div>
   </section>
 </div>
@@ -281,15 +285,16 @@
 <footer>
   <div class="wrap">
     <p>
-      <a href="/rapport">Comprendre le rapport</a>
-      <a href="/revendeurs">Badge boutique</a>
-      <a href="/cgu">Conditions générales d'utilisation</a>
-      <a href="/confidentialite">Politique de confidentialité</a>
+      <a href="/rapport" data-i18n="nav.rapport">Comprendre le rapport</a>
+      <a href="/revendeurs" data-i18n="nav.revendeurs">Badge boutique</a>
+      <a href="/cgu" data-i18n="nav.cgu">Conditions générales d'utilisation</a>
+      <a href="/confidentialite" data-i18n="nav.confidentialite">Politique de confidentialité</a>
     </p>
     <p class="u-margin-top-14px">PhoneScore</p>
   </div>
 </footer>
 
+<script src="/js/i18n.js?v=164b4709"></script>
 <script src="/js/menu.js?v=88bca18d"></script>
 </body>
 </html>

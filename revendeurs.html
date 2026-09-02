@@ -66,7 +66,7 @@
   ]
 }
 </script>
-<link rel="stylesheet" href="/css/revendeurs.css?v=c8ff70d9">
+<link rel="stylesheet" href="/css/revendeurs.css?v=f4ec22fd">
 </head>
 <body>
 
@@ -100,19 +100,23 @@
       <b>Phone<span>Score</span></b>
     </a>
     <div class="menu-zone">
-      <a class="link" href="/">Accueil</a>
+      <a class="link" href="/" data-i18n="nav.accueil">Accueil</a>
       <button type="button" class="menu-bouton" id="menu-bouton"
               aria-expanded="false" aria-controls="menu" aria-label="Menu">
         <span></span><span></span><span></span>
       </button>
       <nav class="menu" id="menu" hidden>
-        <a href="/profil">Profil</a>
-        <a href="/historique">Historique</a>
-        <a href="/assistance">Assistance</a>
-        <a href="/rapport">Comprendre le rapport</a>
-        <a href="/revendeurs" aria-current="page">Badge boutique</a>
-        <a href="/cgu">Conditions générales d'utilisation</a>
-        <a href="/confidentialite">Politique de confidentialité</a>
+        <a href="/profil" data-i18n="nav.profil">Profil</a>
+        <a href="/historique" data-i18n="nav.historique">Historique</a>
+        <a href="/assistance" data-i18n="nav.assistance">Assistance</a>
+        <a href="/rapport" data-i18n="nav.rapport">Comprendre le rapport</a>
+        <a href="/revendeurs" aria-current="page" data-i18n="nav.revendeurs">Badge boutique</a>
+        <a href="/cgu" data-i18n="nav.cgu">Conditions générales d'utilisation</a>
+        <a href="/confidentialite" data-i18n="nav.confidentialite">Politique de confidentialité</a>
+        <div class="menu-langues">
+          <button type="button" data-langue="fr" data-i18n-lang-actif="fr">Français</button>
+          <button type="button" data-langue="en" data-i18n-lang-actif="en">English</button>
+        </div>
       </nav>
     </div>
   </div>
@@ -121,8 +125,8 @@
 <div class="hero">
   <div class="aurora" aria-hidden="true"><i></i><i></i><i></i></div>
   <div class="wrap">
-    <h1>Le badge qui prouve que vous <em>vérifiez</em></h1>
-    <p class="lead">
+    <h1 data-i18n-html="revendeursPage.h1">Le badge qui prouve que vous <em>vérifiez</em></h1>
+    <p class="lead" data-i18n-html="revendeursPage.lead">
       Sur le marché de l&rsquo;occasion, tout le monde promet des appareils sains.
       Le badge Certifiée ne se promet pas : il se gagne, vérification après
       vérification, et il se perd si vous arrêtez.
@@ -134,92 +138,92 @@
   <section class="u-border-top-0">
     <div class="narrow">
 
-      <h2>Pourquoi un badge</h2>
-      <p>
+      <h2 data-i18n="revendeursPage.t1">Pourquoi un badge</h2>
+      <p data-i18n-html="revendeursPage.s1p1">
         Un revendeur sérieux contrôle ses appareils avant de les vendre. Le
         problème, c&rsquo;est que son client ne peut pas le savoir : rien ne le
         distingue de celui qui ne contrôle rien. Les deux tiennent le même discours.
       </p>
-      <p>
+      <p data-i18n-html="revendeursPage.s1p2">
         Le badge répond à cela. Il ne s&rsquo;achète pas et ne se déclare pas : il
         s&rsquo;appuie sur vos vérifications réelles, enregistrées par PhoneScore. Une
         boutique qui le porte a contrôlé au moins dix appareils dans les trente
         derniers jours. C&rsquo;est vérifiable, et c&rsquo;est ce qui lui donne sa valeur.
       </p>
 
-      <h2>Comment l&rsquo;obtenir</h2>
+      <h2 data-i18n="revendeursPage.t2">Comment l&rsquo;obtenir</h2>
 
       <div class="niveaux">
         <div class="niveau fort">
-          <span class="pastille cert">Certifiée ✓</span>
-          <p>
+          <span class="pastille cert" data-i18n="revendeursPage.pastilleCert">Certifiée ✓</span>
+          <p data-i18n-html="revendeursPage.niveauCertP">
             <b>Accès revendeur actif et 10 vérifications sur 30 jours.</b>
             Votre boutique apparaît dans l&rsquo;annuaire de l&rsquo;application, badge
             visible par tous les acheteurs.
           </p>
         </div>
         <div class="niveau">
-          <span class="pastille memb">Membre</span>
-          <p>
+          <span class="pastille memb" data-i18n="revendeursPage.pastilleMembre">Membre</span>
+          <p data-i18n-html="revendeursPage.niveauMembreP">
             <b>Accès revendeur actif, moins de 10 vérifications.</b>
             Votre boutique est visible, sans le badge. Chaque vérification vous
             rapproche du seuil.
           </p>
         </div>
         <div class="niveau">
-          <span class="pastille rien">Aucun</span>
-          <p>
+          <span class="pastille rien" data-i18n="revendeursPage.pastilleAucun">Aucun</span>
+          <p data-i18n-html="revendeursPage.niveauAucunP">
             <b>Accès revendeur expiré, ou aucune vérification.</b>
             La boutique n&rsquo;apparaît pas dans l&rsquo;annuaire.
           </p>
         </div>
       </div>
 
-      <p>
+      <p data-i18n-html="revendeursPage.s2p1">
         L&rsquo;accès revendeur s&rsquo;obtient avec le <b>pack Revendeur</b> : 10 pièces
         pour 6 700 FCFA, qui ouvrent 30 jours d&rsquo;accès. Ces dix pièces sont
         exactement de quoi faire les dix vérifications du seuil.
       </p>
 
-      <h2>Il se garde comme il s&rsquo;obtient</h2>
-      <p>
+      <h2 data-i18n="revendeursPage.t3">Il se garde comme il s&rsquo;obtient</h2>
+      <p data-i18n-html="revendeursPage.s3p1">
         Le compte se fait sur les <b>30 derniers jours glissants</b>, et non sur le
         mois calendaire. Il n&rsquo;y a donc pas de fenêtre de tir : on ne rattrape pas
         un mois creux en groupant ses vérifications le dernier jour. Le badge suit
         votre activité réelle, jour après jour, et il est recalculé chaque nuit.
       </p>
-      <p>
+      <p data-i18n-html="revendeursPage.s3p2">
         Si vous passez sous le seuil, le badge redescend à Membre. Il revient de
         lui-même dès que vous repassez au-dessus : rien à demander, rien à payer.
       </p>
 
-      <div class="compteur">
+      <div class="compteur" data-i18n-html="revendeursPage.compteur">
         Pour que vous ne le perdiez jamais sans le voir venir, l&rsquo;écran
         <b>Ma Boutique</b> affiche en permanence où vous en êtes :
         <b>« 7 vérifications sur les 30 derniers jours — encore 3 pour le badge »</b>.
       </div>
 
-      <h2>Ce que l&rsquo;accès revendeur apporte</h2>
+      <h2 data-i18n="revendeursPage.t4">Ce que l&rsquo;accès revendeur apporte</h2>
       <ul class="avantages">
-        <li><b>Votre stock</b> — enregistrez vos appareils, suivez ce qui est en stock, réservé ou vendu, et retrouvez un IMEI par recherche.</li>
-        <li><b>Vos factures</b> — générées à la vente, numérotées, avec un QR code qui renvoie au rapport de vérification de l&rsquo;appareil.</li>
-        <li><b>Vos archives</b> — les appareils vendus restent consultables avec leurs dates d&rsquo;entrée et de sortie, utile lors d&rsquo;un contrôle.</li>
-        <li><b>Jusqu&rsquo;à trois boutiques</b> — pour séparer vos stocks. Une seule est principale : c&rsquo;est elle qui reçoit vos vérifications et porte le badge.</li>
+        <li data-i18n-html="revendeursPage.avantage1"><b>Votre stock</b> — enregistrez vos appareils, suivez ce qui est en stock, réservé ou vendu, et retrouvez un IMEI par recherche.</li>
+        <li data-i18n-html="revendeursPage.avantage2"><b>Vos factures</b> — générées à la vente, numérotées, avec un QR code qui renvoie au rapport de vérification de l&rsquo;appareil.</li>
+        <li data-i18n-html="revendeursPage.avantage3"><b>Vos archives</b> — les appareils vendus restent consultables avec leurs dates d&rsquo;entrée et de sortie, utile lors d&rsquo;un contrôle.</li>
+        <li data-i18n-html="revendeursPage.avantage4"><b>Jusqu&rsquo;à trois boutiques</b> — pour séparer vos stocks. Une seule est principale : c&rsquo;est elle qui reçoit vos vérifications et porte le badge.</li>
       </ul>
 
-      <h2>Commencer</h2>
-      <p>
+      <h2 data-i18n="revendeursPage.t5">Commencer</h2>
+      <p data-i18n-html="revendeursPage.s5p1">
         Le mode revendeur s&rsquo;active depuis l&rsquo;application, après l&rsquo;achat du pack
         Revendeur. Vous créez ensuite votre boutique, et vos vérifications
         comptent à partir de ce moment.
       </p>
 
       <div class="card contact u-margin-top-26px">
-        <p class="u-margin-0-0-14px">
+        <p class="u-margin-0-0-14px" data-i18n-html="revendeursPage.contactP1">
           Une question sur le badge ou sur votre boutique ? Écrivez-nous à
           <a href="mailto:support@phonescore.app">support@phonescore.app</a>.
         </p>
-        <p class="u-margin-0">
+        <p class="u-margin-0" data-i18n-html="revendeursPage.contactP2">
           <a href="/">Retour à l&rsquo;accueil</a> —
           <a href="/">vérifier un appareil depuis le navigateur</a>.
         </p>
@@ -232,15 +236,16 @@
 <footer>
   <div class="wrap">
     <p>
-      <a href="/rapport">Comprendre le rapport</a>
-      <a href="/cgu">Conditions générales d&rsquo;utilisation</a>
-      <a href="/confidentialite">Politique de confidentialité</a>
-      <a href="/assistance">Assistance</a>
+      <a href="/rapport" data-i18n="nav.rapport">Comprendre le rapport</a>
+      <a href="/cgu" data-i18n="nav.cgu">Conditions générales d&rsquo;utilisation</a>
+      <a href="/confidentialite" data-i18n="nav.confidentialite">Politique de confidentialité</a>
+      <a href="/assistance" data-i18n="nav.assistance">Assistance</a>
     </p>
     <p class="u-margin-top-14px">PhoneScore</p>
   </div>
 </footer>
 
+<script src="/js/i18n.js?v=164b4709"></script>
 <script src="/js/menu.js?v=88bca18d"></script>
 </body>
 </html>

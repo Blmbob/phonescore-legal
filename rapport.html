@@ -103,7 +103,7 @@
   ]
 }
 </script>
-<link rel="stylesheet" href="/css/rapport.css?v=c5832fd3">
+<link rel="stylesheet" href="/css/rapport.css?v=da44423e">
 </head>
 <body>
 
@@ -137,19 +137,23 @@
       <b>Phone<span>Score</span></b>
     </a>
     <div class="menu-zone">
-      <a class="link" href="/">Accueil</a>
+      <a class="link" href="/" data-i18n="nav.accueil">Accueil</a>
       <button type="button" class="menu-bouton" id="menu-bouton"
               aria-expanded="false" aria-controls="menu" aria-label="Menu">
         <span></span><span></span><span></span>
       </button>
       <nav class="menu" id="menu" hidden>
-        <a href="/profil">Profil</a>
-        <a href="/historique">Historique</a>
-        <a href="/assistance">Assistance</a>
-        <a href="/rapport" aria-current="page">Comprendre le rapport</a>
-        <a href="/revendeurs">Badge boutique</a>
-        <a href="/cgu">Conditions générales d'utilisation</a>
-        <a href="/confidentialite">Politique de confidentialité</a>
+        <a href="/profil" data-i18n="nav.profil">Profil</a>
+        <a href="/historique" data-i18n="nav.historique">Historique</a>
+        <a href="/assistance" data-i18n="nav.assistance">Assistance</a>
+        <a href="/rapport" aria-current="page" data-i18n="nav.rapport">Comprendre le rapport</a>
+        <a href="/revendeurs" data-i18n="nav.revendeurs">Badge boutique</a>
+        <a href="/cgu" data-i18n="nav.cgu">Conditions générales d'utilisation</a>
+        <a href="/confidentialite" data-i18n="nav.confidentialite">Politique de confidentialité</a>
+        <div class="menu-langues">
+          <button type="button" data-langue="fr" data-i18n-lang-actif="fr">Français</button>
+          <button type="button" data-langue="en" data-i18n-lang-actif="en">English</button>
+        </div>
       </nav>
     </div>
   </div>
@@ -158,8 +162,8 @@
 <div class="hero">
   <div class="aurora" aria-hidden="true"><i></i><i></i><i></i></div>
   <div class="wrap">
-    <h1>Comprendre le <em>rapport</em></h1>
-    <p class="lead">
+    <h1 data-i18n-html="rapportPage.h1">Comprendre le <em>rapport</em></h1>
+    <p class="lead" data-i18n-html="rapportPage.lead">
       Un rapport ne sert à rien si on ne sait pas quoi en faire. Voici ce que
       chaque ligne signifie, et surtout ce qu&rsquo;elle doit vous faire vérifier
       avant de sortir l&rsquo;argent.
@@ -171,8 +175,8 @@
   <section class="u-border-top-0">
     <div class="narrow">
 
-      <h2>Le verdict</h2>
-      <p>
+      <h2 data-i18n="rapportPage.t1">Le verdict</h2>
+      <p data-i18n-html="rapportPage.s1p1">
         En haut du rapport, une seule couleur résume l&rsquo;ensemble. Elle ne
         remplace pas la lecture des lignes, mais elle dit tout de suite si la
         transaction peut se poursuivre.
@@ -180,35 +184,35 @@
 
       <div class="verdicts">
         <div class="verdict-l v-safe">
-          <span class="v-pill">Appareil sûr</span>
-          <p>Aucun blocage détecté. <b>Vérifiez quand même l&rsquo;appareil physiquement</b> : un rapport porte sur son identité et son statut, pas sur son état réel.</p>
+          <span class="v-pill" data-i18n="rapportPage.vSafePill">Appareil sûr</span>
+          <p data-i18n-html="rapportPage.vSafeP">Aucun blocage détecté. <b>Vérifiez quand même l&rsquo;appareil physiquement</b> : un rapport porte sur son identité et son statut, pas sur son état réel.</p>
         </div>
         <div class="verdict-l v-warn">
-          <span class="v-pill">Prudence</span>
-          <p>Un ou plusieurs points demandent votre attention : information manquante, appareil reconditionné, verrou opérateur. <b>Négociable, mais en connaissance de cause.</b></p>
+          <span class="v-pill" data-i18n="rapportPage.vWarnPill">Prudence</span>
+          <p data-i18n-html="rapportPage.vWarnP">Un ou plusieurs points demandent votre attention : information manquante, appareil reconditionné, verrou opérateur. <b>Négociable, mais en connaissance de cause.</b></p>
         </div>
         <div class="verdict-l v-dang">
-          <span class="v-pill">Ne pas acheter</span>
-          <p>Un blocage rend l&rsquo;appareil inutilisable ou illégal à revendre. <b>Aucune remise ne compense cela</b> : le problème ne se répare pas.</p>
+          <span class="v-pill" data-i18n="rapportPage.vDangPill">Ne pas acheter</span>
+          <p data-i18n-html="rapportPage.vDangP">Un blocage rend l&rsquo;appareil inutilisable ou illégal à revendre. <b>Aucune remise ne compense cela</b> : le problème ne se répare pas.</p>
         </div>
       </div>
 
-      <h2>Sécurité</h2>
-      <p>Les deux lignes qui décident d&rsquo;un achat.</p>
+      <h2 data-i18n="rapportPage.t2">Sécurité</h2>
+      <p data-i18n="rapportPage.s2Intro">Les deux lignes qui décident d&rsquo;un achat.</p>
 
       <div class="champ">
-        <h3>Verrouillage iCloud (FMI)</h3>
-        <p>
+        <h3 data-i18n="rapportPage.icloudT">Verrouillage iCloud (FMI)</h3>
+        <p data-i18n="rapportPage.icloudP1">
           « Localiser mon iPhone » est actif : l&rsquo;appareil reste lié au compte
           Apple de son propriétaire. Après une remise à zéro, il redemandera
           son identifiant et son mot de passe.
         </p>
-        <p>
+        <p data-i18n="rapportPage.icloudP2">
           Personne ne peut le débloquer — ni un réparateur, ni Apple sans
           preuve d&rsquo;achat originale, ni PhoneScore. Un iPhone verrouillé iCloud
           ne vaut que ses pièces détachées.
         </p>
-        <p class="agir">
+        <p class="agir" data-i18n-html="rapportPage.icloudAgir">
           <b>À faire :</b> demandez au vendeur de désactiver « Localiser » devant
           vous, dans Réglages → son nom → Localiser. Puis relancez une
           vérification. S&rsquo;il refuse ou repousse, arrêtez la transaction.
@@ -216,31 +220,31 @@
       </div>
 
       <div class="champ">
-        <h3>Liste noire (blacklist GSMA)</h3>
-        <p>
+        <h3 data-i18n="rapportPage.blacklistT">Liste noire (blacklist GSMA)</h3>
+        <p data-i18n="rapportPage.blacklistP1">
           L&rsquo;IMEI a été signalé — vol, perte, ou impayé auprès d&rsquo;un opérateur.
           Le signalement est partagé entre opérateurs de nombreux pays.
         </p>
-        <p>
+        <p data-i18n="rapportPage.blacklistP2">
           Un appareil signalé peut être bloqué du réseau à tout moment. Il
           fonctionnera en Wi-Fi, ce qui permet à un vendeur de vous le montrer
           « en état de marche » sans mentir tout à fait.
         </p>
-        <p class="agir">
+        <p class="agir" data-i18n-html="rapportPage.blacklistAgir">
           <b>À faire :</b> n&rsquo;achetez pas. Au-delà du risque de blocage, revendre
           sciemment un appareil signalé volé vous expose personnellement.
         </p>
       </div>
 
-      <h2>Appareil</h2>
+      <h2 data-i18n="rapportPage.t3">Appareil</h2>
 
       <div class="champ">
-        <h3>Modèle, capacité, couleur</h3>
-        <p>
+        <h3 data-i18n="rapportPage.modeleT">Modèle, capacité, couleur</h3>
+        <p data-i18n-html="rapportPage.modeleP1">
           Ce que le constructeur a réellement fabriqué sous cet IMEI, quoi
           qu&rsquo;affiche l&rsquo;écran de l&rsquo;appareil ou l&rsquo;annonce du vendeur.
         </p>
-        <p class="agir">
+        <p class="agir" data-i18n-html="rapportPage.modeleAgir">
           <b>À faire :</b> comparez avec l&rsquo;annonce. Un iPhone 13 vendu pour un 14,
           un 128&nbsp;Go annoncé 256, une coque repeinte : l&rsquo;écart se voit ici et
           nulle part ailleurs.
@@ -248,52 +252,52 @@
       </div>
 
       <div class="champ">
-        <h3>IMEI, IMEI2, numéro de série, MEID</h3>
-        <p>
+        <h3 data-i18n="rapportPage.imeiT">IMEI, IMEI2, numéro de série, MEID</h3>
+        <p data-i18n-html="rapportPage.imeiP1">
           Les identifiants de l&rsquo;appareil. L&rsquo;IMEI2 n&rsquo;apparaît que sur les modèles
           gérant deux lignes.
         </p>
-        <p class="agir">
+        <p class="agir" data-i18n-html="rapportPage.imeiAgir">
           <b>À faire :</b> composez <code>*#06#</code> sur l&rsquo;appareil et comparez
           avec le rapport. S&rsquo;ils diffèrent, le vendeur vous a communiqué l&rsquo;IMEI
           d&rsquo;un autre téléphone.
         </p>
       </div>
 
-      <h2>Réseau</h2>
+      <h2 data-i18n="rapportPage.t4">Réseau</h2>
 
       <div class="champ">
-        <h3>SIM-lock (verrou opérateur)</h3>
-        <p>
+        <h3 data-i18n="rapportPage.simlockT">SIM-lock (verrou opérateur)</h3>
+        <p data-i18n-html="rapportPage.simlockP1">
           Un appareil verrouillé n&rsquo;accepte que les cartes SIM de l&rsquo;opérateur
           d&rsquo;origine — souvent étranger, donc inutilisable ici.
         </p>
-        <p>
+        <p data-i18n="rapportPage.simlockP2">
           Le déblocage est parfois possible auprès de cet opérateur, mais il
           suppose que le contrat soit soldé et il n&rsquo;est jamais garanti.
         </p>
-        <p class="agir">
+        <p class="agir" data-i18n-html="rapportPage.simlockAgir">
           <b>À faire :</b> insérez votre propre carte SIM avant de payer. C&rsquo;est
           le seul test qui tranche en trente secondes.
         </p>
       </div>
 
       <div class="champ">
-        <h3>Cartes SIM et eSIM</h3>
-        <p>
+        <h3 data-i18n="rapportPage.esimT">Cartes SIM et eSIM</h3>
+        <p data-i18n-html="rapportPage.esimP1">
           Indique si l&rsquo;appareil gère deux lignes. Surtout, le rapport signale
           les modèles vendus aux États-Unis à partir de l&rsquo;iPhone&nbsp;14 : ils
           n&rsquo;ont <b>aucun tiroir SIM physique</b> et fonctionnent uniquement en eSIM.
         </p>
-        <p class="agir">
+        <p class="agir" data-i18n-html="rapportPage.esimAgir">
           <b>À faire :</b> si cette alerte apparaît, vérifiez que votre opérateur
           propose l&rsquo;eSIM avant d&rsquo;acheter. Sinon, l&rsquo;appareil ne captera jamais.
         </p>
       </div>
 
       <div class="champ">
-        <h3>Pays d&rsquo;achat</h3>
-        <p>
+        <h3 data-i18n="rapportPage.paysT">Pays d&rsquo;achat</h3>
+        <p data-i18n-html="rapportPage.paysP1">
           Le marché pour lequel l&rsquo;appareil a été fabriqué. Il conditionne le
           verrou opérateur, la configuration SIM, et parfois des détails
           matériels — certains modèles japonais, par exemple, ne peuvent pas
@@ -301,42 +305,42 @@
         </p>
       </div>
 
-      <h2>Garantie</h2>
+      <h2 data-i18n="rapportPage.t5">Garantie</h2>
 
       <div class="champ">
-        <h3>Date d&rsquo;achat, expiration réparations, AppleCare</h3>
-        <p>
+        <h3 data-i18n="rapportPage.garantieT">Date d&rsquo;achat, expiration réparations, AppleCare</h3>
+        <p data-i18n-html="rapportPage.garantieP1">
           La couverture Apple restante, quand l&rsquo;information est disponible. Une
           date d&rsquo;achat bien plus ancienne que ce qu&rsquo;annonce le vendeur est un
           signal en soi.
         </p>
-        <p class="agir">
+        <p class="agir" data-i18n-html="rapportPage.garantieAgir">
           <b>À faire :</b> servez-vous-en pour négocier. Un appareil hors garantie
           ne vaut pas le prix d&rsquo;un appareil couvert.
         </p>
       </div>
 
-      <h2>Historique de l&rsquo;appareil</h2>
+      <h2 data-i18n="rapportPage.t6">Historique de l&rsquo;appareil</h2>
 
       <div class="champ">
-        <h3>Reconditionné, remplacé, appareil de prêt ou de démo</h3>
-        <p>
+        <h3 data-i18n="rapportPage.histT">Reconditionné, remplacé, appareil de prêt ou de démo</h3>
+        <p data-i18n-html="rapportPage.histP1">
           Un appareil <b>reconditionné</b> a été remis à neuf par Apple : ce n&rsquo;est
           pas un défaut, mais il ne se vend pas au prix du neuf.
         </p>
-        <p>
+        <p data-i18n-html="rapportPage.histP2">
           <b>Remplacé</b> signifie que celui-ci a été fourni en échange d&rsquo;un
           appareil défectueux. Un <b>appareil de démo</b> vient d&rsquo;un magasin et
           n&rsquo;était pas destiné à la revente.
         </p>
-        <p class="agir">
+        <p class="agir" data-i18n-html="rapportPage.histAgir">
           <b>À faire :</b> aucun de ces états n&rsquo;interdit l&rsquo;achat. Ils justifient
           un prix plus bas, et le vendeur qui ne les a pas mentionnés vous
           apprend quelque chose sur lui.
         </p>
       </div>
 
-      <div class="encadre">
+      <div class="encadre" data-i18n-html="rapportPage.encadre">
         <b>Ce qu&rsquo;un rapport ne dit pas.</b> Il porte sur l&rsquo;identité et le statut
         administratif de l&rsquo;appareil, pas sur son état physique. Batterie usée,
         écran remplacé par une pièce non officielle, dégât des eaux : rien de
@@ -346,11 +350,11 @@
       </div>
 
       <div class="card contact u-margin-top-26px">
-        <p class="u-margin-0-0-14px">
+        <p class="u-margin-0-0-14px" data-i18n-html="rapportPage.contactP1">
           Une ligne du rapport que vous ne comprenez pas&nbsp;? Écrivez-nous à
           <a href="mailto:support@phonescore.app">support@phonescore.app</a>.
         </p>
-        <p class="u-margin-0">
+        <p class="u-margin-0" data-i18n-html="rapportPage.contactP2">
           <a href="/">Vérifier un appareil depuis le navigateur</a> —
           <a href="/assistance">questions fréquentes</a>.
         </p>
@@ -363,15 +367,16 @@
 <footer>
   <div class="wrap">
     <p>
-      <a href="/revendeurs">Badge boutique</a>
-      <a href="/assistance">Assistance</a>
-      <a href="/cgu">Conditions générales d&rsquo;utilisation</a>
-      <a href="/confidentialite">Politique de confidentialité</a>
+      <a href="/revendeurs" data-i18n="nav.revendeurs">Badge boutique</a>
+      <a href="/assistance" data-i18n="nav.assistance">Assistance</a>
+      <a href="/cgu" data-i18n="nav.cgu">Conditions générales d&rsquo;utilisation</a>
+      <a href="/confidentialite" data-i18n="nav.confidentialite">Politique de confidentialité</a>
     </p>
     <p class="u-margin-top-14px">PhoneScore</p>
   </div>
 </footer>
 
+<script src="/js/i18n.js?v=164b4709"></script>
 <script src="/js/menu.js?v=88bca18d"></script>
 </body>
 </html>

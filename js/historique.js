@@ -50,15 +50,15 @@ $('historique-recherche').addEventListener('input', () => {
 
 function ilYA(iso) {
   const diffSec = Math.floor((Date.now() - new Date(iso).getTime()) / 1000);
-  if (diffSec < 60) return "à l'instant";
+  if (diffSec < 60) return PSI18N.t('historique.ilYaInstant');
   const diffMin = Math.floor(diffSec / 60);
-  if (diffMin < 60) return `il y a ${diffMin} min`;
+  if (diffMin < 60) return PSI18N.t('historique.ilYaMin', { n: diffMin });
   const diffH = Math.floor(diffMin / 60);
-  if (diffH < 24) return `il y a ${diffH} h`;
+  if (diffH < 24) return PSI18N.t('historique.ilYaH', { n: diffH });
   const diffJ = Math.floor(diffH / 24);
-  if (diffJ < 30) return `il y a ${diffJ} j`;
+  if (diffJ < 30) return PSI18N.t('historique.ilYaJ', { n: diffJ });
   const diffMois = Math.floor(diffJ / 30);
-  return `il y a ${diffMois} mois`;
+  return PSI18N.t('historique.ilYaMois', { n: diffMois });
 }
 
 function masquer(valeur) {
@@ -142,8 +142,8 @@ async function chargerHistorique(reinitialiser) {
 
   if (decalage === 0 && data.length === 0) {
     $('historique-vide').textContent = rechercheAppliquee
-      ? 'Aucun résultat pour cette recherche.'
-      : 'Aucune vérification pour l’instant. Tes rapports apparaîtront ici.';
+      ? PSI18N.t('historique.videRecherche')
+      : PSI18N.t('historique.vide');
     $('historique-vide').classList.remove('hidden');
     return;
   }

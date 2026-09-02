@@ -44,10 +44,12 @@ async function charger(uid) {
     /* pro_until fait foi : `role` peut rester a 'reseller' apres expiration. */
     const jusqua = profil.value.data.pro_until;
     const actif = jusqua && new Date(jusqua) > new Date();
+    const locale = PSI18N.langueActuelle() === 'en' ? 'en-US' : 'fr-FR';
     $('revendeur').textContent = actif
-      ? 'jusqu’au ' + new Date(jusqua).toLocaleDateString('fr-FR',
-          { day: 'numeric', month: 'long', year: 'numeric' })
-      : 'aucun';
+      ? PSI18N.t('profilPage.revendeurJusquau', {
+          date: new Date(jusqua).toLocaleDateString(locale, { day: 'numeric', month: 'long', year: 'numeric' }),
+        })
+      : PSI18N.t('profilPage.revendeurAucun');
     $('revendeur').classList.toggle('actif', !!actif);
   }
 
@@ -65,11 +67,11 @@ $('btn-deconnexion').addEventListener('click', () => supabase.auth.signOut());
 /* Double confirmation : l'action est irreversible et detruit des pieces
    payees. Meme exigence que dans l'application. */
 $('btn-supprimer').addEventListener('click', async () => {
-  if (!confirm('Supprimer votre compte ?\n\nVos pièces, votre historique de vérifications et vos boutiques seront définitivement effacés.')) return;
-  if (!confirm('Dernière confirmation.\n\nVos pièces non utilisées seront perdues et ne seront pas remboursées.')) return;
+  if (!confirm(PSI18N.t('profilPage.confirmSuppression1'))) return;
+  if (!confirm(PSI18N.t('profilPage.confirmSuppression2'))) return;
 
   const msg = $('msg');
-  msg.textContent = 'Suppression en cours…';
+  msg.textContent = PSI18N.t('profilPage.suppressionEnCours');
   msg.className = 'msg';
   try {
     const { data, error } = await supabase.functions.invoke('delete-account');
@@ -77,7 +79,7 @@ $('btn-supprimer').addEventListener('click', async () => {
     await supabase.auth.signOut();
     location.replace('/');
   } catch {
-    msg.textContent = 'La suppression a échoué. Réessayez, ou écrivez à support@phonescore.app.';
+    msg.textContent = PSI18N.t('profilPage.suppressionEchec');
     msg.className = 'msg err';
   }
 });
