@@ -24,7 +24,21 @@ function occupe(bouton, actif, libelle) {
 
 /* ---------------- session ---------------- */
 
-supabase.auth.onAuthStateChange((_evt, session) => rendre(session));
+// Marque le compte comme venant du site, une seule fois : le filtre
+// `is('signup_source', null)` fait qu'un compte déjà tagué 'app' (créé
+// depuis le mobile, puis connecté ici) n'est jamais écrasé. Même logique
+// côté app dans contexts/auth-context.tsx (tagSignupSource).
+async function marquerOrigineWeb(userId) {
+  const { error } = await supabase
+    .from('profiles').update({ signup_source: 'web' })
+    .eq('id', userId).is('signup_source', null);
+  if (error) console.warn('marquerOrigineWeb error', error.message);
+}
+
+supabase.auth.onAuthStateChange((evt, session) => {
+  rendre(session);
+  if (evt === 'SIGNED_IN' && session) marquerOrigineWeb(session.user.id);
+});
 supabase.auth.getSession().then(({ data }) => rendre(data.session));
 
 async function rendre(session) {
