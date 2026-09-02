@@ -99,7 +99,7 @@
   ]
 }
 </script>
-<link rel="stylesheet" href="/css/index.css?v=cf9bb9ef">
+<link rel="stylesheet" href="/css/index.css?v=e9e46a6d">
 
 <!-- Outil de verification, isole par .outil : sa feuille et celle de
      l'accueil partagent sept noms de classe (card, pack, sub, wrap...). -->
@@ -144,13 +144,17 @@
         <span></span><span></span><span></span>
       </button>
       <nav class="menu" id="menu" hidden>
-        <a href="/profil">Profil</a>
-        <a href="/historique">Historique</a>
-        <a href="/assistance">Assistance</a>
-        <a href="/rapport">Comprendre le rapport</a>
-        <a href="/revendeurs">Badge boutique</a>
-        <a href="/cgu">Conditions générales d'utilisation</a>
-        <a href="/confidentialite">Politique de confidentialité</a>
+        <a href="/profil" data-i18n="nav.profil">Profil</a>
+        <a href="/historique" data-i18n="nav.historique">Historique</a>
+        <a href="/assistance" data-i18n="nav.assistance">Assistance</a>
+        <a href="/rapport" data-i18n="nav.rapport">Comprendre le rapport</a>
+        <a href="/revendeurs" data-i18n="nav.revendeurs">Badge boutique</a>
+        <a href="/cgu" data-i18n="nav.cgu">Conditions générales d'utilisation</a>
+        <a href="/confidentialite" data-i18n="nav.confidentialite">Politique de confidentialité</a>
+        <div class="menu-langues">
+          <button type="button" data-langue="fr" data-i18n-lang-actif="fr">Français</button>
+          <button type="button" data-langue="en" data-i18n-lang-actif="en">English</button>
+        </div>
       </nav>
     </div>
   </div>
@@ -188,44 +192,45 @@
       </svg>
       <h1>PhoneScore</h1>
     </div>
-    <p class="lead">Vérifie avant d’acheter</p>
+    <p class="lead" data-i18n="hero.lead">Vérifie avant d’acheter</p>
     <!-- L'outil, pas une brochure. Le visiteur type arrive d'un lien
          partage sur les reseaux : lui proposer de telecharger l'app
          alors qu'il en vient peut-etre n'a aucun sens. -->
     <div class="outil">
       <section id="vue-auth" class="hidden">
-          <p class="o-sub" id="sous-titre-auth">Connectez-vous pour vérifier un appareil.</p>
+          <p class="o-sub" id="sous-titre-auth" data-i18n="auth.sousTitreConnexion">Connectez-vous pour vérifier un appareil.</p>
 
           <div class="o-card">
             <button id="btn-apple" class="apple" type="button">
               <svg viewBox="0 0 170 170" aria-hidden="true"><path fill="currentColor" d="M150.4 128.8c-2.6 6-5.7 11.5-9.4 16.6-5.1 7-9.3 11.9-12.4 14.6-4.9 4.5-10.1 6.8-15.7 6.9-4 0-8.9-1.1-14.5-3.5-5.6-2.3-10.8-3.5-15.5-3.5-4.9 0-10.2 1.2-16 3.5-5.8 2.4-10.4 3.6-14.1 3.7-5.4.2-10.7-2.2-15.9-6.9-3.4-2.9-7.7-8-13-15.3-5.6-7.7-10.2-16.7-13.9-27C6.1 106.4 4 95.6 4 85.2c0-11.9 2.6-22.2 7.7-30.8 4-6.9 9.4-12.4 16.1-16.4 6.7-4 14-6.1 21.8-6.2 4.2 0 9.8 1.3 16.8 3.9 6.9 2.6 11.4 3.9 13.3 3.9 1.4 0 6.3-1.5 14.7-4.5 8-2.8 14.7-3.9 20.2-3.5 14.9 1.2 26.1 7.1 33.5 17.7-13.3 8.1-19.9 19.4-19.8 34 .1 11.4 4.3 20.8 12.5 28.3 3.7 3.5 7.9 6.3 12.5 8.2-1 2.9-2.1 5.7-3.2 8.4v-.4Zm-33-113.5c0 8.9-3.3 17.2-9.7 24.9-7.8 9.1-17.2 14.4-27.4 13.6-.1-1.1-.2-2.2-.2-3.4 0-8.6 3.7-17.7 10.4-25.2 3.3-3.8 7.5-7 12.6-9.5 5.1-2.5 9.9-3.9 14.4-4.1.1 1.3.2 2.5.2 3.7Z"/></svg>
-              Continuer avec Apple
+              <span data-i18n="auth.apple">Continuer avec Apple</span>
             </button>
-            <div class="separateur"><span>ou</span></div>
+            <div class="separateur"><span data-i18n="auth.ou">ou</span></div>
             <div class="field">
-              <label for="email">Adresse e-mail</label>
-              <input id="email" type="email" autocomplete="email" inputmode="email" placeholder="vous@exemple.com">
+              <label for="email" data-i18n="auth.emailLabel">Adresse e-mail</label>
+              <input id="email" type="email" autocomplete="email" inputmode="email" placeholder="vous@exemple.com" data-i18n-ph="auth.emailPh">
             </div>
             <div class="field">
-              <label for="mdp">Mot de passe</label>
-              <input id="mdp" type="password" autocomplete="current-password" placeholder="8 caractères minimum">
+              <label for="mdp" data-i18n="auth.mdpLabel">Mot de passe</label>
+              <input id="mdp" type="password" autocomplete="current-password" placeholder="8 caractères minimum" data-i18n-ph="auth.mdpPh">
             </div>
             <div class="field hidden" id="champ-confirmation">
-              <label for="mdp-confirmation">Confirmer le mot de passe</label>
-              <input id="mdp-confirmation" type="password" autocomplete="new-password" placeholder="Retapez le même mot de passe">
+              <label for="mdp-confirmation" data-i18n="auth.mdpConfirmLabel">Confirmer le mot de passe</label>
+              <input id="mdp-confirmation" type="password" autocomplete="new-password" placeholder="Retapez le même mot de passe" data-i18n-ph="auth.mdpConfirmPh">
             </div>
 
-            <button id="btn-connexion" type="button">Se connecter</button>
-            <button id="btn-inscription" type="button" class="hidden">Créer un compte</button>
-            <button id="btn-basculer" type="button" class="ghost">Créer un nouveau compte</button>
+            <button id="btn-connexion" type="button" data-i18n="auth.connexion">Se connecter</button>
+            <button id="btn-inscription" type="button" class="hidden" data-i18n="auth.inscription">Créer un compte</button>
+            <button id="btn-basculer" type="button" class="ghost" data-i18n="auth.basculerVersInscription">Créer un nouveau compte</button>
 
             <p class="hint" id="hint-connexion">
-              <a href="/reinitialiser">Mot de passe oublié&nbsp;?</a>
+              <a href="/reinitialiser" data-i18n="auth.mdpOublie">Mot de passe oublié&nbsp;?</a>
             </p>
             <p class="hint hidden" id="hint-inscription">
-              En créant un compte, vous acceptez les
-              <a href="/cgu">conditions d'utilisation</a> et la
-              <a href="/confidentialite">politique de confidentialité</a>.
+              <span data-i18n="auth.legalPrefixe">En créant un compte, vous acceptez les</span>
+              <a href="/cgu" data-i18n="auth.legalCgu">conditions d'utilisation</a>
+              <span data-i18n="auth.legalEt">et la</span>
+              <a href="/confidentialite" data-i18n="auth.legalConfidentialite">politique de confidentialité</a>.
             </p>
             <div id="msg-auth" class="msg"></div>
           </div>
@@ -243,7 +248,7 @@
                       fill="url(#sG)" stroke="#FDE68A" stroke-width="5" stroke-linejoin="round"/>
               </svg>
               <b id="stat-jour">—</b>
-              <span>Aujourd’hui</span>
+              <span data-i18n="stats.jour">Aujourd’hui</span>
             </div>
             <div class="stat">
               <svg viewBox="0 0 200 200" aria-hidden="true">
@@ -255,7 +260,7 @@
                 <rect x="132" y="34" width="34" height="138" rx="10" fill="url(#bC)"/>
               </svg>
               <b id="stat-total">—</b>
-              <span>Vérifiés</span>
+              <span data-i18n="stats.total">Vérifiés</span>
             </div>
             <div class="stat" id="stat-fiable" data-ton="neutral">
               <svg viewBox="0 0 200 200" aria-hidden="true">
@@ -289,7 +294,7 @@
                          transform="rotate(-25 72 52)"/>
               </svg>
               <b id="stat-fiable-valeur">—</b>
-              <span>Fiable</span>
+              <span data-i18n="stats.fiable">Fiable</span>
             </div>
           </div>
 
@@ -309,43 +314,43 @@
                 <path d="M118 106 L172 106 L172 142 L118 142 Q104 142 104 124 Q104 106 118 106 Z" fill="#1E40AF"/>
                 <circle cx="126" cy="124" r="9" fill="#93C5FD"/>
               </svg>
-              <span>Solde : <b id="solde">—</b> pièce(s)</span>
+              <span><span data-i18n="solde.prefixe">Solde : </span><b id="solde">—</b><span data-i18n="solde.suffixe"> pièce(s)</span></span>
             </div>
             <p class="hint" id="courriel"></p>
           </div>
       
           <div class="o-card">
             <div class="seg">
-              <button type="button" id="t-iphone" aria-pressed="true">iPhone — 1 pièce</button>
-              <button type="button" id="t-macbook" aria-pressed="false">MacBook — 2 pièces</button>
+              <button type="button" id="t-iphone" aria-pressed="true" data-i18n="verif.iphone">iPhone — 1 pièce</button>
+              <button type="button" id="t-macbook" aria-pressed="false" data-i18n="verif.macbook">MacBook — 2 pièces</button>
             </div>
             <div class="field">
-              <label for="imei">IMEI ou numéro de série</label>
-              <input id="imei" inputmode="numeric" autocomplete="off" placeholder="Composez *#06# sur l'appareil">
+              <label for="imei" data-i18n="verif.imeiLabel">IMEI ou numéro de série</label>
+              <input id="imei" inputmode="numeric" autocomplete="off" placeholder="Composez *#06# sur l'appareil" data-i18n-ph="verif.imeiPh">
             </div>
-            <button id="btn-verifier">Vérifier maintenant</button>
+            <button id="btn-verifier" data-i18n="verif.btn">Vérifier maintenant</button>
             <div id="chargement-verif" class="chargement-verif hidden">
               <div class="etapes" id="etapes-verif">
-                <div class="etape" data-i="0"><span class="point"></span><span>Connexion au fournisseur…</span></div>
-                <div class="etape" data-i="1"><span class="point"></span><span>Vérification Apple (iCloud, garantie)…</span></div>
-                <div class="etape" data-i="2"><span class="point"></span><span>Vérification opérateur et liste noire…</span></div>
-                <div class="etape" data-i="3"><span class="point"></span><span>Compilation du rapport…</span></div>
+                <div class="etape" data-i="0"><span class="point"></span><span data-i18n="verif.etape0">Connexion au fournisseur…</span></div>
+                <div class="etape" data-i="1"><span class="point"></span><span data-i18n="verif.etape1">Vérification Apple (iCloud, garantie)…</span></div>
+                <div class="etape" data-i="2"><span class="point"></span><span data-i18n="verif.etape2">Vérification opérateur et liste noire…</span></div>
+                <div class="etape" data-i="3"><span class="point"></span><span data-i18n="verif.etape3">Compilation du rapport…</span></div>
               </div>
             </div>
             <div id="msg-verif" class="msg"></div>
           </div>
-      
+
           <div id="rapport" class="o-card hidden"></div>
 
           <p class="recharge">
-            <a href="/recharger">Recharger mes pièces</a>
+            <a href="/recharger" data-i18n="verif.recharger">Recharger mes pièces</a>
           </p>
         </section>
     </div>
 
     <p class="cta-note u-margin-top-26px">
-      Vous préférez l’application&nbsp;?
-      <a href="https://apps.apple.com/app/id6795897093">Télécharger sur l’App&nbsp;Store</a>
+      <span data-i18n="cta.avant">Vous préférez l’application&nbsp;?</span>
+      <a href="https://apps.apple.com/app/id6795897093" data-i18n="cta.lien">Télécharger sur l’App&nbsp;Store</a>
     </p>
   </div>
 </div>
@@ -354,19 +359,19 @@
 <div class="wrap">
   <section>
     <div class="narrow">
-      <h2>Ce que PhoneScore contrôle</h2>
-      <p class="sub">À partir du seul code IMEI, auprès des bases constructeur et GSMA.</p>
+      <h2 data-i18n="controles.titre">Ce que PhoneScore contrôle</h2>
+      <p class="sub" data-i18n="controles.sub">À partir du seul code IMEI, auprès des bases constructeur et GSMA.</p>
       <ul class="controles">
-        <li><b>Verrou iCloud</b> — le point le plus coûteux : un appareil lié à « Localiser » est inutilisable, et personne ne peut le débloquer.</li>
-        <li><b>Déclaré volé ou perdu</b> — inscription sur liste noire GSMA. Un appareil signalé peut être coupé du réseau à tout moment.</li>
-        <li><b>Verrou opérateur</b> — un téléphone SIM-locké n'accepte que l'opérateur d'origine, souvent étranger.</li>
-        <li><b>Modèle et capacité réels</b> — ce qui a été fabriqué sous cet IMEI, quoi qu'annonce le vendeur.</li>
-        <li><b>Cartes SIM et eSIM</b> — les iPhone américains depuis le 14 n'ont aucun tiroir SIM. Le rapport le signale.</li>
-        <li><b>Garantie</b> — date d'achat et couverture Apple restante, quand l'information existe.</li>
-        <li><b>Rapport partageable</b> — à envoyer au vendeur ou à l'acheteur par WhatsApp.</li>
+        <li><b data-i18n="controles.icloudT">Verrou iCloud</b> <span data-i18n="controles.icloudD">— le point le plus coûteux : un appareil lié à « Localiser » est inutilisable, et personne ne peut le débloquer.</span></li>
+        <li><b data-i18n="controles.voleT">Déclaré volé ou perdu</b> <span data-i18n="controles.voleD">— inscription sur liste noire GSMA. Un appareil signalé peut être coupé du réseau à tout moment.</span></li>
+        <li><b data-i18n="controles.simlockT">Verrou opérateur</b> <span data-i18n="controles.simlockD">— un téléphone SIM-locké n'accepte que l'opérateur d'origine, souvent étranger.</span></li>
+        <li><b data-i18n="controles.modeleT">Modèle et capacité réels</b> <span data-i18n="controles.modeleD">— ce qui a été fabriqué sous cet IMEI, quoi qu'annonce le vendeur.</span></li>
+        <li><b data-i18n="controles.esimT">Cartes SIM et eSIM</b> <span data-i18n="controles.esimD">— les iPhone américains depuis le 14 n'ont aucun tiroir SIM. Le rapport le signale.</span></li>
+        <li><b data-i18n="controles.garantieT">Garantie</b> <span data-i18n="controles.garantieD">— date d'achat et couverture Apple restante, quand l'information existe.</span></li>
+        <li><b data-i18n="controles.partageT">Rapport partageable</b> <span data-i18n="controles.partageD">— à envoyer au vendeur ou à l'acheteur par WhatsApp.</span></li>
       </ul>
       <p class="sub u-margin-18px-0-0">
-        <a href="/rapport">Ce que chaque ligne veut dire</a>, et quoi vérifier sur l'appareil.
+        <a href="/rapport" data-i18n="controles.lien">Ce que chaque ligne veut dire</a><span data-i18n="controles.lienSuite">, et quoi vérifier sur l'appareil.</span>
       </p>
     </div>
   </section>
@@ -376,21 +381,21 @@
 <div class="wrap">
   <section>
     <div class="narrow">
-      <h2>Comment ça marche</h2>
-      <p class="sub">Trois gestes, moins d'une minute.</p>
+      <h2 data-i18n="comment.titre">Comment ça marche</h2>
+      <p class="sub" data-i18n="comment.sub">Trois gestes, moins d'une minute.</p>
       <div class="steps">
         <div class="step">
           <div class="n">1</div>
-          <p><b>Relevez l'IMEI</b>Composez <code>*#06#</code> sur le téléphone à vérifier, ou scannez le code-barres avec l'appareil photo.</p>
+          <p><b data-i18n="comment.s1T">Relevez l'IMEI</b><span data-i18n="comment.s1Da">Composez </span><code>*#06#</code><span data-i18n="comment.s1Db"> sur le téléphone à vérifier, ou scannez le code-barres avec l'appareil photo.</span></p>
         </div>
         <div class="step">
           <div class="n">2</div>
-          <p><b>Lancez la vérification</b>PhoneScore interroge les bases officielles et renvoie le rapport en quelques secondes.</p>
+          <p><b data-i18n="comment.s2T">Lancez la vérification</b><span data-i18n="comment.s2D">PhoneScore interroge les bases officielles et renvoie le rapport en quelques secondes.</span></p>
         </div>
         <div class="step">
           <div class="n">3</div>
-          <p><b>Décidez</b>Verdict vert, vous pouvez conclure. Verdict rouge, passez votre chemin — et gardez le rapport comme preuve.
-             <a href="/rapport">Comprendre chaque ligne du rapport</a>.</p>
+          <p><b data-i18n="comment.s3T">Décidez</b><span data-i18n="comment.s3D">Verdict vert, vous pouvez conclure. Verdict rouge, passez votre chemin — et gardez le rapport comme preuve.</span>
+             <a href="/rapport" data-i18n="comment.s3Lien">Comprendre chaque ligne du rapport</a>.</p>
         </div>
       </div>
     </div>
@@ -400,21 +405,21 @@
 <!-- ---------------- REVENDEURS ---------------- -->
 <div class="wrap">
   <section>
-    <h2>Pour les revendeurs</h2>
-    <p class="sub">Les outils du métier, inclus dans l'application.</p>
+    <h2 data-i18n="revendeurs.titre">Pour les revendeurs</h2>
+    <p class="sub" data-i18n="revendeurs.sub">Les outils du métier, inclus dans l'application.</p>
     <div class="grid">
       <div class="card">
-        <h4>Votre boutique dans l'annuaire</h4>
-        <p>Inscrivez votre boutique, indiquez sa position, et laissez vos clients vous contacter directement par WhatsApp. Les boutiques proches de l'acheteur apparaissent en premier. L'inscription demande le Pack Revendeur, qui ouvre 30 jours d'accès.</p>
+        <h4 data-i18n="revendeurs.annuaireT">Votre boutique dans l'annuaire</h4>
+        <p data-i18n="revendeurs.annuaireD">Inscrivez votre boutique, indiquez sa position, et laissez vos clients vous contacter directement par WhatsApp. Les boutiques proches de l'acheteur apparaissent en premier. L'inscription demande le Pack Revendeur, qui ouvre 30 jours d'accès.</p>
       </div>
       <div class="card">
-        <h4>Badge Certifiée</h4>
-        <p>Les boutiques qui vérifient régulièrement leurs appareils affichent un badge de confiance visible par les acheteurs.
-           <a href="/revendeurs">Comment l&rsquo;obtenir</a>.</p>
+        <h4 data-i18n="revendeurs.badgeT">Badge Certifiée</h4>
+        <p><span data-i18n="revendeurs.badgeD">Les boutiques qui vérifient régulièrement leurs appareils affichent un badge de confiance visible par les acheteurs.</span>
+           <a href="/revendeurs" data-i18n="revendeurs.badgeLien">Comment l&rsquo;obtenir</a>.</p>
       </div>
       <div class="card">
-        <h4>Stock et factures</h4>
-        <p>Suivez vos appareils en stock, vos prix d'achat et de vente, et éditez une facture propre pour chaque client.</p>
+        <h4 data-i18n="revendeurs.stockT">Stock et factures</h4>
+        <p data-i18n="revendeurs.stockD">Suivez vos appareils en stock, vos prix d'achat et de vente, et éditez une facture propre pour chaque client.</p>
       </div>
     </div>
   </section>
@@ -423,13 +428,13 @@
 <footer>
   <div class="wrap">
     <p>
-      <a href="/rapport">Comprendre le rapport</a>
-      <a href="/assistance">Assistance</a>
-      <a href="/revendeurs">Badge boutique</a>
-      <a href="/cgu">Conditions générales d'utilisation</a>
-      <a href="/confidentialite">Politique de confidentialité</a>
+      <a href="/rapport" data-i18n="nav.rapport">Comprendre le rapport</a>
+      <a href="/assistance" data-i18n="nav.assistance">Assistance</a>
+      <a href="/revendeurs" data-i18n="nav.revendeurs">Badge boutique</a>
+      <a href="/cgu" data-i18n="nav.cgu">Conditions générales d'utilisation</a>
+      <a href="/confidentialite" data-i18n="nav.confidentialite">Politique de confidentialité</a>
     </p>
-    <p class="u-margin-top-14px">PhoneScore</p>
+    <p class="u-margin-top-14px" data-i18n="footer.marque">PhoneScore</p>
   </div>
 </footer>
 
@@ -437,10 +442,13 @@
      depuis un CDN ne peut pas etre verifie par integrity.
      Empreinte dans vendor/SHA256SUMS.txt. -->
 <script src="/vendor/supabase-2.112.3.js"></script>
+<!-- Traduction FR/EN de la coquille statique + PSI18N.t() pour les textes
+     ecrits dynamiquement par accueil.js : doit se charger avant lui. -->
+<script src="/js/i18n.js?v=d43405d3"></script>
 <!-- Script classique (pas de type="module") : ses fonctions doivent rester
      visibles comme identifiants globaux pour accueil.js, charge apres lui. -->
 <script src="/js/rapport-commun.js?v=a66716f2"></script>
-<script type="module" src="/js/accueil.js?v=ed0ac791"></script>
+<script type="module" src="/js/accueil.js?v=787610cc"></script>
 
 <script src="/js/menu.js?v=88bca18d"></script>
 </body>

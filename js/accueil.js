@@ -77,12 +77,10 @@ function basculerModeAuth(inscription) {
   $('champ-confirmation').classList.toggle('hidden', !modeInscription);
   $('btn-connexion').classList.toggle('hidden', modeInscription);
   $('btn-inscription').classList.toggle('hidden', !modeInscription);
-  $('btn-basculer').textContent = modeInscription ? 'J’ai déjà un compte' : 'Créer un nouveau compte';
+  $('btn-basculer').textContent = PSI18N.t(modeInscription ? 'auth.basculerVersConnexion' : 'auth.basculerVersInscription');
   $('hint-connexion').classList.toggle('hidden', modeInscription);
   $('hint-inscription').classList.toggle('hidden', !modeInscription);
-  $('sous-titre-auth').textContent = modeInscription
-    ? 'Créez un compte en quelques secondes — puis vérifiez un appareil.'
-    : 'Connectez-vous pour vérifier un appareil.';
+  $('sous-titre-auth').textContent = PSI18N.t(modeInscription ? 'auth.sousTitreInscription' : 'auth.sousTitreConnexion');
   $('mdp').setAttribute('autocomplete', modeInscription ? 'new-password' : 'current-password');
   $('mdp-confirmation').value = '';
   effacer($('msg-auth'));
@@ -93,12 +91,12 @@ $('btn-basculer').addEventListener('click', () => basculerModeAuth(!modeInscript
 $('btn-connexion').addEventListener('click', async () => {
   const email = $('email').value.trim().toLowerCase();
   const password = $('mdp').value;
-  if (!email || !password) return afficher($('msg-auth'), 'Renseignez votre e-mail et votre mot de passe.', 'err');
+  if (!email || !password) return afficher($('msg-auth'), PSI18N.t('auth.champsManquants'), 'err');
 
   occupe($('btn-connexion'), true);
   const { error } = await supabase.auth.signInWithPassword({ email, password });
-  occupe($('btn-connexion'), false, 'Se connecter');
-  if (error) afficher($('msg-auth'), 'Connexion refusée. Vérifiez vos identifiants.', 'err');
+  occupe($('btn-connexion'), false, PSI18N.t('auth.connexion'));
+  if (error) afficher($('msg-auth'), PSI18N.t('auth.connexionRefusee'), 'err');
 });
 
 // `occupe()` remplace tout le contenu du bouton par le libelle donne : garder
@@ -116,27 +114,27 @@ $('btn-apple').addEventListener('click', async () => {
   // Pas de reactivation du bouton en cas de succes : la page part vers Apple.
   if (error) {
     occupe($('btn-apple'), false, CONTENU_BTN_APPLE);
-    afficher($('msg-auth'), "La connexion avec Apple n'a pas pu démarrer. Réessayez dans un instant.", 'err');
+    afficher($('msg-auth'), PSI18N.t('auth.appleEchec'), 'err');
   }
 });
 
 $('btn-inscription').addEventListener('click', async () => {
   const email = $('email').value.trim().toLowerCase();
   const password = $('mdp').value;
-  if (password.length < 8) return afficher($('msg-auth'), 'Le mot de passe doit contenir au moins 8 caractères.', 'err');
-  if (password !== $('mdp-confirmation').value) return afficher($('msg-auth'), 'Les mots de passe ne correspondent pas.', 'err');
+  if (password.length < 8) return afficher($('msg-auth'), PSI18N.t('auth.mdpTropCourt'), 'err');
+  if (password !== $('mdp-confirmation').value) return afficher($('msg-auth'), PSI18N.t('auth.mdpDifferents'), 'err');
 
   occupe($('btn-inscription'), true);
   const { data, error } = await supabase.auth.signUp({ email, password });
-  occupe($('btn-inscription'), false, 'Créer un compte');
+  occupe($('btn-inscription'), false, PSI18N.t('auth.inscription'));
 
-  if (error) return afficher($('msg-auth'), "Inscription impossible. Cette adresse est peut-être déjà utilisée.", 'err');
+  if (error) return afficher($('msg-auth'), PSI18N.t('auth.inscriptionEchec'), 'err');
   // Selon le reglage de confirmation d'e-mail, la session peut etre nulle :
   // le compte existe mais rien n'est encore signe. On repasse sur l'ecran de
   // connexion, ou l'utilisateur atterrira de toute facon apres avoir confirme.
   if (!data.session) {
     basculerModeAuth(false);
-    afficher($('msg-auth'), 'Compte créé. Vérifiez votre boîte mail pour confirmer votre adresse.', 'ok');
+    afficher($('msg-auth'), PSI18N.t('auth.inscriptionOk'), 'ok');
   }
 });
 
@@ -237,21 +235,21 @@ $('btn-verifier').addEventListener('click', async () => {
   effacer($('msg-verif'));
   $('rapport').classList.add('hidden');
 
-  if (imei.length < 8) return afficher($('msg-verif'), 'Saisissez un IMEI ou un numéro de série valide.', 'err');
+  if (imei.length < 8) return afficher($('msg-verif'), PSI18N.t('verif.imeiInvalide'), 'err');
 
   occupe($('btn-verifier'), true);
   $('chargement-verif').classList.remove('hidden');
   demarrerEtapesVerif();
   const { data, error } = await supabase.functions.invoke('check-imei', { body: { imei, type } });
   arreterEtapesVerif();
-  occupe($('btn-verifier'), false, 'Vérifier maintenant');
+  occupe($('btn-verifier'), false, PSI18N.t('verif.btn'));
   $('chargement-verif').classList.add('hidden');
 
   if (error) {
-    return afficher($('msg-verif'), await messageErreur(error, "La vérification n'a pas pu aboutir. Réessayez dans un instant."), 'err');
+    return afficher($('msg-verif'), await messageErreur(error, PSI18N.t('verif.erreurDefaut')), 'err');
   }
   if (!data?.success) {
-    return afficher($('msg-verif'), data?.message || 'Appareil introuvable.', 'err');
+    return afficher($('msg-verif'), data?.message || PSI18N.t('verif.introuvable'), 'err');
   }
 
   await rafraichirSolde();
