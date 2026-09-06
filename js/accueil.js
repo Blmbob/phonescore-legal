@@ -35,9 +35,32 @@ async function marquerOrigineWeb(userId) {
   if (error) console.warn('marquerOrigineWeb error', error.message);
 }
 
+// Meme logique write-once que marquerOrigineWeb, pour le pays. cf-ipcountry
+// n'atteint jamais le JS client (c'est un en-tete de la requete, pas une
+// donnee exposee au navigateur) : /geo (functions/geo.js, une fonction
+// Cloudflare Pages) le relaie. Cote app, contexts/auth-context.tsx pose la
+// meme colonne via Localization.getLocales() -- un reglage appareil, pas une
+// geoloc IP comme ici.
+async function marquerPaysWeb(userId) {
+  let country;
+  try {
+    country = (await (await fetch('/geo')).json()).country;
+  } catch (e) {
+    return console.warn('marquerPaysWeb fetch error', e.message);
+  }
+  if (!country) return;
+  const { error } = await supabase
+    .from('profiles').update({ signup_country: country })
+    .eq('id', userId).is('signup_country', null);
+  if (error) console.warn('marquerPaysWeb error', error.message);
+}
+
 supabase.auth.onAuthStateChange((evt, session) => {
   rendre(session);
-  if (evt === 'SIGNED_IN' && session) marquerOrigineWeb(session.user.id);
+  if (evt === 'SIGNED_IN' && session) {
+    marquerOrigineWeb(session.user.id);
+    marquerPaysWeb(session.user.id);
+  }
 });
 supabase.auth.getSession().then(({ data }) => rendre(data.session));
 
