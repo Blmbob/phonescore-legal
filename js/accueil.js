@@ -141,6 +141,22 @@ $('btn-apple').addEventListener('click', async () => {
   }
 });
 
+const CONTENU_BTN_GOOGLE = $('btn-google').innerHTML;
+
+$('btn-google').addEventListener('click', async () => {
+  effacer($('msg-auth'));
+  occupe($('btn-google'), true);
+  const { error } = await supabase.auth.signInWithOAuth({
+    provider: 'google',
+    options: { redirectTo: 'https://phonescore.app/' },
+  });
+  // Pas de reactivation du bouton en cas de succes : la page part vers Google.
+  if (error) {
+    occupe($('btn-google'), false, CONTENU_BTN_GOOGLE);
+    afficher($('msg-auth'), PSI18N.t('auth.googleEchec'), 'err');
+  }
+});
+
 $('btn-inscription').addEventListener('click', async () => {
   const email = $('email').value.trim().toLowerCase();
   const password = $('mdp').value;

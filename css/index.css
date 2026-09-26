@@ -251,6 +251,15 @@
   .outil button.apple:hover:not(:disabled){background:#1a1a1a}
   .outil button.apple svg{width:18px; height:18px; flex:0 0 auto}
 
+  /* Charte Google Sign-In : fond blanc, texte gris fonce, logo "G" en
+     couleurs, jamais recolore. */
+  .outil button.google{
+    background:#fff; border-color:#dadce0; color:#1f1f1f; margin-top:10px;
+    display:flex; align-items:center; justify-content:center; gap:9px;
+  }
+  .outil button.google:hover:not(:disabled){background:#f1f3f4}
+  .outil button.google svg{width:18px; height:18px; flex:0 0 auto}
+
   .outil .separateur{display:flex; align-items:center; gap:12px; margin:16px 0}
   .outil .separateur::before, .outil .separateur::after{content:''; flex:1; height:1px; background:var(--line)}
   .outil .separateur span{color:var(--muted); font-size:13px}
