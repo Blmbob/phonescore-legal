@@ -82,6 +82,13 @@ const PAGES = [
     fil: 'iPhone IMEI check',
     article: { publie: '2026-09-29', titre: 'iPhone IMEI check' },
   },
+  {
+    fichier: 'verrou-icloud.html', chemin: '/verrou-icloud', en: '/en/icloud-lock-check',
+    titre: 'iCloud lock check before buying an iPhone or Mac — PhoneScore',
+    description: 'Spot an active iCloud Activation Lock, have it removed in front of you on iPhone, iPad or Mac, and know who can really unlock it.',
+    fil: 'iCloud lock check',
+    article: { publie: '2026-09-29', titre: 'iCloud lock check before you buy' },
+  },
 ];
 
 const EN_PARTICULIERS = Object.fromEntries(PAGES.filter(p => p.en).map(p => [p.chemin, p.en]));
@@ -256,7 +263,7 @@ function dateModif(fichier) {
 }
 
 function sitemap() {
-  const priorite = { '/': '1.0', '/rapport': '0.8', '/assistance': '0.8', '/revendeurs': '0.7', '/iphone-vole': '0.9', '/verifier-imei-iphone': '0.9' };
+  const priorite = { '/': '1.0', '/rapport': '0.8', '/assistance': '0.8', '/revendeurs': '0.7', '/iphone-vole': '0.9', '/verifier-imei-iphone': '0.9', '/verrou-icloud': '0.9' };
   const entrees = [];
   for (const page of PAGES) {
     const lastmod = dateModif(page.fichier);
