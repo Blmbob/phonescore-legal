@@ -21,6 +21,8 @@ exacte de l'adresse courante, un lien absolu non.
 | `assistance.html` | `/assistance` | FAQ, suppression de compte, contact — **c'est l'URL d'assistance Apple** |
 | `rapport.html` | `/rapport` | Ce que chaque ligne du rapport signifie |
 | `revendeurs.html` | `/revendeurs` | Badge boutique « Certifiée » |
+| `iphone-vole.html` | `/iphone-vole` | Guide SEO « Comment savoir si un iPhone est volé » — anglais sur `/en/stolen-iphone-check` |
+| `en/` | `/en/…` | Version anglaise **générée** par `outils/generer-en.mjs`, ne pas modifier |
 | `cgu.html` | `/cgu` | Conditions générales d'utilisation |
 | `confidentialite.html` | `/confidentialite` | Politique de confidentialité |
 | `profil.html` | `/profil` | Compte : solde, accès revendeur, parrainage — `noindex` |

@@ -9,10 +9,48 @@ const LANGUES_SUPPORTEES = ['fr', 'en'];
 
 const TRADUCTIONS = {
   fr: {
+    guideVole: {
+      h1: 'Comment savoir si un iPhone est <em>volé</em>',
+      lead: 'Avant d’acheter un iPhone d’occasion, trois vérifications suffisent pour savoir s’il a été déclaré volé ou perdu. Voici les signes qui doivent alerter, et les contrôles qui tranchent.',
+      courtT: 'La réponse courte',
+      courtP: '<b>Relevez l’IMEI</b> en composant <code>*#06#</code>, puis vérifiez deux choses : que cet IMEI n’est pas sur <b>liste noire</b>, et que le <b>verrou iCloud</b> est désactivé. Si l’un des deux est actif, n’achetez pas, quel que soit le prix.',
+      signesT: 'Les signes qui doivent vous alerter',
+      signesIntro: 'Aucun n’est une preuve à lui seul. Deux ensemble justifient de tout vérifier avant de sortir l’argent.',
+      signe1: '<b>Un prix nettement sous le marché.</b> Un iPhone récent vendu 30&nbsp;% moins cher que partout ailleurs a presque toujours une raison.',
+      signe2: '<b>Un vendeur pressé.</b> Rendez-vous dans la rue, refus de vous laisser manipuler l’appareil, insistance pour conclure vite.',
+      signe3: '<b>Ni boîte, ni facture</b>, ou une facture au nom de quelqu’un d’autre que le vendeur.',
+      signe4: '<b>Un écran de verrouillage au nom d’un autre</b>, un message « iPhone verrouillé par le propriétaire », ou une demande d’identifiant Apple au démarrage.',
+      signe5: '<b>Un IMEI qui ne correspond pas</b> entre l’appareil, la boîte et l’annonce.',
+      signe6: '<b>Un appareil « neuf sous blister » bradé.</b> Un film plastique se refait facilement : il ne prouve ni la provenance ni l’état.',
+      e1T: 'Étape 1 — Relever l’IMEI',
+      e1P1: 'L’IMEI est le numéro d’identité unique du téléphone, à 15 chiffres. C’est lui que les opérateurs signalent en cas de vol.',
+      e1P2: 'Composez <code>*#06#</code> sur le clavier de l’appareil : il s’affiche aussitôt. Vous le trouvez aussi dans <b>Réglages → Général → Informations</b>, et sur l’étiquette de la boîte.',
+      e1Agir: '<b>À faire :</b> comparez l’IMEI de l’écran, celui des Réglages et celui de la boîte. S’ils diffèrent, la boîte vient d’un autre téléphone, ou l’annonce aussi.',
+      e2T: 'Étape 2 — Vérifier la liste noire',
+      e2P1: 'Quand un iPhone est déclaré volé ou perdu, son opérateur inscrit l’IMEI sur une liste noire, partagée entre opérateurs de nombreux pays via la base de la GSMA. Un appareil inscrit peut être coupé du réseau à tout moment.',
+      e2P2: 'Il continue pourtant de fonctionner en Wi-Fi : un vendeur peut vous le montrer « en état de marche » sans mentir tout à fait. La liste noire concerne aussi les appareils <b>bloqués pour impayé</b> : pas forcément volés, mais tout aussi inutilisables.',
+      e2Agir: '<b>À faire :</b> si l’IMEI est sur liste noire, n’achetez pas. Revendre sciemment un appareil déclaré volé expose personnellement.',
+      e3T: 'Étape 3 — Vérifier le verrou iCloud',
+      e3P1: 'Le verrou d’activation, lié à « Localiser », rattache l’iPhone au compte Apple de son propriétaire. Après une remise à zéro, il redemande son identifiant et son mot de passe. Un voleur ne peut pas le retirer : c’est pour cela qu’un iPhone volé se revend souvent « bloqué iCloud », ou avec la promesse d’un déblocage.',
+      e3P2: 'Apple a retiré en 2017 sa page publique qui permettait de vérifier ce verrou à partir de l’IMEI. Il reste deux moyens : un service de vérification, ou un test devant le vendeur.',
+      e3Agir: '<b>À faire :</b> ouvrez <b>Réglages</b> : aucun nom ne doit apparaître en haut. Sinon, demandez au vendeur de se déconnecter de son compte Apple devant vous. S’il refuse ou repousse, arrêtez là. Aucun « déblocage iCloud » vendu en ligne n’est fiable.',
+      psT: 'Les trois contrôles en une fois',
+      psP1: 'PhoneScore interroge les bases officielles à partir de l’IMEI et renvoie un rapport en quelques secondes : <b>verrou iCloud, liste noire, verrou opérateur</b>, modèle réel, garantie, et appareil reconditionné ou remplacé.',
+      psP2: 'Un verdict vert, orange ou rouge résume le tout, et le rapport se garde comme preuve de la vérification.',
+      psCta: 'Vérifier un iPhone maintenant',
+      psNote: 'Aussi dans l’application iPhone —',
+      psNoteLien: 'télécharger sur l’App Store',
+      dejaT: 'Vous avez déjà acheté un iPhone volé ?',
+      dejaP1: 'Ne le revendez pas : vous transmettriez le problème, et le risque avec. Recontactez le vendeur et gardez toutes les traces de l’échange (annonce, messages, paiement).',
+      dejaP2: 'Si l’appareil est déclaré volé, rapprochez-vous de la police : c’est aussi ce qui vous protège si l’origine vous est reprochée. Méfiez-vous des offres de « déblocage » : sur un iPhone verrouillé iCloud ou sur liste noire, elles ne fonctionnent pas.',
+      encadre: '<b>Ce qu’une vérification ne dit pas.</b> Elle porte sur l’identité et le statut de l’appareil, pas sur son état : batterie, écran, dégât des eaux. Et un appareil peut être déclaré volé après votre vérification. Un rapport propre est un feu vert, pas une garantie : inspectez toujours l’appareil.',
+      contactP1: 'Une question sur un appareil précis ? Écrivez-nous à <a href="mailto:support@phonescore.app">support@phonescore.app</a>.',
+      contactP2: '<a href="/rapport">Comprendre chaque ligne du rapport</a> — <a href="/assistance">questions fréquentes</a>.',
+    },
     nav: {
       accueil: 'Accueil', verifierAppareil: 'Vérifier un appareil',
       profil: 'Profil', historique: 'Historique', assistance: 'Assistance',
-      rapport: 'Comprendre le rapport', revendeurs: 'Badge boutique',
+      rapport: 'Comprendre le rapport', revendeurs: 'Badge boutique', guideVole: 'Savoir si un iPhone est volé',
       cgu: "Conditions générales d'utilisation", confidentialite: 'Politique de confidentialité',
       langue: 'Langue',
     },
@@ -421,10 +459,48 @@ const TRADUCTIONS = {
     },
   },
   en: {
+    guideVole: {
+      h1: 'How to check if an iPhone is <em>stolen</em>',
+      lead: 'Before buying a used iPhone, three checks are enough to know whether it has been reported lost or stolen. Here are the warning signs, and the checks that settle it.',
+      courtT: 'The short answer',
+      courtP: '<b>Get the IMEI</b> by dialing <code>*#06#</code>, then check two things: that the IMEI is not <b>blacklisted</b>, and that <b>iCloud Activation Lock</b> is off. If either one is on, don’t buy it, whatever the price.',
+      signesT: 'Warning signs',
+      signesIntro: 'None of these proves anything on its own. Two together mean you should check everything before paying.',
+      signe1: '<b>A price well below the market.</b> A recent iPhone selling for 30% less than everywhere else almost always has a reason.',
+      signe2: '<b>A seller in a hurry.</b> Meeting on the street, refusing to let you handle the phone, pushing to close fast.',
+      signe3: '<b>No box and no receipt</b>, or a receipt in someone else’s name.',
+      signe4: '<b>A lock screen with someone else’s name</b>, an “iPhone Locked to Owner” message, or an Apple ID prompt at startup.',
+      signe5: '<b>An IMEI that doesn’t match</b> between the phone, the box and the listing.',
+      signe6: '<b>A cheap “brand new, still sealed” iPhone.</b> Shrink wrap is easy to redo: it proves neither origin nor condition.',
+      e1T: 'Step 1 — Get the IMEI',
+      e1P1: 'The IMEI is the phone’s unique 15-digit identity number. It is what carriers report when a phone is stolen.',
+      e1P2: 'Dial <code>*#06#</code> on the phone’s keypad and it shows up right away. You can also find it in <b>Settings → General → About</b>, and on the box label.',
+      e1Agir: '<b>What to do:</b> compare the IMEI on screen, in Settings and on the box. If they differ, the box belongs to another phone, and maybe the listing too.',
+      e2T: 'Step 2 — Check the blacklist',
+      e2P1: 'When an iPhone is reported lost or stolen, the carrier adds its IMEI to a blacklist shared between carriers in many countries through the GSMA database. A blacklisted phone can be cut off from the network at any time.',
+      e2P2: 'It still works on Wi-Fi, so a seller can show it to you “working” without quite lying. The blacklist also covers phones <b>blocked for unpaid bills</b>: not necessarily stolen, but just as unusable.',
+      e2Agir: '<b>What to do:</b> if the IMEI is blacklisted, don’t buy it. Knowingly reselling a phone reported stolen puts you personally at risk.',
+      e3T: 'Step 3 — Check iCloud Activation Lock',
+      e3P1: 'Activation Lock, tied to Find My, links the iPhone to its owner’s Apple Account. After a reset, it asks for their Apple ID and password again. A thief cannot remove it, which is why stolen iPhones are often sold “iCloud locked”, or with a promise of unlocking.',
+      e3P2: 'In 2017 Apple removed its public page for checking this lock from an IMEI. Two options remain: a checking service, or a test in front of the seller.',
+      e3Agir: '<b>What to do:</b> open <b>Settings</b>: no name should appear at the top. Otherwise, ask the seller to sign out of their Apple Account in front of you. If they refuse or stall, walk away. No “iCloud unlock” sold online can be trusted.',
+      psT: 'All three checks at once',
+      psP1: 'PhoneScore queries official databases from the IMEI and returns a report in seconds: <b>iCloud lock, blacklist, carrier lock</b>, real model, warranty, and refurbished or replaced status.',
+      psP2: 'A green, orange or red verdict sums it up, and you can keep the report as proof of the check.',
+      psCta: 'Check an iPhone now',
+      psNote: 'Also in the iPhone app —',
+      psNoteLien: 'download on the App Store',
+      dejaT: 'Already bought a stolen iPhone?',
+      dejaP1: 'Don’t resell it: you would pass on the problem, and the risk with it. Contact the seller again and keep every record of the deal (listing, messages, payment).',
+      dejaP2: 'If the phone is reported stolen, go to the police: that is also what protects you if its origin is held against you. Beware of “unlocking” offers: on an iCloud-locked or blacklisted iPhone, they don’t work.',
+      encadre: '<b>What a check doesn’t tell you.</b> It covers the device’s identity and status, not its condition: battery, screen, water damage. And a phone can be reported stolen after your check. A clean report is a green light, not a guarantee: always inspect the device.',
+      contactP1: 'A question about a specific device? Write to us at <a href="mailto:support@phonescore.app">support@phonescore.app</a>.',
+      contactP2: '<a href="/rapport">Understand each line of the report</a> — <a href="/assistance">frequently asked questions</a>.',
+    },
     nav: {
       accueil: 'Home', verifierAppareil: 'Check a device',
       profil: 'Profile', historique: 'History', assistance: 'Support',
-      rapport: 'Understanding the report', revendeurs: 'Shop badge',
+      rapport: 'Understanding the report', guideVole: 'Is this iPhone stolen?', revendeurs: 'Shop badge',
       cgu: 'Terms of Service', confidentialite: 'Privacy Policy',
       langue: 'Language',
     },
@@ -873,6 +949,13 @@ function t(cle, vars) {
 
 function appliquerTraductions() {
   document.documentElement.lang = langueActuelle();
+  document.querySelectorAll('[data-i18n-lang-actif]').forEach(el => {
+    el.classList.toggle('actif', el.getAttribute('data-i18n-lang-actif') === langueActuelle());
+  });
+  // Page a langue fixe : son HTML est deja dans la bonne langue, et ses
+  // liens internes deja adaptes (/en/...) par outils/generer-en.mjs. Y
+  // reinjecter le dictionnaire les ramenerait vers les pages francaises.
+  if (languePage()) return;
   document.querySelectorAll('[data-i18n]').forEach(el => {
     el.textContent = t(el.getAttribute('data-i18n'));
   });
@@ -884,9 +967,6 @@ function appliquerTraductions() {
   });
   document.querySelectorAll('[data-i18n-ph]').forEach(el => {
     el.setAttribute('placeholder', t(el.getAttribute('data-i18n-ph')));
-  });
-  document.querySelectorAll('[data-i18n-lang-actif]').forEach(el => {
-    el.classList.toggle('actif', el.getAttribute('data-i18n-lang-actif') === langueActuelle());
   });
 }
 

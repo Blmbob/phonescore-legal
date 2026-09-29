@@ -66,9 +66,19 @@ const PAGES = [
     description: 'What data PhoneScore collects, why, who it is shared with, and how to delete your account.',
     fil: 'Privacy Policy',
   },
+  // Guides : une adresse anglaise propre (`en`), les mots-cles de la
+  // recherche anglaise n'etant pas ceux du slug francais.
+  {
+    fichier: 'iphone-vole.html', chemin: '/iphone-vole', en: '/en/stolen-iphone-check',
+    titre: 'How to check if an iPhone is stolen before buying — PhoneScore',
+    description: 'Before buying a used iPhone: the warning signs, and how to check the IMEI, the blacklist and iCloud Activation Lock in minutes.',
+    fil: 'Check if an iPhone is stolen',
+    article: { publie: '2026-09-29', titre: 'How to check if an iPhone is stolen' },
+  },
 ];
 
-const cheminEn = c => (c === '/' ? '/en/' : '/en' + c);
+const EN_PARTICULIERS = Object.fromEntries(PAGES.filter(p => p.en).map(p => [p.chemin, p.en]));
+const cheminEn = c => EN_PARTICULIERS[c] ?? (c === '/' ? '/en/' : '/en' + c);
 const CHEMINS_PUBLICS = new Set(PAGES.map(p => p.chemin));
 
 // --- Dictionnaire : js/i18n.js execute dans un bac a sable sans DOM. -------
@@ -181,11 +191,20 @@ function jsonLdEn(page) {
           { '@type': 'ListItem', position: 2, name: page.fil },
         ],
       },
-      {
-        '@type': 'WebPage', '@id': `${url}#page`, url, name: page.titre,
-        description: page.description, inLanguage: 'en',
-        isPartOf: { '@id': `${SITE}/en/#website` }, publisher: { '@id': `${SITE}/#organization` },
-      },
+      page.article
+        ? {
+          '@type': 'Article', '@id': `${url}#article`, headline: page.article.titre,
+          description: page.description, inLanguage: 'en',
+          datePublished: page.article.publie, dateModified: dateModif(page.fichier),
+          image: `${SITE}/og-image.png`,
+          author: { '@id': `${SITE}/#organization` }, publisher: { '@id': `${SITE}/#organization` },
+          isPartOf: { '@id': `${SITE}/en/#website` }, mainEntityOfPage: url,
+        }
+        : {
+          '@type': 'WebPage', '@id': `${url}#page`, url, name: page.titre,
+          description: page.description, inLanguage: 'en',
+          isPartOf: { '@id': `${SITE}/en/#website` }, publisher: { '@id': `${SITE}/#organization` },
+        },
     ];
   const json = JSON.stringify({ '@context': 'https://schema.org', '@graph': graphe }, null, 2);
   return `<script type="application/ld+json">\n${json}\n</script>`;
@@ -230,7 +249,7 @@ function dateModif(fichier) {
 }
 
 function sitemap() {
-  const priorite = { '/': '1.0', '/rapport': '0.8', '/assistance': '0.8', '/revendeurs': '0.7' };
+  const priorite = { '/': '1.0', '/rapport': '0.8', '/assistance': '0.8', '/revendeurs': '0.7', '/iphone-vole': '0.9' };
   const entrees = [];
   for (const page of PAGES) {
     const lastmod = dateModif(page.fichier);
@@ -270,8 +289,9 @@ for (const page of PAGES) {
   if (frMaj !== fr) fs.writeFileSync(cheminFr, frMaj);
   fr = frMaj;
 
-  fs.writeFileSync(path.join(RACINE, 'en', page.fichier), versionAnglaise(fr, page, manquantes));
-  console.log(`en/${page.fichier}`);
+  const fichierEn = page.en ? page.en.slice(1) + '.html' : 'en/' + page.fichier;
+  fs.writeFileSync(path.join(RACINE, fichierEn), versionAnglaise(fr, page, manquantes));
+  console.log(fichierEn);
 }
 
 fs.writeFileSync(path.join(RACINE, 'sitemap.xml'), sitemap());
