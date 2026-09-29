@@ -114,4 +114,20 @@
     <xhtml:link rel="alternate" hreflang="x-default" href="https://phonescore.app/en/stolen-iphone-check"/>
     <priority>0.9</priority>
   </url>
+  <url>
+    <loc>https://phonescore.app/verifier-imei-iphone</loc>
+    <lastmod>2026-09-29</lastmod>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://phonescore.app/verifier-imei-iphone"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://phonescore.app/en/iphone-imei-check"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://phonescore.app/en/iphone-imei-check"/>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://phonescore.app/en/iphone-imei-check</loc>
+    <lastmod>2026-09-29</lastmod>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://phonescore.app/verifier-imei-iphone"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://phonescore.app/en/iphone-imei-check"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://phonescore.app/en/iphone-imei-check"/>
+    <priority>0.9</priority>
+  </url>
 </urlset>

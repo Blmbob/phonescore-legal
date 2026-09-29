@@ -75,6 +75,13 @@ const PAGES = [
     fil: 'Check if an iPhone is stolen',
     article: { publie: '2026-09-29', titre: 'How to check if an iPhone is stolen' },
   },
+  {
+    fichier: 'verifier-imei-iphone.html', chemin: '/verifier-imei-iphone', en: '/en/iphone-imei-check',
+    titre: 'iPhone IMEI check: where to find it and what it reveals — PhoneScore',
+    description: 'Where to find an iPhone IMEI (*#06#, Settings, box, locked iPhone) and what a check reveals: real model, blacklist, iCloud lock, carrier lock, warranty.',
+    fil: 'iPhone IMEI check',
+    article: { publie: '2026-09-29', titre: 'iPhone IMEI check' },
+  },
 ];
 
 const EN_PARTICULIERS = Object.fromEntries(PAGES.filter(p => p.en).map(p => [p.chemin, p.en]));
@@ -249,7 +256,7 @@ function dateModif(fichier) {
 }
 
 function sitemap() {
-  const priorite = { '/': '1.0', '/rapport': '0.8', '/assistance': '0.8', '/revendeurs': '0.7', '/iphone-vole': '0.9' };
+  const priorite = { '/': '1.0', '/rapport': '0.8', '/assistance': '0.8', '/revendeurs': '0.7', '/iphone-vole': '0.9', '/verifier-imei-iphone': '0.9' };
   const entrees = [];
   for (const page of PAGES) {
     const lastmod = dateModif(page.fichier);

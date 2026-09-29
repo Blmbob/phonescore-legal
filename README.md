@@ -22,6 +22,7 @@ exacte de l'adresse courante, un lien absolu non.
 | `rapport.html` | `/rapport` | Ce que chaque ligne du rapport signifie |
 | `revendeurs.html` | `/revendeurs` | Badge boutique « Certifiée » |
 | `iphone-vole.html` | `/iphone-vole` | Guide SEO « Comment savoir si un iPhone est volé » — anglais sur `/en/stolen-iphone-check` |
+| `verifier-imei-iphone.html` | `/verifier-imei-iphone` | Guide SEO « Vérifier l'IMEI d'un iPhone » — anglais sur `/en/iphone-imei-check` |
 | `en/` | `/en/…` | Version anglaise **générée** par `outils/generer-en.mjs`, ne pas modifier |
 | `cgu.html` | `/cgu` | Conditions générales d'utilisation |
 | `confidentialite.html` | `/confidentialite` | Politique de confidentialité |
