@@ -843,8 +843,20 @@ function detecterLangueParDefaut() {
   return nav === 'fr' ? 'fr' : 'en';
 }
 
+// Pages publiques : une adresse par langue (/rapport en francais,
+// /en/rapport en anglais, generees par outils/generer-en.mjs). Leur langue
+// est celle du HTML, jamais celle du navigateur -- sinon Googlebot, qui
+// navigue en anglais, lisait une page anglaise sous un titre francais.
+function languePage() {
+  const racine = document.documentElement;
+  return racine.hasAttribute('data-langue-fixe') ? racine.lang : null;
+}
+
 function langueActuelle() {
-  const sauvee = localStorage.getItem(LANGUE_CLE);
+  const fixe = languePage();
+  if (fixe) return fixe;
+  let sauvee = null;
+  try { sauvee = localStorage.getItem(LANGUE_CLE); } catch (e) { /* stockage bloque */ }
   return LANGUES_SUPPORTEES.includes(sauvee) ? sauvee : detecterLangueParDefaut();
 }
 
@@ -893,7 +905,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
 function definirLangue(langue) {
   if (!LANGUES_SUPPORTEES.includes(langue)) return;
-  localStorage.setItem(LANGUE_CLE, langue);
+  try { localStorage.setItem(LANGUE_CLE, langue); } catch (e) { /* stockage bloque */ }
+  // Page a langue fixe : changer de langue, c'est changer d'adresse.
+  if (languePage()) {
+    const autre = document.querySelector(`link[rel="alternate"][hreflang="${langue}"]`);
+    if (autre && langue !== languePage()) location.href = new URL(autre.href).pathname + location.search + location.hash;
+    return;
+  }
   appliquerTraductions();
   document.dispatchEvent(new CustomEvent('langue-changee', { detail: { langue } }));
 }

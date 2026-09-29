@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en" data-langue-fixe>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self' https://static.cloudflareinsights.com; style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src 'self' https://bvriicetjcnxrbhelokh.supabase.co https://cloudflareinsights.com; base-uri 'none'; form-action 'none'">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Understanding the report — PhoneScore</title>
+<link rel="icon" href="/favicon.png" type="image/png">
+<link rel="apple-touch-icon" href="/favicon.png">
+<link rel="canonical" href="https://phonescore.app/en/rapport">
+<!-- hreflang : genere par outils/generer-en.mjs -->
+<link rel="alternate" hreflang="fr" href="https://phonescore.app/rapport">
+<link rel="alternate" hreflang="en" href="https://phonescore.app/en/rapport">
+<link rel="alternate" hreflang="x-default" href="https://phonescore.app/en/rapport">
+<!-- /hreflang -->
+<meta name="description" content="iCloud lock, GSMA blacklist, SIM lock, refurbished, eSIM: what each line of the PhoneScore report means, and what it should make you do before buying.">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="PhoneScore">
+<meta property="og:locale" content="en_US">
+<meta property="og:url" content="https://phonescore.app/en/rapport">
+<meta property="og:title" content="Understanding the report — PhoneScore">
+<meta property="og:description" content="iCloud lock, GSMA blacklist, SIM lock, refurbished, eSIM: what each line of the PhoneScore report means, and what it should make you do before buying.">
+<meta property="og:image" content="https://phonescore.app/og-image.png">
+<meta property="og:image:width" content="1024">
+<meta property="og:image:height" content="1024">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Understanding the report — PhoneScore">
+<meta name="twitter:description" content="iCloud lock, GSMA blacklist, SIM lock, refurbished, eSIM: what each line of the PhoneScore report means, and what it should make you do before buying.">
+<meta name="twitter:image" content="https://phonescore.app/og-image.png">
+<meta name="theme-color" content="#0A1028">
+
+<!-- Donnees structurees. Le fil d'Ariane est ce qui s'affiche reellement dans
+     les resultats de recherche ; le balisage FAQ ne produit plus d'extraits
+     deplies depuis que Google les a reserves aux sites gouvernementaux et de
+     sante (2023), mais il reste lu pour comprendre le contenu de la page.
+     Les entites Organization et WebSite sont declarees une seule fois, sur
+     l'accueil : on s'y refere par @id plutot que de les redeclarer. -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://phonescore.app/en/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Understanding the report"
+        }
+      ]
+    },
+    {
+      "@type": "WebPage",
+      "@id": "https://phonescore.app/en/rapport#page",
+      "url": "https://phonescore.app/en/rapport",
+      "name": "Understanding the report — PhoneScore",
+      "description": "iCloud lock, GSMA blacklist, SIM lock, refurbished, eSIM: what each line of the PhoneScore report means, and what it should make you do before buying.",
+      "inLanguage": "en",
+      "isPartOf": {
+        "@id": "https://phonescore.app/en/#website"
+      },
+      "publisher": {
+        "@id": "https://phonescore.app/#organization"
+      }
+    }
+  ]
+}
+</script>
+<link rel="stylesheet" href="/css/rapport.css?v=3a404bd6">
+</head>
+<body>
+
+<div class="wrap">
+  <div class="nav">
+    <a class="brand" href="/en/">
+      <svg aria-hidden="true" viewBox="0 0 200 200">
+        <defs>
+          <linearGradient id="mSh" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#3B82F6"/><stop offset="1" stop-color="#1D4ED8"/>
+          </linearGradient>
+          <linearGradient id="mShIn" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#1E3A8A"/><stop offset="1" stop-color="#172B63"/>
+          </linearGradient>
+          <linearGradient id="mPh" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0" stop-color="#1F2937"/><stop offset="1" stop-color="#0B1220"/>
+          </linearGradient>
+          <linearGradient id="mCk" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#4ADE80"/><stop offset="1" stop-color="#16A34A"/>
+          </linearGradient>
+        </defs>
+        <path d="M100 10 C120 24 146 30 166 31 C166 86 149 128 100 150 C51 128 34 86 34 31 C54 30 80 24 100 10 Z" fill="url(#mSh)"/>
+        <path d="M100 22 C117 33 138 38 154 39.4 C154 84 139.5 119 100 138 C60.5 119 46 84 46 39.4 C62 38 83 33 100 22 Z" fill="url(#mShIn)"/>
+        <rect x="70" y="34" width="60" height="104" rx="14" fill="url(#mPh)" stroke="#374151" stroke-width="3"/>
+        <rect x="76" y="42" width="48" height="88" rx="9" fill="#0D1526"/>
+        <rect x="88" y="38" width="24" height="6" rx="3" fill="#1F2937"/>
+        <path d="M78 44 L108 44 L84 126 L78 126 Z" fill="#FFFFFF" opacity=".05"/>
+        <circle cx="124" cy="128" r="34" fill="url(#mCk)" stroke="#0D1117" stroke-width="6"/>
+        <path d="M108 128 L120 140 L142 114" fill="none" stroke="#FFFFFF" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      <b>Phone<span>Score</span></b>
+    </a>
+    <div class="menu-zone">
+      <a class="link" href="/en/" data-i18n="nav.accueil">Home</a>
+      <button type="button" class="menu-bouton" id="menu-bouton"
+              aria-expanded="false" aria-controls="menu" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
+      <nav class="menu" id="menu" hidden>
+        <a href="/profil" data-i18n="nav.profil">Profile</a>
+        <a href="/historique" data-i18n="nav.historique">History</a>
+        <a href="/en/assistance" data-i18n="nav.assistance">Support</a>
+        <a href="/en/rapport" aria-current="page" data-i18n="nav.rapport">Understanding the report</a>
+        <a href="/en/revendeurs" data-i18n="nav.revendeurs">Shop badge</a>
+        <a href="/en/cgu" data-i18n="nav.cgu">Terms of Service</a>
+        <a href="/en/confidentialite" data-i18n="nav.confidentialite">Privacy Policy</a>
+        <details class="menu-langues">
+          <summary data-i18n="nav.langue">Language</summary>
+          <div class="menu-langues-options">
+            <button type="button" data-langue="fr" data-i18n-lang-actif="fr"><span class="drapeau" aria-hidden="true">🇫🇷</span> Français</button>
+            <button type="button" data-langue="en" data-i18n-lang-actif="en"><span class="drapeau" aria-hidden="true">🇬🇧</span> English</button>
+          </div>
+        </details>
+      </nav>
+    </div>
+  </div>
+</div>
+
+<div class="hero">
+  <div class="aurora" aria-hidden="true"><i></i><i></i><i></i></div>
+  <div class="wrap">
+    <h1 data-i18n-html="rapportPage.h1">Understanding the <em>report</em></h1>
+    <p class="lead" data-i18n-html="rapportPage.lead">A report is useless if you don't know what to do with it. Here's what each line means, and above all what it should make you check before handing over the money.</p>
+  </div>
+</div>
+
+<div class="wrap">
+  <section class="u-border-top-0">
+    <div class="narrow">
+
+      <h2 data-i18n="rapportPage.t1">The verdict</h2>
+      <p data-i18n-html="rapportPage.s1p1">At the top of the report, a single color sums it all up. It doesn't replace reading the lines, but it tells you right away whether the deal can move forward.</p>
+
+      <div class="verdicts">
+        <div class="verdict-l v-safe">
+          <span class="v-pill" data-i18n="rapportPage.vSafePill">Safe device</span>
+          <p data-i18n-html="rapportPage.vSafeP">No block detected. <b>Still inspect the device physically</b>: a report covers its identity and status, not its actual condition.</p>
+        </div>
+        <div class="verdict-l v-warn">
+          <span class="v-pill" data-i18n="rapportPage.vWarnPill">Caution</span>
+          <p data-i18n-html="rapportPage.vWarnP">One or more points need your attention: missing information, refurbished device, carrier lock. <b>Negotiable, but go in informed.</b></p>
+        </div>
+        <div class="verdict-l v-dang">
+          <span class="v-pill" data-i18n="rapportPage.vDangPill">Don't buy</span>
+          <p data-i18n-html="rapportPage.vDangP">A block makes the device unusable or illegal to resell. <b>No discount makes up for that</b>: the problem cannot be fixed.</p>
+        </div>
+      </div>
+
+      <h2 data-i18n="rapportPage.t2">Security</h2>
+      <p data-i18n="rapportPage.s2Intro">The two lines that make or break a purchase.</p>
+
+      <div class="champ">
+        <h3 data-i18n="rapportPage.icloudT">iCloud lock (Find My)</h3>
+        <p data-i18n="rapportPage.icloudP1">"Find My iPhone" is active: the device stays tied to its owner's Apple account. After a factory reset, it will ask for their Apple ID and password again.</p>
+        <p data-i18n="rapportPage.icloudP2">No one can unlock it — not a repair shop, not Apple without the original proof of purchase, not PhoneScore. An iCloud-locked iPhone is only worth its spare parts.</p>
+        <p class="agir" data-i18n-html="rapportPage.icloudAgir"><b>Do this:</b> ask the seller to turn off "Find My" in front of you, in Settings → their name → Find My. Then run the check again. If they refuse or stall, walk away from the deal.</p>
+      </div>
+
+      <div class="champ">
+        <h3 data-i18n="rapportPage.blacklistT">Blacklist (GSMA)</h3>
+        <p data-i18n="rapportPage.blacklistP1">The IMEI has been reported — stolen, lost, or unpaid with a carrier. The report is shared between carriers in many countries.</p>
+        <p data-i18n="rapportPage.blacklistP2">A reported device can be cut off the network at any time. It will still work on Wi-Fi, which lets a seller show it "working fine" without quite lying.</p>
+        <p class="agir" data-i18n-html="rapportPage.blacklistAgir"><b>Do this:</b> don't buy it. Beyond the risk of it being cut off, knowingly reselling a device reported stolen exposes you personally.</p>
+      </div>
+
+      <h2 data-i18n="rapportPage.t3">Device</h2>
+
+      <div class="champ">
+        <h3 data-i18n="rapportPage.modeleT">Model, capacity, color</h3>
+        <p data-i18n-html="rapportPage.modeleP1">What the manufacturer actually built under this IMEI, whatever the device's screen or the seller's listing says.</p>
+        <p class="agir" data-i18n-html="rapportPage.modeleAgir"><b>Do this:</b> compare with the listing. An iPhone 13 sold as a 14, a 128 GB claimed as 256, a repainted case: the gap shows up here and nowhere else.</p>
+      </div>
+
+      <div class="champ">
+        <h3 data-i18n="rapportPage.imeiT">IMEI, IMEI2, serial number, MEID</h3>
+        <p data-i18n-html="rapportPage.imeiP1">The device's identifiers. IMEI2 only appears on models that handle two lines.</p>
+        <p class="agir" data-i18n-html="rapportPage.imeiAgir"><b>Do this:</b> dial <code>*#06#</code> on the device and compare it with the report. If they differ, the seller gave you the IMEI of a different phone.</p>
+      </div>
+
+      <h2 data-i18n="rapportPage.t4">Network</h2>
+
+      <div class="champ">
+        <h3 data-i18n="rapportPage.simlockT">SIM-lock (carrier lock)</h3>
+        <p data-i18n-html="rapportPage.simlockP1">A locked device only accepts SIM cards from its original carrier — often a foreign one, so unusable here.</p>
+        <p data-i18n="rapportPage.simlockP2">Unlocking is sometimes possible through that carrier, but it assumes the contract is paid off, and it is never guaranteed.</p>
+        <p class="agir" data-i18n-html="rapportPage.simlockAgir"><b>Do this:</b> insert your own SIM card before paying. It is the one test that settles it in thirty seconds.</p>
+      </div>
+
+      <div class="champ">
+        <h3 data-i18n="rapportPage.esimT">SIM cards and eSIM</h3>
+        <p data-i18n-html="rapportPage.esimP1">Shows whether the device handles two lines. Importantly, the report flags models sold in the United States from the iPhone 14 onward: they have <b>no physical SIM tray</b> at all and work with eSIM only.</p>
+        <p class="agir" data-i18n-html="rapportPage.esimAgir"><b>Do this:</b> if this alert appears, check that your carrier supports eSIM before buying. Otherwise, the device will never get signal.</p>
+      </div>
+
+      <div class="champ">
+        <h3 data-i18n="rapportPage.paysT">Country of purchase</h3>
+        <p data-i18n-html="rapportPage.paysP1">The market the device was built for. It determines the carrier lock, the SIM configuration, and sometimes hardware details — some Japanese models, for instance, cannot turn off the camera shutter sound.</p>
+      </div>
+
+      <h2 data-i18n="rapportPage.t5">Warranty</h2>
+
+      <div class="champ">
+        <h3 data-i18n="rapportPage.garantieT">Purchase date, repair coverage expiry, AppleCare</h3>
+        <p data-i18n-html="rapportPage.garantieP1">Remaining Apple coverage, when the information is available. A purchase date much older than what the seller claims is a signal in itself.</p>
+        <p class="agir" data-i18n-html="rapportPage.garantieAgir"><b>Do this:</b> use it to negotiate. A device out of warranty isn't worth the price of a covered one.</p>
+      </div>
+
+      <h2 data-i18n="rapportPage.t6">Device history</h2>
+
+      <div class="champ">
+        <h3 data-i18n="rapportPage.histT">Refurbished, replaced, loaner, or demo unit</h3>
+        <p data-i18n-html="rapportPage.histP1">A <b>refurbished</b> device has been restored by Apple: that is not a defect, but it should not sell at new-device price.</p>
+        <p data-i18n-html="rapportPage.histP2"><b>Replaced</b> means this unit was provided in exchange for a defective one. A <b>demo unit</b> came from a store and was not meant for resale.</p>
+        <p class="agir" data-i18n-html="rapportPage.histAgir"><b>Do this:</b> none of these statuses rule out buying. They justify a lower price, and a seller who didn't mention them tells you something about themselves.</p>
+      </div>
+
+      <div class="encadre" data-i18n-html="rapportPage.encadre"><b>What a report doesn't tell you.</b> It covers the device's identity and administrative status, not its physical condition. A worn battery, a screen replaced with an unofficial part, water damage: none of that shows up. The information comes from third-party databases that can be incomplete or out of date. A clean report is a green light, not a guarantee — always inspect the device.</div>
+
+      <div class="card contact u-margin-top-26px">
+        <p class="u-margin-0-0-14px" data-i18n-html="rapportPage.contactP1">A line in the report you don't understand? Write to us at <a href="mailto:support@phonescore.app">support@phonescore.app</a>.</p>
+        <p class="u-margin-0" data-i18n-html="rapportPage.contactP2"><a href="/en/">Check a device from the browser</a> — <a href="/en/assistance">frequently asked questions</a>.</p>
+      </div>
+
+    </div>
+  </section>
+</div>
+
+<footer>
+  <div class="wrap">
+    <p>
+      <a href="/en/revendeurs" data-i18n="nav.revendeurs">Shop badge</a>
+      <a href="/en/assistance" data-i18n="nav.assistance">Support</a>
+      <a href="/en/cgu" data-i18n="nav.cgu">Terms of Service</a>
+      <a href="/en/confidentialite" data-i18n="nav.confidentialite">Privacy Policy</a>
+    </p>
+    <p class="u-margin-top-14px">PhoneScore</p>
+  </div>
+</footer>
+
+<script src="/js/i18n.js?v=3a368791"></script>
+<script src="/js/menu.js?v=88bca18d"></script>
+</body>
+</html>

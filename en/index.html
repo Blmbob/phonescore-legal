@@ -1,70 +1,55 @@
 <!DOCTYPE html>
-<html lang="fr" data-langue-fixe>
+<html lang="en" data-langue-fixe>
 <head>
 <meta charset="utf-8">
 <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self' https://static.cloudflareinsights.com; style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src 'self' https://bvriicetjcnxrbhelokh.supabase.co https://cloudflareinsights.com; base-uri 'none'; form-action 'none'">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>PhoneScore — Vérifie un iPhone d'occasion avant de l'acheter</title>
+<title>PhoneScore — Check a used iPhone before you buy it</title>
 <link rel="icon" href="/favicon.png" type="image/png">
 <link rel="apple-touch-icon" href="/favicon.png">
-<link rel="canonical" href="https://phonescore.app/">
+<link rel="canonical" href="https://phonescore.app/en/">
 <!-- hreflang : genere par outils/generer-en.mjs -->
 <link rel="alternate" hreflang="fr" href="https://phonescore.app/">
 <link rel="alternate" hreflang="en" href="https://phonescore.app/en/">
 <link rel="alternate" hreflang="x-default" href="https://phonescore.app/en/">
 <!-- /hreflang -->
-<meta name="description" content="Vérifiez en quelques secondes si un iPhone ou un MacBook d'occasion est verrouillé iCloud, déclaré volé ou bloqué opérateur.">
+<meta name="description" content="Find out in seconds whether a used iPhone or MacBook is iCloud locked, reported stolen or carrier locked.">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="PhoneScore">
-<meta property="og:locale" content="fr_FR">
-<meta property="og:url" content="https://phonescore.app/">
-<meta property="og:title" content="PhoneScore — Vérifie un iPhone d'occasion avant de l'acheter">
-<meta property="og:description" content="Vérifiez en quelques secondes si un iPhone ou un MacBook d'occasion est verrouillé iCloud, déclaré volé ou bloqué opérateur.">
+<meta property="og:locale" content="en_US">
+<meta property="og:url" content="https://phonescore.app/en/">
+<meta property="og:title" content="PhoneScore — Check a used iPhone before you buy it">
+<meta property="og:description" content="Find out in seconds whether a used iPhone or MacBook is iCloud locked, reported stolen or carrier locked.">
 <meta property="og:image" content="https://phonescore.app/og-image.png">
 <meta property="og:image:width" content="1024">
 <meta property="og:image:height" content="1024">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="PhoneScore — Vérifie un iPhone d'occasion avant de l'acheter">
-<meta name="twitter:description" content="Vérifiez en quelques secondes si un iPhone ou un MacBook d'occasion est verrouillé iCloud, déclaré volé ou bloqué opérateur.">
+<meta name="twitter:title" content="PhoneScore — Check a used iPhone before you buy it">
+<meta name="twitter:description" content="Find out in seconds whether a used iPhone or MacBook is iCloud locked, reported stolen or carrier locked.">
 <meta name="twitter:image" content="https://phonescore.app/og-image.png">
 <meta name="theme-color" content="#0A1028">
-<!-- Propriete Search Console (prefixe d URL). Ne pas retirer : Google
-     revalide periodiquement, et sa disparition ferait perdre la propriete. -->
-<meta name="google-site-verification" content="cbvRjllIeWkfNGAZO99gUy_Uv3-TBf-Dx8JRhI0siCM" />
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
   "@graph": [
     {
-      "@type": "Organization",
-      "@id": "https://phonescore.app/#organization",
-      "name": "PhoneScore",
-      "url": "https://phonescore.app/",
-      "logo": "https://phonescore.app/og-image.png",
-      "contactPoint": {
-        "@type": "ContactPoint",
-        "contactType": "customer support",
-        "email": "support@phonescore.app",
-        "availableLanguage": ["fr", "en"]
-      }
-    },
-    {
       "@type": "WebSite",
-      "@id": "https://phonescore.app/#website",
-      "url": "https://phonescore.app/",
+      "@id": "https://phonescore.app/en/#website",
+      "url": "https://phonescore.app/en/",
       "name": "PhoneScore",
-      "inLanguage": "fr-FR",
-      "publisher": { "@id": "https://phonescore.app/#organization" }
+      "inLanguage": "en",
+      "publisher": {
+        "@id": "https://phonescore.app/#organization"
+      }
     },
     {
       "@type": "MobileApplication",
       "name": "PhoneScore",
       "applicationCategory": "UtilitiesApplication",
       "operatingSystem": "iOS",
-      "inLanguage": "fr-FR",
-      "url": "https://phonescore.app/",
+      "inLanguage": "en",
+      "url": "https://phonescore.app/en/",
       "downloadUrl": "https://apps.apple.com/app/id6795897093",
-      "softwareVersion": "1.0.2",
       "offers": {
         "@type": "Offer",
         "price": "0",
@@ -72,34 +57,10 @@
         "availability": "https://schema.org/InStock"
       },
       "image": "https://phonescore.app/og-image.png",
-      "description": "Vérification de l'historique d'un iPhone ou d'un MacBook d'occasion à partir de son code IMEI : verrou iCloud, inscription sur liste noire, verrou opérateur, modèle réel et garantie.",
-      "publisher": { "@id": "https://phonescore.app/#organization" }
-    },
-    {
-      "@type": "HowTo",
-      "@id": "https://phonescore.app/#howto",
-      "name": "Comment vérifier un iPhone ou un MacBook d'occasion",
-      "description": "Trois gestes, moins d'une minute.",
-      "step": [
-        {
-          "@type": "HowToStep",
-          "position": 1,
-          "name": "Relevez l'IMEI",
-          "text": "Composez *#06# sur le téléphone à vérifier, ou scannez le code-barres avec l'appareil photo."
-        },
-        {
-          "@type": "HowToStep",
-          "position": 2,
-          "name": "Lancez la vérification",
-          "text": "PhoneScore interroge les bases officielles et renvoie le rapport en quelques secondes."
-        },
-        {
-          "@type": "HowToStep",
-          "position": 3,
-          "name": "Décidez",
-          "text": "Verdict vert, vous pouvez conclure. Verdict rouge, passez votre chemin — et gardez le rapport comme preuve."
-        }
-      ]
+      "description": "Check the history of a used iPhone or MacBook from its IMEI: iCloud lock, blacklist status, carrier lock, real model and warranty.",
+      "publisher": {
+        "@id": "https://phonescore.app/#organization"
+      }
     }
   ]
 }
@@ -116,7 +77,7 @@
 
 <div class="wrap">
   <div class="nav">
-    <a class="brand" href="/">
+    <a class="brand" href="/en/">
       <svg viewBox="0 0 200 200" aria-hidden="true">
         <defs>
           <linearGradient id="lbSh" x1="0" y1="0" x2="0" y2="1">
@@ -149,15 +110,15 @@
         <span></span><span></span><span></span>
       </button>
       <nav class="menu" id="menu" hidden>
-        <a href="/profil" data-i18n="nav.profil">Profil</a>
-        <a href="/historique" data-i18n="nav.historique">Historique</a>
-        <a href="/assistance" data-i18n="nav.assistance">Assistance</a>
-        <a href="/rapport" data-i18n="nav.rapport">Comprendre le rapport</a>
-        <a href="/revendeurs" data-i18n="nav.revendeurs">Badge boutique</a>
-        <a href="/cgu" data-i18n="nav.cgu">Conditions générales d'utilisation</a>
-        <a href="/confidentialite" data-i18n="nav.confidentialite">Politique de confidentialité</a>
+        <a href="/profil" data-i18n="nav.profil">Profile</a>
+        <a href="/historique" data-i18n="nav.historique">History</a>
+        <a href="/en/assistance" data-i18n="nav.assistance">Support</a>
+        <a href="/en/rapport" data-i18n="nav.rapport">Understanding the report</a>
+        <a href="/en/revendeurs" data-i18n="nav.revendeurs">Shop badge</a>
+        <a href="/en/cgu" data-i18n="nav.cgu">Terms of Service</a>
+        <a href="/en/confidentialite" data-i18n="nav.confidentialite">Privacy Policy</a>
         <details class="menu-langues">
-          <summary data-i18n="nav.langue">Langue</summary>
+          <summary data-i18n="nav.langue">Language</summary>
           <div class="menu-langues-options">
             <button type="button" data-langue="fr" data-i18n-lang-actif="fr"><span class="drapeau" aria-hidden="true">🇫🇷</span> Français</button>
             <button type="button" data-langue="en" data-i18n-lang-actif="en"><span class="drapeau" aria-hidden="true">🇬🇧</span> English</button>
@@ -200,49 +161,49 @@
       </svg>
       <h1>PhoneScore</h1>
     </div>
-    <p class="lead" data-i18n="hero.lead">Vérifie avant d’acheter</p>
+    <p class="lead" data-i18n="hero.lead">Check before you buy</p>
     <!-- L'outil, pas une brochure. Le visiteur type arrive d'un lien
          partage sur les reseaux : lui proposer de telecharger l'app
          alors qu'il en vient peut-etre n'a aucun sens. -->
     <div class="outil">
       <section id="vue-auth" class="hidden">
-          <p class="o-sub" id="sous-titre-auth" data-i18n="auth.sousTitreConnexion">Connectez-vous pour vérifier un appareil.</p>
+          <p class="o-sub" id="sous-titre-auth" data-i18n="auth.sousTitreConnexion">Sign in to check a device.</p>
 
           <div class="o-card">
             <button id="btn-apple" class="apple" type="button">
               <svg viewBox="0 0 170 170" aria-hidden="true"><path fill="currentColor" d="M150.4 128.8c-2.6 6-5.7 11.5-9.4 16.6-5.1 7-9.3 11.9-12.4 14.6-4.9 4.5-10.1 6.8-15.7 6.9-4 0-8.9-1.1-14.5-3.5-5.6-2.3-10.8-3.5-15.5-3.5-4.9 0-10.2 1.2-16 3.5-5.8 2.4-10.4 3.6-14.1 3.7-5.4.2-10.7-2.2-15.9-6.9-3.4-2.9-7.7-8-13-15.3-5.6-7.7-10.2-16.7-13.9-27C6.1 106.4 4 95.6 4 85.2c0-11.9 2.6-22.2 7.7-30.8 4-6.9 9.4-12.4 16.1-16.4 6.7-4 14-6.1 21.8-6.2 4.2 0 9.8 1.3 16.8 3.9 6.9 2.6 11.4 3.9 13.3 3.9 1.4 0 6.3-1.5 14.7-4.5 8-2.8 14.7-3.9 20.2-3.5 14.9 1.2 26.1 7.1 33.5 17.7-13.3 8.1-19.9 19.4-19.8 34 .1 11.4 4.3 20.8 12.5 28.3 3.7 3.5 7.9 6.3 12.5 8.2-1 2.9-2.1 5.7-3.2 8.4v-.4Zm-33-113.5c0 8.9-3.3 17.2-9.7 24.9-7.8 9.1-17.2 14.4-27.4 13.6-.1-1.1-.2-2.2-.2-3.4 0-8.6 3.7-17.7 10.4-25.2 3.3-3.8 7.5-7 12.6-9.5 5.1-2.5 9.9-3.9 14.4-4.1.1 1.3.2 2.5.2 3.7Z"/></svg>
-              <span data-i18n="auth.apple">Continuer avec Apple</span>
+              <span data-i18n="auth.apple">Continue with Apple</span>
             </button>
             <button id="btn-google" class="google" type="button">
               <svg viewBox="0 0 48 48" aria-hidden="true"><path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/><path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/><path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/><path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/></svg>
-              <span data-i18n="auth.google">Continuer avec Google</span>
+              <span data-i18n="auth.google">Continue with Google</span>
             </button>
-            <div class="separateur"><span data-i18n="auth.ou">ou</span></div>
+            <div class="separateur"><span data-i18n="auth.ou">or</span></div>
             <div class="field">
-              <label for="email" data-i18n="auth.emailLabel">Adresse e-mail</label>
-              <input id="email" type="email" autocomplete="email" inputmode="email" placeholder="vous@exemple.com" data-i18n-ph="auth.emailPh">
+              <label for="email" data-i18n="auth.emailLabel">Email address</label>
+              <input id="email" type="email" autocomplete="email" inputmode="email" placeholder="you@example.com" data-i18n-ph="auth.emailPh">
             </div>
             <div class="field">
-              <label for="mdp" data-i18n="auth.mdpLabel">Mot de passe</label>
-              <input id="mdp" type="password" autocomplete="current-password" placeholder="8 caractères minimum" data-i18n-ph="auth.mdpPh">
+              <label for="mdp" data-i18n="auth.mdpLabel">Password</label>
+              <input id="mdp" type="password" autocomplete="current-password" placeholder="At least 8 characters" data-i18n-ph="auth.mdpPh">
             </div>
             <div class="field hidden" id="champ-confirmation">
-              <label for="mdp-confirmation" data-i18n="auth.mdpConfirmLabel">Confirmer le mot de passe</label>
-              <input id="mdp-confirmation" type="password" autocomplete="new-password" placeholder="Retapez le même mot de passe" data-i18n-ph="auth.mdpConfirmPh">
+              <label for="mdp-confirmation" data-i18n="auth.mdpConfirmLabel">Confirm password</label>
+              <input id="mdp-confirmation" type="password" autocomplete="new-password" placeholder="Type the same password again" data-i18n-ph="auth.mdpConfirmPh">
             </div>
 
-            <button id="btn-connexion" type="button" data-i18n="auth.connexion">Se connecter</button>
-            <button id="btn-inscription" type="button" class="hidden" data-i18n="auth.inscription">Créer un compte</button>
-            <button id="btn-basculer" type="button" class="ghost" data-i18n="auth.basculerVersInscription">Créer un nouveau compte</button>
+            <button id="btn-connexion" type="button" data-i18n="auth.connexion">Sign in</button>
+            <button id="btn-inscription" type="button" class="hidden" data-i18n="auth.inscription">Create account</button>
+            <button id="btn-basculer" type="button" class="ghost" data-i18n="auth.basculerVersInscription">Create a new account</button>
 
             <p class="hint" id="hint-connexion">
-              <a href="/reinitialiser" data-i18n="auth.mdpOublie">Mot de passe oublié&nbsp;?</a>
+              <a href="/reinitialiser" data-i18n="auth.mdpOublie">Forgot password?</a>
             </p>
             <p class="hint hidden" id="hint-inscription">
-              <span data-i18n="auth.legalPrefixe">En créant un compte, vous acceptez les</span>
-              <a href="/cgu" data-i18n="auth.legalCgu">conditions d'utilisation</a>
-              <span data-i18n="auth.legalEt">et la</span>
-              <a href="/confidentialite" data-i18n="auth.legalConfidentialite">politique de confidentialité</a>.
+              <span data-i18n="auth.legalPrefixe">By creating an account, you agree to the</span>
+              <a href="/en/cgu" data-i18n="auth.legalCgu">Terms of Service</a>
+              <span data-i18n="auth.legalEt">and the</span>
+              <a href="/en/confidentialite" data-i18n="auth.legalConfidentialite">Privacy Policy</a>.
             </p>
             <div id="msg-auth" class="msg"></div>
           </div>
@@ -260,7 +221,7 @@
                       fill="url(#sG)" stroke="#FDE68A" stroke-width="5" stroke-linejoin="round"/>
               </svg>
               <b id="stat-jour">—</b>
-              <span data-i18n="stats.jour">Aujourd’hui</span>
+              <span data-i18n="stats.jour">Today</span>
             </div>
             <div class="stat">
               <svg viewBox="0 0 200 200" aria-hidden="true">
@@ -272,7 +233,7 @@
                 <rect x="132" y="34" width="34" height="138" rx="10" fill="url(#bC)"/>
               </svg>
               <b id="stat-total">—</b>
-              <span data-i18n="stats.total">Vérifiés</span>
+              <span data-i18n="stats.total">Checked</span>
             </div>
             <div class="stat" id="stat-fiable" data-ton="neutral">
               <svg viewBox="0 0 200 200" aria-hidden="true">
@@ -306,7 +267,7 @@
                          transform="rotate(-25 72 52)"/>
               </svg>
               <b id="stat-fiable-valeur">—</b>
-              <span data-i18n="stats.fiable">Fiable</span>
+              <span data-i18n="stats.fiable">Clean rate</span>
             </div>
           </div>
 
@@ -326,27 +287,27 @@
                 <path d="M118 106 L172 106 L172 142 L118 142 Q104 142 104 124 Q104 106 118 106 Z" fill="#1E40AF"/>
                 <circle cx="126" cy="124" r="9" fill="#93C5FD"/>
               </svg>
-              <span><span data-i18n="solde.prefixe">Solde : </span><b id="solde">—</b><span data-i18n="solde.suffixe"> pièce(s)</span></span>
+              <span><span data-i18n="solde.prefixe">Balance: </span><b id="solde">—</b><span data-i18n="solde.suffixe"> coin(s)</span></span>
             </div>
             <p class="hint" id="courriel"></p>
           </div>
       
           <div class="o-card">
             <div class="seg">
-              <button type="button" id="t-iphone" aria-pressed="true" data-i18n="verif.iphone">iPhone — 1 pièce</button>
-              <button type="button" id="t-macbook" aria-pressed="false" data-i18n="verif.macbook">MacBook — 2 pièces</button>
+              <button type="button" id="t-iphone" aria-pressed="true" data-i18n="verif.iphone">iPhone — 1 coin</button>
+              <button type="button" id="t-macbook" aria-pressed="false" data-i18n="verif.macbook">MacBook — 2 coins</button>
             </div>
             <div class="field">
-              <label for="imei" data-i18n="verif.imeiLabel">IMEI ou numéro de série</label>
-              <input id="imei" inputmode="numeric" autocomplete="off" placeholder="Composez *#06# sur l'appareil" data-i18n-ph="verif.imeiPh">
+              <label for="imei" data-i18n="verif.imeiLabel">IMEI or serial number</label>
+              <input id="imei" inputmode="numeric" autocomplete="off" placeholder="Dial *#06# on the device" data-i18n-ph="verif.imeiPh">
             </div>
-            <button id="btn-verifier" data-i18n="verif.btn">Vérifier maintenant</button>
+            <button id="btn-verifier" data-i18n="verif.btn">Check now</button>
             <div id="chargement-verif" class="chargement-verif hidden">
               <div class="etapes" id="etapes-verif">
-                <div class="etape" data-i="0"><span class="point"></span><span data-i18n="verif.etape0">Connexion au fournisseur…</span></div>
-                <div class="etape" data-i="1"><span class="point"></span><span data-i18n="verif.etape1">Vérification Apple (iCloud, garantie)…</span></div>
-                <div class="etape" data-i="2"><span class="point"></span><span data-i18n="verif.etape2">Vérification opérateur et liste noire…</span></div>
-                <div class="etape" data-i="3"><span class="point"></span><span data-i18n="verif.etape3">Compilation du rapport…</span></div>
+                <div class="etape" data-i="0"><span class="point"></span><span data-i18n="verif.etape0">Connecting to the provider…</span></div>
+                <div class="etape" data-i="1"><span class="point"></span><span data-i18n="verif.etape1">Checking with Apple (iCloud, warranty)…</span></div>
+                <div class="etape" data-i="2"><span class="point"></span><span data-i18n="verif.etape2">Checking carrier and blacklist…</span></div>
+                <div class="etape" data-i="3"><span class="point"></span><span data-i18n="verif.etape3">Compiling the report…</span></div>
               </div>
             </div>
             <div id="msg-verif" class="msg"></div>
@@ -355,14 +316,14 @@
           <div id="rapport" class="o-card hidden"></div>
 
           <p class="recharge">
-            <a href="/recharger" data-i18n="verif.recharger">Recharger mes pièces</a>
+            <a href="/recharger" data-i18n="verif.recharger">Buy more coins</a>
           </p>
         </section>
     </div>
 
     <p class="cta-note u-margin-top-26px">
-      <span data-i18n="cta.avant">Vous préférez l’application&nbsp;?</span>
-      <a href="https://apps.apple.com/app/id6795897093" data-i18n="cta.lien">Télécharger sur l’App&nbsp;Store</a>
+      <span data-i18n="cta.avant">Prefer the app?</span>
+      <a href="https://apps.apple.com/app/id6795897093" data-i18n="cta.lien">Download on the App Store</a>
     </p>
   </div>
 </div>
@@ -371,19 +332,19 @@
 <div class="wrap">
   <section>
     <div class="narrow">
-      <h2 data-i18n="controles.titre">Ce que PhoneScore contrôle</h2>
-      <p class="sub" data-i18n="controles.sub">À partir du seul code IMEI, auprès des bases constructeur et GSMA.</p>
+      <h2 data-i18n="controles.titre">What PhoneScore checks</h2>
+      <p class="sub" data-i18n="controles.sub">From the IMEI alone, against the manufacturer and GSMA databases.</p>
       <ul class="controles">
-        <li><b data-i18n="controles.icloudT">Verrou iCloud</b> <span data-i18n="controles.icloudD">— le point le plus coûteux : un appareil lié à « Localiser » est inutilisable, et personne ne peut le débloquer.</span></li>
-        <li><b data-i18n="controles.voleT">Déclaré volé ou perdu</b> <span data-i18n="controles.voleD">— inscription sur liste noire GSMA. Un appareil signalé peut être coupé du réseau à tout moment.</span></li>
-        <li><b data-i18n="controles.simlockT">Verrou opérateur</b> <span data-i18n="controles.simlockD">— un téléphone SIM-locké n'accepte que l'opérateur d'origine, souvent étranger.</span></li>
-        <li><b data-i18n="controles.modeleT">Modèle et capacité réels</b> <span data-i18n="controles.modeleD">— ce qui a été fabriqué sous cet IMEI, quoi qu'annonce le vendeur.</span></li>
-        <li><b data-i18n="controles.esimT">Cartes SIM et eSIM</b> <span data-i18n="controles.esimD">— les iPhone américains depuis le 14 n'ont aucun tiroir SIM. Le rapport le signale.</span></li>
-        <li><b data-i18n="controles.garantieT">Garantie</b> <span data-i18n="controles.garantieD">— date d'achat et couverture Apple restante, quand l'information existe.</span></li>
-        <li><b data-i18n="controles.partageT">Rapport partageable</b> <span data-i18n="controles.partageD">— à envoyer au vendeur ou à l'acheteur par WhatsApp.</span></li>
+        <li><b data-i18n="controles.icloudT">iCloud lock</b> <span data-i18n="controles.icloudD">— the costliest issue: a device tied to "Find My" is unusable, and no one can unlock it.</span></li>
+        <li><b data-i18n="controles.voleT">Reported stolen or lost</b> <span data-i18n="controles.voleD">— GSMA blacklist entry. A flagged device can be cut off the network at any time.</span></li>
+        <li><b data-i18n="controles.simlockT">Carrier lock</b> <span data-i18n="controles.simlockD">— a SIM-locked phone only accepts its original carrier, often a foreign one.</span></li>
+        <li><b data-i18n="controles.modeleT">Real model and capacity</b> <span data-i18n="controles.modeleD">— what was actually manufactured under this IMEI, regardless of what the seller claims.</span></li>
+        <li><b data-i18n="controles.esimT">SIM cards and eSIM</b> <span data-i18n="controles.esimD">— US iPhones since the 14 have no SIM tray at all. The report flags it.</span></li>
+        <li><b data-i18n="controles.garantieT">Warranty</b> <span data-i18n="controles.garantieD">— purchase date and remaining Apple coverage, when the information exists.</span></li>
+        <li><b data-i18n="controles.partageT">Shareable report</b> <span data-i18n="controles.partageD">— send it to the seller or buyer over WhatsApp.</span></li>
       </ul>
       <p class="sub u-margin-18px-0-0">
-        <a href="/rapport" data-i18n="controles.lien">Ce que chaque ligne veut dire</a><span data-i18n="controles.lienSuite">, et quoi vérifier sur l'appareil.</span>
+        <a href="/en/rapport" data-i18n="controles.lien">What each line means</a><span data-i18n="controles.lienSuite">, and what to check on the device.</span>
       </p>
     </div>
   </section>
@@ -393,21 +354,21 @@
 <div class="wrap">
   <section>
     <div class="narrow">
-      <h2 data-i18n="comment.titre">Comment ça marche</h2>
-      <p class="sub" data-i18n="comment.sub">Trois gestes, moins d'une minute.</p>
+      <h2 data-i18n="comment.titre">How it works</h2>
+      <p class="sub" data-i18n="comment.sub">Three steps, under a minute.</p>
       <div class="steps">
         <div class="step">
           <div class="n">1</div>
-          <p><b data-i18n="comment.s1T">Relevez l'IMEI</b><span data-i18n="comment.s1Da">Composez </span><code>*#06#</code><span data-i18n="comment.s1Db"> sur le téléphone à vérifier, ou scannez le code-barres avec l'appareil photo.</span></p>
+          <p><b data-i18n="comment.s1T">Get the IMEI</b><span data-i18n="comment.s1Da">Dial </span><code>*#06#</code><span data-i18n="comment.s1Db"> on the phone to check, or scan the barcode with the camera.</span></p>
         </div>
         <div class="step">
           <div class="n">2</div>
-          <p><b data-i18n="comment.s2T">Lancez la vérification</b><span data-i18n="comment.s2D">PhoneScore interroge les bases officielles et renvoie le rapport en quelques secondes.</span></p>
+          <p><b data-i18n="comment.s2T">Run the check</b><span data-i18n="comment.s2D">PhoneScore queries official databases and returns the report in seconds.</span></p>
         </div>
         <div class="step">
           <div class="n">3</div>
-          <p><b data-i18n="comment.s3T">Décidez</b><span data-i18n="comment.s3D">Verdict vert, vous pouvez conclure. Verdict rouge, passez votre chemin — et gardez le rapport comme preuve.</span>
-             <a href="/rapport" data-i18n="comment.s3Lien">Comprendre chaque ligne du rapport</a>.</p>
+          <p><b data-i18n="comment.s3T">Decide</b><span data-i18n="comment.s3D">Green verdict, you can go ahead. Red verdict, walk away — and keep the report as proof.</span>
+             <a href="/en/rapport" data-i18n="comment.s3Lien">Understand every line of the report</a>.</p>
         </div>
       </div>
     </div>
@@ -417,21 +378,21 @@
 <!-- ---------------- REVENDEURS ---------------- -->
 <div class="wrap">
   <section>
-    <h2 data-i18n="revendeurs.titre">Pour les revendeurs</h2>
-    <p class="sub" data-i18n="revendeurs.sub">Les outils du métier, inclus dans l'application.</p>
+    <h2 data-i18n="revendeurs.titre">For resellers</h2>
+    <p class="sub" data-i18n="revendeurs.sub">Professional tools, built into the app.</p>
     <div class="grid">
       <div class="card">
-        <h4 data-i18n="revendeurs.annuaireT">Votre boutique dans l'annuaire</h4>
-        <p data-i18n="revendeurs.annuaireD">Inscrivez votre boutique, indiquez sa position, et laissez vos clients vous contacter directement par WhatsApp. Les boutiques proches de l'acheteur apparaissent en premier. L'inscription demande le Pack Revendeur, qui ouvre 30 jours d'accès.</p>
+        <h4 data-i18n="revendeurs.annuaireT">Your shop in the directory</h4>
+        <p data-i18n="revendeurs.annuaireD">List your shop, set its location, and let customers reach you directly on WhatsApp. Shops closer to the buyer show up first. Listing requires the Reseller Pack, which unlocks 30 days of access.</p>
       </div>
       <div class="card">
-        <h4 data-i18n="revendeurs.badgeT">Badge Certifiée</h4>
-        <p><span data-i18n="revendeurs.badgeD">Les boutiques qui vérifient régulièrement leurs appareils affichent un badge de confiance visible par les acheteurs.</span>
-           <a href="/revendeurs" data-i18n="revendeurs.badgeLien">Comment l&rsquo;obtenir</a>.</p>
+        <h4 data-i18n="revendeurs.badgeT">Certified badge</h4>
+        <p><span data-i18n="revendeurs.badgeD">Shops that check their devices regularly display a trust badge buyers can see.</span>
+           <a href="/en/revendeurs" data-i18n="revendeurs.badgeLien">How to get it</a>.</p>
       </div>
       <div class="card">
-        <h4 data-i18n="revendeurs.stockT">Stock et factures</h4>
-        <p data-i18n="revendeurs.stockD">Suivez vos appareils en stock, vos prix d'achat et de vente, et éditez une facture propre pour chaque client.</p>
+        <h4 data-i18n="revendeurs.stockT">Stock and invoices</h4>
+        <p data-i18n="revendeurs.stockD">Track your devices in stock, your buy and sell prices, and issue a clean invoice for every customer.</p>
       </div>
     </div>
   </section>
@@ -440,11 +401,11 @@
 <footer>
   <div class="wrap">
     <p>
-      <a href="/rapport" data-i18n="nav.rapport">Comprendre le rapport</a>
-      <a href="/assistance" data-i18n="nav.assistance">Assistance</a>
-      <a href="/revendeurs" data-i18n="nav.revendeurs">Badge boutique</a>
-      <a href="/cgu" data-i18n="nav.cgu">Conditions générales d'utilisation</a>
-      <a href="/confidentialite" data-i18n="nav.confidentialite">Politique de confidentialité</a>
+      <a href="/en/rapport" data-i18n="nav.rapport">Understanding the report</a>
+      <a href="/en/assistance" data-i18n="nav.assistance">Support</a>
+      <a href="/en/revendeurs" data-i18n="nav.revendeurs">Shop badge</a>
+      <a href="/en/cgu" data-i18n="nav.cgu">Terms of Service</a>
+      <a href="/en/confidentialite" data-i18n="nav.confidentialite">Privacy Policy</a>
     </p>
     <p class="u-margin-top-14px" data-i18n="footer.marque">PhoneScore</p>
   </div>

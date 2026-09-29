@@ -99,6 +99,20 @@ visite. Sans nouvelle empreinte, un visiteur déjà venu reçoit du HTML neuf
 avec du script périmé, et la page casse sans la moindre erreur. Le script est
 idempotent : le lancer pour rien ne change rien.
 
+**Si le poussé touche une page publique ou `js/i18n.js`, lancer ensuite :**
+
+```bash
+node outils/generer-en.mjs
+```
+
+Il régénère la version anglaise dans `en/` (`/en/`, `/en/rapport`…), les
+balises `hreflang` des deux langues et `sitemap.xml`. Depuis le 29 sept. 2026,
+chaque langue a sa propre adresse et une langue fixe (`data-langue-fixe`) :
+auparavant le navigateur traduisait selon sa langue, et Googlebot, qui
+navigue en anglais, indexait une page anglaise sous un titre français.
+**Ne jamais modifier `en/` ni `sitemap.xml` à la main.** Une clé absente du
+dictionnaire `en` est signalée et fait échouer le script.
+
 ## État
 
 L'app est **publiée** depuis le 13 août 2026 :
