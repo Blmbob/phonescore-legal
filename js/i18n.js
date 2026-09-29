@@ -918,6 +918,66 @@ function definirLangue(langue) {
 
 document.addEventListener('DOMContentLoaded', appliquerTraductions);
 
+// Page francaise vue par un navigateur qui n'est pas en francais : un
+// bandeau propose la version anglaise. Pas de redirection automatique --
+// Googlebot, qui navigue en anglais, la suivrait et n'indexerait plus le
+// francais. Il ne voit pas non plus le bandeau (texte anglais sur une page
+// francaise). Styles poses en JS : la CSP interdit l'attribut style.
+function proposerAnglais() {
+  if (languePage() !== 'fr') return;
+  if (/bot|crawl|spider|slurp|lighthouse/i.test(navigator.userAgent)) return;
+  if ((navigator.language || 'fr').slice(0, 2).toLowerCase() === 'fr') return;
+  let refus = null;
+  try { refus = localStorage.getItem(LANGUE_CLE) === 'fr' || sessionStorage.getItem('phonescore:bandeau-en') === 'ferme'; } catch (e) { /* stockage bloque */ }
+  if (refus) return;
+  const lien = document.querySelector('link[rel="alternate"][hreflang="en"]');
+  if (!lien) return;
+
+  const bandeau = document.createElement('div');
+  bandeau.setAttribute('role', 'region');
+  bandeau.setAttribute('aria-label', 'Language');
+  bandeau.setAttribute('lang', 'en');
+  Object.assign(bandeau.style, {
+    position: 'fixed', left: '16px', right: '16px', bottom: '16px', zIndex: '1000',
+    maxWidth: '520px', margin: '0 auto', display: 'flex', alignItems: 'center', gap: '12px',
+    padding: '12px 14px', borderRadius: '12px', background: '#16204a', color: '#fff',
+    border: '1px solid rgba(255,255,255,.15)', boxShadow: '0 8px 24px rgba(0,0,0,.35)',
+    font: '500 14px/1.4 system-ui, -apple-system, sans-serif',
+  });
+
+  const texte = document.createElement('span');
+  texte.textContent = 'This page is also available in English.';
+  texte.style.flex = '1';
+
+  const aller = document.createElement('a');
+  aller.href = new URL(lien.href).pathname + location.search + location.hash;
+  aller.textContent = 'Read in English';
+  Object.assign(aller.style, {
+    padding: '8px 12px', borderRadius: '8px', background: '#3b82f6', color: '#fff',
+    textDecoration: 'none', fontWeight: '600', whiteSpace: 'nowrap',
+  });
+  aller.addEventListener('click', () => {
+    try { localStorage.setItem(LANGUE_CLE, 'en'); } catch (e) { /* stockage bloque */ }
+  });
+
+  const fermer = document.createElement('button');
+  fermer.type = 'button';
+  fermer.textContent = '×';
+  fermer.setAttribute('aria-label', 'Close');
+  Object.assign(fermer.style, {
+    background: 'none', border: '0', color: '#fff', fontSize: '22px', lineHeight: '1',
+    cursor: 'pointer', padding: '4px',
+  });
+  fermer.addEventListener('click', () => {
+    bandeau.remove();
+    try { sessionStorage.setItem('phonescore:bandeau-en', 'ferme'); } catch (e) { /* stockage bloque */ }
+  });
+
+  bandeau.append(texte, aller, fermer);
+  document.body.appendChild(bandeau);
+}
+document.addEventListener('DOMContentLoaded', proposerAnglais);
+
 // Expose au script non-module accueil.js (charge apres celui-ci) pour les
 // textes qu'il ecrit lui-meme au fil de l'auth (bascule connexion/inscription,
 // messages d'erreur).
