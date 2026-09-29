@@ -24,6 +24,9 @@ exacte de l'adresse courante, un lien absolu non.
 | `iphone-vole.html` | `/iphone-vole` | Guide SEO « Comment savoir si un iPhone est volé » — anglais sur `/en/stolen-iphone-check` |
 | `verifier-imei-iphone.html` | `/verifier-imei-iphone` | Guide SEO « Vérifier l'IMEI d'un iPhone » — anglais sur `/en/iphone-imei-check` |
 | `verrou-icloud.html` | `/verrou-icloud` | Guide SEO « Verrou iCloud » (iPhone, iPad, Mac) — anglais sur `/en/icloud-lock-check` |
+| `iphone-blackliste.html` | `/iphone-blackliste` | Guide SEO « iPhone blacklisté » — anglais sur `/en/iphone-blacklist-check` |
+| `iphone-bloque-operateur.html` | `/iphone-bloque-operateur` | Guide SEO « iPhone bloqué opérateur » — anglais sur `/en/iphone-carrier-lock-check` |
+| `acheter-iphone-occasion.html` | `/acheter-iphone-occasion` | Guide SEO « Acheter un iPhone d'occasion : la checklist » — anglais sur `/en/used-iphone-checklist` |
 | `en/` | `/en/…` | Version anglaise **générée** par `outils/generer-en.mjs`, ne pas modifier |
 | `cgu.html` | `/cgu` | Conditions générales d'utilisation |
 | `confidentialite.html` | `/confidentialite` | Politique de confidentialité |

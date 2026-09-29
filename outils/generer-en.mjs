@@ -89,6 +89,27 @@ const PAGES = [
     fil: 'iCloud lock check',
     article: { publie: '2026-09-29', titre: 'iCloud lock check before you buy' },
   },
+  {
+    fichier: 'iphone-blackliste.html', chemin: '/iphone-blackliste', en: '/en/iphone-blacklist-check',
+    titre: 'iPhone blacklist check before buying — PhoneScore',
+    description: 'What a blacklisted iPhone means (theft, loss, unpaid bills), the delayed trap of a block for unpaid bills, how to check the IMEI and who can lift the block.',
+    fil: 'iPhone blacklist check',
+    article: { publie: '2026-09-29', titre: 'iPhone blacklist check before buying' },
+  },
+  {
+    fichier: 'iphone-bloque-operateur.html', chemin: '/iphone-bloque-operateur', en: '/en/iphone-carrier-lock-check',
+    titre: 'iPhone carrier lock check: spot it and unlock it — PhoneScore',
+    description: 'See in 30 seconds whether an iPhone is locked to a carrier (Settings, SIM card), the case of eSIM-only US iPhones, and who can really unlock it.',
+    fil: 'iPhone carrier lock check',
+    article: { publie: '2026-09-29', titre: 'iPhone carrier lock check' },
+  },
+  {
+    fichier: 'acheter-iphone-occasion.html', chemin: '/acheter-iphone-occasion', en: '/en/used-iphone-checklist',
+    titre: 'Buying a used iPhone: the complete checklist — PhoneScore',
+    description: 'What to check before buying a used iPhone: IMEI, iCloud lock, blacklist, carrier lock, battery, parts, screen, Face ID, and what to require before paying.',
+    fil: 'Used iPhone checklist',
+    article: { publie: '2026-09-29', titre: 'Buying a used iPhone: what to check' },
+  },
 ];
 
 const EN_PARTICULIERS = Object.fromEntries(PAGES.filter(p => p.en).map(p => [p.chemin, p.en]));
@@ -263,7 +284,7 @@ function dateModif(fichier) {
 }
 
 function sitemap() {
-  const priorite = { '/': '1.0', '/rapport': '0.8', '/assistance': '0.8', '/revendeurs': '0.7', '/iphone-vole': '0.9', '/verifier-imei-iphone': '0.9', '/verrou-icloud': '0.9' };
+  const priorite = { '/': '1.0', '/rapport': '0.8', '/assistance': '0.8', '/revendeurs': '0.7', '/iphone-vole': '0.9', '/verifier-imei-iphone': '0.9', '/verrou-icloud': '0.9', '/iphone-blackliste': '0.9', '/iphone-bloque-operateur': '0.9', '/acheter-iphone-occasion': '0.9' };
   const entrees = [];
   for (const page of PAGES) {
     const lastmod = dateModif(page.fichier);

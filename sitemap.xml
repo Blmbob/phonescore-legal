@@ -146,4 +146,52 @@
     <xhtml:link rel="alternate" hreflang="x-default" href="https://phonescore.app/en/icloud-lock-check"/>
     <priority>0.9</priority>
   </url>
+  <url>
+    <loc>https://phonescore.app/iphone-blackliste</loc>
+    <lastmod>2026-09-29</lastmod>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://phonescore.app/iphone-blackliste"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://phonescore.app/en/iphone-blacklist-check"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://phonescore.app/en/iphone-blacklist-check"/>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://phonescore.app/en/iphone-blacklist-check</loc>
+    <lastmod>2026-09-29</lastmod>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://phonescore.app/iphone-blackliste"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://phonescore.app/en/iphone-blacklist-check"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://phonescore.app/en/iphone-blacklist-check"/>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://phonescore.app/iphone-bloque-operateur</loc>
+    <lastmod>2026-09-29</lastmod>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://phonescore.app/iphone-bloque-operateur"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://phonescore.app/en/iphone-carrier-lock-check"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://phonescore.app/en/iphone-carrier-lock-check"/>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://phonescore.app/en/iphone-carrier-lock-check</loc>
+    <lastmod>2026-09-29</lastmod>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://phonescore.app/iphone-bloque-operateur"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://phonescore.app/en/iphone-carrier-lock-check"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://phonescore.app/en/iphone-carrier-lock-check"/>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://phonescore.app/acheter-iphone-occasion</loc>
+    <lastmod>2026-09-29</lastmod>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://phonescore.app/acheter-iphone-occasion"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://phonescore.app/en/used-iphone-checklist"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://phonescore.app/en/used-iphone-checklist"/>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://phonescore.app/en/used-iphone-checklist</loc>
+    <lastmod>2026-09-29</lastmod>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://phonescore.app/acheter-iphone-occasion"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://phonescore.app/en/used-iphone-checklist"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://phonescore.app/en/used-iphone-checklist"/>
+    <priority>0.9</priority>
+  </url>
 </urlset>
