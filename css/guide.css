@@ -350,3 +350,12 @@
 .phonescore h2{margin-bottom:10px}
 .phonescore p{font-size:15px; line-height:1.6; margin:0 0 10px}
 .cta-zone{margin:18px 0 0 !important}
+
+/* Bouton « Télécharger dans l'App Store » (badge officiel FR ; pages EN : bouton texte,
+   voir outils/generer-en.mjs). Ajoute le 1er oct. 2026 : le site n'envoyait personne
+   vers l'App Store (« site web referent » = 0 chez Apple). */
+.badge-zone{margin:18px 0 0 !important; text-align:center}
+.badge-app{height:50px; width:auto; display:inline-block}
+.badge-texte{display:inline-flex; align-items:center; gap:10px; height:50px; padding:0 20px; border-radius:10px;
+  background:#000; border:1px solid #a6a6a6; color:#fff !important; font-weight:600; font-size:16px; text-decoration:none}
+.badge-texte svg{width:20px; height:20px; flex:none}

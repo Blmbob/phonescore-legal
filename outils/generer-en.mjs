@@ -245,6 +245,12 @@ function jsonLdEn(page) {
   return `<script type="application/ld+json">\n${json}\n</script>`;
 }
 
+// Le badge officiel n'existe ici qu'en francais : les pages anglaises recoivent un
+// bouton texte de meme emplacement (a remplacer par le badge officiel anglais).
+const BADGE_EN = '<p class="badge-zone"><a class="badge-texte" href="https://apps.apple.com/app/id6795897093">'
+  + '<svg viewBox="0 0 170 170" aria-hidden="true"><path fill="currentColor" d="M150.4 128.8c-2.6 6-5.7 11.5-9.4 16.6-5.1 7-9.3 11.9-12.4 14.5-4.9 4.4-10.1 6.7-15.7 6.8-4 0-8.9-1.1-14.6-3.4-5.7-2.3-11-3.4-15.7-3.4-5 0-10.4 1.1-16.2 3.4-5.8 2.3-10.5 3.5-14.1 3.7-5.4.2-10.8-2.1-16.2-7-3.4-3-7.7-8.1-12.9-15.3-5.5-7.7-10.1-16.6-13.6-26.7-3.8-11.1-5.7-21.8-5.7-32.2 0-11.9 2.6-22.2 7.7-30.8 4-6.8 9.4-12.2 16-16.1 6.6-3.9 13.8-6 21.5-6.1 4.2 0 9.7 1.3 16.6 3.8 6.8 2.6 11.2 3.8 13.1 3.8 1.4 0 6.3-1.5 14.5-4.5 7.8-2.8 14.4-4 19.8-3.5 14.6 1.2 25.6 6.9 32.9 17.3-13.1 7.9-19.5 19-19.4 33.2.1 11.1 4.1 20.3 12 27.7 3.6 3.4 7.6 6 12 7.9-1 2.8-2 5.4-3.2 8zM119.1 7.2c0 8.7-3.2 16.8-9.5 24.4-7.6 8.9-16.8 14-26.8 13.2-.1-1-.2-2.1-.2-3.2 0-8.4 3.7-17.3 10.1-24.6 3.2-3.7 7.3-6.8 12.2-9.2 4.9-2.4 9.5-3.7 13.9-3.9.1 1.1.2 2.2.2 3.3z"/></svg>'
+  + '<span>Download on the App Store</span></a></p>';
+
 // --- Construction d'une page anglaise. -------------------------------------
 function versionAnglaise(fr, page, manquantes) {
   let html = fr;
@@ -253,6 +259,7 @@ function versionAnglaise(fr, page, manquantes) {
   const d = echapperAttr(page.description);
 
   html = html.replace(/<html lang="fr"[^>]*>/, '<html lang="en" data-langue-fixe>');
+  html = html.replace(/<p class="badge-zone[^"]*">[\s\S]*?<\/p>/g, m => BADGE_EN.replace('badge-zone', m.match(/class="(badge-zone[^"]*)"/)[1]));
   html = html.replace(/<title>[^<]*<\/title>/, `<title>${echapper(page.titre)}</title>`);
   html = html.replace(/(<link rel="canonical" href=")[^"]*"/, `$1${url}"`);
   html = html.replace(/(<meta name="description" content=")[^"]*"/, `$1${d}"`);
