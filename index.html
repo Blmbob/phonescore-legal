@@ -105,7 +105,7 @@
   ]
 }
 </script>
-<link rel="stylesheet" href="/css/index.css?v=448c7bde">
+<link rel="stylesheet" href="/css/index.css?v=d67ad87c">
 
 <!-- Outil de verification, isole par .outil : sa feuille et celle de
      l'accueil partagent sept noms de classe (card, pack, sub, wrap...). -->
@@ -193,35 +193,11 @@
         <input id="imei-accroche" inputmode="numeric" autocomplete="off" placeholder="IMEI (compose *#06#)" data-i18n-ph="hero.champPh">
         <button type="submit" data-i18n="hero.ctaVerifier">Vérifier</button>
       </form>
-      <ul class="confiance">
-        <li data-i18n="hero.conf1">Apple et GSMA</li>
-        <li data-i18n="hero.conf2">Partage WhatsApp</li>
-        <li data-i18n="hero.conf3">Dès 700 FCFA</li>
-      </ul>
-      <a class="paiements" href="/recharger">
-        <span class="paiements-lib" data-i18n="hero.payer">Sans carte bancaire : paie par mobile money</span>
-        <span class="op orange">Orange Money</span><span class="op mtn">MTN</span><span class="op moov">Moov</span><span class="op wave">Wave</span>
-      </a>
-    </div>
-
-    <!-- Vraies captures de l'application : un rapport rouge devant un vert. -->
-    <div class="hero-visuel">
-      <figure class="tel tel-arriere">
-        <picture><source srcset="/img/rapport-safe.webp" type="image/webp"><img src="/img/rapport-safe.jpg" width="600" height="832" alt="Rapport PhoneScore : Appareil sûr, 4 contrôles passés" data-i18n-alt="hero.altSur"></picture>
-      </figure>
-      <figure class="tel tel-avant">
-        <picture><source srcset="/img/rapport-danger.webp" type="image/webp"><img src="/img/rapport-danger.jpg" width="600" height="832" alt="Rapport PhoneScore : Ne pas acheter, verrou iCloud actif" data-i18n-alt="hero.altDanger"></picture>
-      </figure>
-      <p class="demo-legende" data-i18n="hero.demoLegende">Captures de l’application PhoneScore</p>
-    </div>
-  </div>
-</div>
-
-<!-- ---------------- OUTIL ---------------- -->
-<div class="wrap">
-  <section id="verifier" class="zone-outil">
-    <h2 data-i18n="hero.outilTitre">Lance ta vérification</h2>
-    <div class="outil">
+      <p class="deja-compte" id="deja-compte"><a href="#" id="lien-connexion" data-i18n="hero.dejaCompte">Déjà un compte ? Se connecter</a></p>
+      <!-- Un seul bloc de verification : non connecte, l'accroche ci-dessus,
+           puis la connexion a sa place au clic ; connecte, la carte de
+           verification remplace l'accroche (accueil.js). -->
+    <div class="outil" id="verifier">
       <section id="vue-auth" class="hidden">
           <p class="imei-pret hidden" id="imei-pret"><span data-i18n="verif.imeiPret">IMEI prêt :</span> <b id="imei-pret-val"></b></p>
           <p class="o-sub" id="sous-titre-auth" data-i18n="auth.sousTitreConnexion">Connectez-vous pour vérifier un appareil.</p>
@@ -423,10 +399,28 @@
           </div>
         </section>
     </div>
+      <ul class="confiance">
+        <li data-i18n="hero.conf1">Apple et GSMA</li>
+        <li data-i18n="hero.conf2">Partage WhatsApp</li>
+        <li data-i18n="hero.conf3">Dès 700 FCFA</li>
+      </ul>
+      <a class="paiements" href="/recharger">
+        <span class="paiements-lib" data-i18n="hero.payer">Sans carte bancaire : paie par mobile money</span>
+        <span class="op orange">Orange Money</span><span class="op mtn">MTN</span><span class="op moov">Moov</span><span class="op wave">Wave</span>
+      </a>
+    </div>
 
-    <p class="cta-note u-margin-top-26px" data-i18n="cta.avant">Vous préférez l’application&nbsp;?</p>
-    <p class="badge-zone u-margin-top-14px"><a href="https://apps.apple.com/app/id6795897093" aria-label="Télécharger dans l’App Store"><img class="badge-app" src="/appstore-badge-fr.svg" alt="Télécharger dans l’App Store" width="158" height="50"></a></p>
-  </section>
+    <!-- Vraies captures de l'application : un rapport rouge devant un vert. -->
+    <div class="hero-visuel">
+      <figure class="tel tel-arriere">
+        <picture><source srcset="/img/rapport-safe.webp" type="image/webp"><img src="/img/rapport-safe.jpg" width="600" height="832" alt="Rapport PhoneScore : Appareil sûr, 4 contrôles passés" data-i18n-alt="hero.altSur"></picture>
+      </figure>
+      <figure class="tel tel-avant">
+        <picture><source srcset="/img/rapport-danger.webp" type="image/webp"><img src="/img/rapport-danger.jpg" width="600" height="832" alt="Rapport PhoneScore : Ne pas acheter, verrou iCloud actif" data-i18n-alt="hero.altDanger"></picture>
+      </figure>
+      <p class="demo-legende" data-i18n="hero.demoLegende">Captures de l’application PhoneScore</p>
+    </div>
+  </div>
 </div>
 
 <!-- ---------------- MOBILE MONEY ---------------- -->
@@ -444,6 +438,8 @@
       </ol>
       <a class="btn-principal" href="/recharger" data-i18n="mm.btn">Recharger mes pièces</a>
       <p class="mm-note" data-i18n="mm.note">Les pièces servent sur le site et dans l’application. Dans l’application iPhone, elles s’achètent aussi via l’App Store.</p>
+      <p class="cta-note u-margin-top-26px" data-i18n="cta.avant">Vous préférez l’application&nbsp;?</p>
+      <p class="badge-zone u-margin-top-14px"><a href="https://apps.apple.com/app/id6795897093" aria-label="Télécharger dans l’App Store"><img class="badge-app" src="/appstore-badge-fr.svg" alt="Télécharger dans l’App Store" width="158" height="50"></a></p>
     </div>
   </section>
 </div>
@@ -543,11 +539,11 @@
 <script src="/vendor/supabase-2.112.3.js"></script>
 <!-- Traduction FR/EN de la coquille statique + PSI18N.t() pour les textes
      ecrits dynamiquement par accueil.js : doit se charger avant lui. -->
-<script src="/js/i18n.js?v=f1419f0d"></script>
+<script src="/js/i18n.js?v=421e9516"></script>
 <!-- Script classique (pas de type="module") : ses fonctions doivent rester
      visibles comme identifiants globaux pour accueil.js, charge apres lui. -->
 <script src="/js/rapport-commun.js?v=3e69fdac"></script>
-<script type="module" src="/js/accueil.js?v=165c3526"></script>
+<script type="module" src="/js/accueil.js?v=43d3d2fe"></script>
 
 <script src="/js/menu.js?v=88bca18d"></script>
 </body>

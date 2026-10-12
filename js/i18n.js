@@ -354,7 +354,7 @@ const TRADUCTIONS = {
       payer: 'Sans carte bancaire : paie par mobile money',
       altSur: 'Rapport PhoneScore : Appareil sûr, 4 contrôles passés',
       altDanger: 'Rapport PhoneScore : Ne pas acheter, verrou iCloud actif',
-      demoLegende: 'Captures de l’application PhoneScore', outilTitre: 'Lance ta vérification',
+      demoLegende: 'Captures de l’application PhoneScore', dejaCompte: 'Déjà un compte ? Se connecter',
     },
     apercu: {
       analyse: 'Analyse de l’IMEI…',
@@ -1053,7 +1053,7 @@ const TRADUCTIONS = {
       payer: 'No bank card? Pay with mobile money',
       altSur: 'PhoneScore report: Safe device, 4 checks passed',
       altDanger: 'PhoneScore report: Do not buy, iCloud lock active',
-      demoLegende: 'Screenshots from the PhoneScore app', outilTitre: 'Run your check',
+      demoLegende: 'Screenshots from the PhoneScore app', dejaCompte: 'Already have an account? Sign in',
     },
     apercu: {
       analyse: 'Analyzing the IMEI…',

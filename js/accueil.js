@@ -71,6 +71,8 @@ supabase.auth.getSession().then(({ data }) => rendre(data.session));
 async function rendre(session) {
   if (session) {
     $('vue-auth').classList.add('hidden');
+    $('form-accroche').classList.add('hidden');
+    $('deja-compte').classList.add('hidden');
     $('vue-app').classList.remove('hidden');
     $('courriel').textContent = session.user.email ?? '';
     await rafraichirSolde();
@@ -78,7 +80,9 @@ async function rendre(session) {
     majApercu();
   } else {
     $('vue-app').classList.add('hidden');
-    $('vue-auth').classList.remove('hidden');
+    // La connexion ne s'affiche qu'a la demande (IMEI saisi, ou « Deja un
+    // compte ») : sinon la page montrerait deux fois « verifier ».
+    if (imeiEnAttente()) montrerConnexion();
   }
 }
 
@@ -356,10 +360,25 @@ $('form-accroche')?.addEventListener('submit', (e) => {
     try { sessionStorage.setItem(CLE_IMEI_ATTENTE, imei); } catch { /* navigation privee */ }
     majApercu();
   }
-  $('verifier').scrollIntoView({ behavior: 'smooth', block: 'start' });
-  // Connecte : le bouton Verifier ; sinon, le premier moyen de connexion.
-  const cible = $('vue-app').classList.contains('hidden') ? $('btn-apple') : $('btn-verifier');
-  setTimeout(() => cible?.focus({ preventScroll: true }), 600);
+  montrerConnexion();
+  setTimeout(() => $('btn-apple')?.focus({ preventScroll: true }), 400);
+});
+
+// Remplace l'accroche par la connexion, au meme endroit.
+function montrerConnexion() {
+  $('form-accroche').classList.add('hidden');
+  $('deja-compte').classList.add('hidden');
+  $('vue-auth').classList.remove('hidden');
+  $('verifier').scrollIntoView({ behavior: 'smooth', block: 'center' });
+}
+
+function imeiEnAttente() {
+  try { return sessionStorage.getItem(CLE_IMEI_ATTENTE); } catch { return null; }
+}
+
+$('lien-connexion').addEventListener('click', (e) => {
+  e.preventDefault();
+  montrerConnexion();
 });
 
 // Rappel cote connexion : le visiteur voit que son IMEI l'attend.

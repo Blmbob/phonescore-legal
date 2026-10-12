@@ -515,8 +515,6 @@ a.paiements{text-decoration:none; color:var(--text); align-items:center}
 @media (min-width:860px){ .hero-visuel{height:520px} .tel{width:240px} }
 
 /* ---- outil ---- */
-.zone-outil{text-align:center; padding-top:36px}
-.zone-outil h2{margin-bottom:18px}
 
 /* ---- mobile money ---- */
 .mm{border-top:0; padding-top:0}
@@ -637,3 +635,12 @@ a.paiements{text-decoration:none; color:var(--text); align-items:center}
 .outil .niveaux button.niveau b{font-size:14px; color:var(--text)}
 .outil .niveaux button.niveau span{font-size:12px; font-weight:500; line-height:1.35}
 .outil .niveaux button.niveau[aria-pressed="true"]{border-color:var(--green); background:rgba(85,174,96,.14); box-shadow:0 0 0 4px rgba(85,174,96,.12)}
+
+/* ---- bloc unique de verification, dans l'accroche ---- */
+.accroche.hidden, .deja-compte.hidden{display:none}
+.deja-compte{margin:10px 0 0; font-size:14px}
+.deja-compte a{color:var(--blue-l); font-weight:600}
+.hero .outil{max-width:520px; margin:14px auto 0; text-align:center}
+@media (min-width:860px){ .hero .outil, .hero .deja-compte{margin-left:0; text-align:left} .hero .outil .o-sub{text-align:left} }
+.mm .badge-zone{margin:22px 0 0; text-align:center}
+.outil input.champ-imei::placeholder{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif; letter-spacing:0; font-size:16px}
