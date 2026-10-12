@@ -66,7 +66,7 @@
   ]
 }
 </script>
-<link rel="stylesheet" href="/css/index.css?v=d67ad87c">
+<link rel="stylesheet" href="/css/index.css?v=8fd7b9ae">
 
 <!-- Outil de verification, isole par .outil : sa feuille et celle de
      l'accueil partagent sept noms de classe (card, pack, sub, wrap...). -->
@@ -138,7 +138,6 @@
   <div class="sweepline" aria-hidden="true"></div>
   <div class="wrap hero-grille">
     <div class="hero-texte">
-      <p class="pastille-direct"><span class="pulse" aria-hidden="true"></span><span data-i18n="hero.pastille">IMEI check · iPhone and MacBook</span></p>
       <h1>
         <span class="h1-debut" data-i18n="hero.titreA">Is this iPhone</span>
         <span class="mots" aria-hidden="true">
@@ -148,7 +147,6 @@
         </span>
         <span class="sr-only" data-i18n="hero.titreSr">stolen, iCloud locked or carrier locked?</span>
       </h1>
-      <p class="lead" data-i18n="hero.lead">Enter its IMEI. The verdict comes back in seconds.</p>
       <form class="accroche" id="form-accroche" novalidate>
         <label class="sr-only" for="imei-accroche" data-i18n="verif.imeiLabel">IMEI or serial number</label>
         <input id="imei-accroche" inputmode="numeric" autocomplete="off" placeholder="IMEI (dial *#06#)" data-i18n-ph="hero.champPh">
@@ -360,11 +358,6 @@
           </div>
         </section>
     </div>
-      <ul class="confiance">
-        <li data-i18n="hero.conf1">Apple and GSMA</li>
-        <li data-i18n="hero.conf2">Share on WhatsApp</li>
-        <li data-i18n="hero.conf3">From 700 FCFA</li>
-      </ul>
       <a class="paiements" href="/recharger">
         <span class="paiements-lib" data-i18n="hero.payer">No bank card? Pay with mobile money</span>
         <span class="op orange">Orange Money</span><span class="op mtn">MTN</span><span class="op moov">Moov</span><span class="op wave">Wave</span>
@@ -379,7 +372,6 @@
       <figure class="tel tel-avant">
         <picture><source srcset="/img/rapport-danger.webp" type="image/webp"><img src="/img/rapport-danger.jpg" width="600" height="832" alt="PhoneScore report: Do not buy, iCloud lock active" data-i18n-alt="hero.altDanger"></picture>
       </figure>
-      <p class="demo-legende" data-i18n="hero.demoLegende">Screenshots from the PhoneScore app</p>
     </div>
   </div>
 </div>
@@ -390,16 +382,14 @@
 <div class="wrap">
   <section class="mm">
     <div class="mm-carte">
-      <h2 data-i18n="mm.titre">No bank card? No problem.</h2>
-      <p class="sub" data-i18n="mm.sub">Top up your coins here with mobile money, in under a minute.</p>
-      <ol class="mm-etapes">
-        <li><b data-i18n="mm.s1T">Sign in</b><span data-i18n="mm.s1D">With Apple, Google or your email.</span></li>
-        <li><b data-i18n="mm.s2T">Pick a pack</b><span data-i18n="mm.s2D">1 coin 700 F · 3 coins 2,000 F · 10 coins 6,700 F</span></li>
-        <li><b data-i18n="mm.s3T">Pay from your phone</b><span data-i18n="mm.s3D">Orange Money, MTN, Moov or Wave. Your coins arrive right away.</span></li>
+      <h2 data-i18n="mm.titreCourt">No card? Pay with mobile money</h2>
+      <ol class="mm-etapes court">
+        <li data-i18n="mm.c1">Sign in</li>
+        <li data-i18n="mm.c2">Pick a pack, from 700 F</li>
+        <li data-i18n="mm.c3">Pay from your phone</li>
       </ol>
       <a class="btn-principal" href="/recharger" data-i18n="mm.btn">Top up my coins</a>
-      <p class="mm-note" data-i18n="mm.note">Coins work on the website and in the app. In the iPhone app, they can also be bought through the App Store.</p>
-      <p class="cta-note u-margin-top-26px" data-i18n="cta.avant">Prefer the app?</p>
+      <p class="mm-note" data-i18n="mm.noteCourte">In the iPhone app, buy through the App Store.</p>
       <p class="badge-zone u-margin-top-14px"><a class="badge-texte" href="https://apps.apple.com/app/id6795897093"><svg viewBox="0 0 170 170" aria-hidden="true"><path fill="currentColor" d="M150.4 128.8c-2.6 6-5.7 11.5-9.4 16.6-5.1 7-9.3 11.9-12.4 14.5-4.9 4.4-10.1 6.7-15.7 6.8-4 0-8.9-1.1-14.6-3.4-5.7-2.3-11-3.4-15.7-3.4-5 0-10.4 1.1-16.2 3.4-5.8 2.3-10.5 3.5-14.1 3.7-5.4.2-10.8-2.1-16.2-7-3.4-3-7.7-8.1-12.9-15.3-5.5-7.7-10.1-16.6-13.6-26.7-3.8-11.1-5.7-21.8-5.7-32.2 0-11.9 2.6-22.2 7.7-30.8 4-6.8 9.4-12.2 16-16.1 6.6-3.9 13.8-6 21.5-6.1 4.2 0 9.7 1.3 16.6 3.8 6.8 2.6 11.2 3.8 13.1 3.8 1.4 0 6.3-1.5 14.5-4.5 7.8-2.8 14.4-4 19.8-3.5 14.6 1.2 25.6 6.9 32.9 17.3-13.1 7.9-19.5 19-19.4 33.2.1 11.1 4.1 20.3 12 27.7 3.6 3.4 7.6 6 12 7.9-1 2.8-2 5.4-3.2 8zM119.1 7.2c0 8.7-3.2 16.8-9.5 24.4-7.6 8.9-16.8 14-26.8 13.2-.1-1-.2-2.1-.2-3.2 0-8.4 3.7-17.3 10.1-24.6 3.2-3.7 7.3-6.8 12.2-9.2 4.9-2.4 9.5-3.7 13.9-3.9.1 1.1.2 2.2.2 3.3z"/></svg><span>Download on the App Store</span></a></p>
     </div>
   </section>
@@ -407,71 +397,17 @@
 
 <!-- ---------------- CE QU'ON VÉRIFIE ---------------- -->
 <div class="wrap">
-  <section>
-    <div class="narrow">
-      <h2 data-i18n="controles.titre">What PhoneScore checks</h2>
-      <p class="sub" data-i18n="controles.sub">From the IMEI alone, against the manufacturer and GSMA databases.</p>
-      <ul class="controles">
-        <li><b data-i18n="controles.icloudT">iCloud lock</b> <span data-i18n="controles.icloudD">— the costliest issue: a device tied to "Find My" is unusable, and no one can unlock it.</span></li>
-        <li><b data-i18n="controles.voleT">Reported stolen or lost</b> <span data-i18n="controles.voleD">— GSMA blacklist entry. A flagged device can be cut off the network at any time.</span></li>
-        <li><b data-i18n="controles.simlockT">Carrier lock</b> <span data-i18n="controles.simlockD">— a SIM-locked phone only accepts its original carrier, often a foreign one.</span></li>
-        <li><b data-i18n="controles.modeleT">Real model and capacity</b> <span data-i18n="controles.modeleD">— what was actually manufactured under this IMEI, regardless of what the seller claims.</span></li>
-        <li><b data-i18n="controles.esimT">SIM cards and eSIM</b> <span data-i18n="controles.esimD">— US iPhones since the 14 have no SIM tray at all. The report flags it.</span></li>
-        <li><b data-i18n="controles.garantieT">Warranty</b> <span data-i18n="controles.garantieD">— purchase date and remaining Apple coverage, when the information exists.</span></li>
-        <li><b data-i18n="controles.partageT">Shareable report</b> <span data-i18n="controles.partageD">— send it to the seller or buyer over WhatsApp.</span></li>
-      </ul>
-      <p class="sub u-margin-18px-0-0">
-        <a href="/en/rapport" data-i18n="controles.lien">What each line means</a><span data-i18n="controles.lienSuite">, and what to check on the device.</span>
-      </p>
-    </div>
-  </section>
-</div>
-
-<!-- ---------------- COMMENT ---------------- -->
-<div class="wrap">
-  <section>
-    <div class="narrow">
-      <h2 data-i18n="comment.titre">How it works</h2>
-      <p class="sub" data-i18n="comment.sub">Three steps, under a minute.</p>
-      <div class="steps">
-        <div class="step">
-          <div class="n">1</div>
-          <p><b data-i18n="comment.s1T">Get the IMEI</b><span data-i18n="comment.s1Da">Dial </span><code>*#06#</code><span data-i18n="comment.s1Db"> on the phone to check, or scan the barcode with the camera.</span></p>
-        </div>
-        <div class="step">
-          <div class="n">2</div>
-          <p><b data-i18n="comment.s2T">Run the check</b><span data-i18n="comment.s2D">PhoneScore queries official databases and returns the report in seconds.</span></p>
-        </div>
-        <div class="step">
-          <div class="n">3</div>
-          <p><b data-i18n="comment.s3T">Decide</b><span data-i18n="comment.s3D">Green verdict, you can go ahead. Red verdict, walk away — and keep the report as proof.</span>
-             <a href="/en/rapport" data-i18n="comment.s3Lien">Understand every line of the report</a>.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-</div>
-
-<!-- ---------------- REVENDEURS ---------------- -->
-<div class="wrap">
-  <section>
-    <h2 data-i18n="revendeurs.titre">For resellers</h2>
-    <p class="sub" data-i18n="revendeurs.sub">Professional tools, built into the app.</p>
-    <div class="grid">
-      <div class="card">
-        <h4 data-i18n="revendeurs.annuaireT">Your shop in the directory</h4>
-        <p data-i18n="revendeurs.annuaireD">List your shop, set its location, and let customers reach you directly on WhatsApp. Shops closer to the buyer show up first. Listing requires the Reseller Pack, which unlocks 30 days of access.</p>
-      </div>
-      <div class="card">
-        <h4 data-i18n="revendeurs.badgeT">Certified badge</h4>
-        <p><span data-i18n="revendeurs.badgeD">Shops that check their devices regularly display a trust badge buyers can see.</span>
-           <a href="/en/revendeurs" data-i18n="revendeurs.badgeLien">How to get it</a>.</p>
-      </div>
-      <div class="card">
-        <h4 data-i18n="revendeurs.stockT">Stock and invoices</h4>
-        <p data-i18n="revendeurs.stockD">Track your devices in stock, your buy and sell prices, and issue a clean invoice for every customer.</p>
-      </div>
-    </div>
+  <section class="controles-court">
+    <h2 data-i18n="controles.titreCourt">What we check</h2>
+    <ul class="puces">
+      <li data-i18n="controles.p1">iCloud</li>
+      <li data-i18n="controles.p2">Theft or loss</li>
+      <li data-i18n="controles.p3">Carrier</li>
+      <li data-i18n="controles.p4">Real model</li>
+      <li data-i18n="controles.p5">Warranty</li>
+      <li data-i18n="controles.p6">Remote management</li>
+    </ul>
+    <p class="lien-court"><a href="/en/revendeurs" data-i18n="revendeurs.lienCourt">Reseller? Shop badge, stock, invoices →</a></p>
   </section>
 </div>
 
@@ -500,7 +436,7 @@
 <script src="/vendor/supabase-2.112.3.js"></script>
 <!-- Traduction FR/EN de la coquille statique + PSI18N.t() pour les textes
      ecrits dynamiquement par accueil.js : doit se charger avant lui. -->
-<script src="/js/i18n.js?v=421e9516"></script>
+<script src="/js/i18n.js?v=9ccf425b"></script>
 <!-- Script classique (pas de type="module") : ses fonctions doivent rester
      visibles comme identifiants globaux pour accueil.js, charge apres lui. -->
 <script src="/js/rapport-commun.js?v=3e69fdac"></script>

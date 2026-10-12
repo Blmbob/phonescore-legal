@@ -75,37 +75,11 @@
       "image": "https://phonescore.app/og-image.png",
       "description": "Vérification de l'historique d'un iPhone ou d'un MacBook d'occasion à partir de son code IMEI : verrou iCloud, inscription sur liste noire, verrou opérateur, modèle réel et garantie.",
       "publisher": { "@id": "https://phonescore.app/#organization" }
-    },
-    {
-      "@type": "HowTo",
-      "@id": "https://phonescore.app/#howto",
-      "name": "Comment vérifier un iPhone ou un MacBook d'occasion",
-      "description": "Trois gestes, moins d'une minute.",
-      "step": [
-        {
-          "@type": "HowToStep",
-          "position": 1,
-          "name": "Relevez l'IMEI",
-          "text": "Composez *#06# sur le téléphone à vérifier, ou scannez le code-barres avec l'appareil photo."
-        },
-        {
-          "@type": "HowToStep",
-          "position": 2,
-          "name": "Lancez la vérification",
-          "text": "PhoneScore interroge les bases officielles et renvoie le rapport en quelques secondes."
-        },
-        {
-          "@type": "HowToStep",
-          "position": 3,
-          "name": "Décidez",
-          "text": "Verdict vert, vous pouvez conclure. Verdict rouge, passez votre chemin — et gardez le rapport comme preuve."
-        }
-      ]
     }
   ]
 }
 </script>
-<link rel="stylesheet" href="/css/index.css?v=d67ad87c">
+<link rel="stylesheet" href="/css/index.css?v=8fd7b9ae">
 
 <!-- Outil de verification, isole par .outil : sa feuille et celle de
      l'accueil partagent sept noms de classe (card, pack, sub, wrap...). -->
@@ -177,7 +151,6 @@
   <div class="sweepline" aria-hidden="true"></div>
   <div class="wrap hero-grille">
     <div class="hero-texte">
-      <p class="pastille-direct"><span class="pulse" aria-hidden="true"></span><span data-i18n="hero.pastille">Vérification IMEI · iPhone et MacBook</span></p>
       <h1>
         <span class="h1-debut" data-i18n="hero.titreA">Cet iPhone est-il</span>
         <span class="mots" aria-hidden="true">
@@ -187,7 +160,6 @@
         </span>
         <span class="sr-only" data-i18n="hero.titreSr">volé, verrouillé iCloud ou bloqué opérateur ?</span>
       </h1>
-      <p class="lead" data-i18n="hero.lead">Entre son IMEI. Le verdict tombe en quelques secondes.</p>
       <form class="accroche" id="form-accroche" novalidate>
         <label class="sr-only" for="imei-accroche" data-i18n="verif.imeiLabel">IMEI ou numéro de série</label>
         <input id="imei-accroche" inputmode="numeric" autocomplete="off" placeholder="IMEI (compose *#06#)" data-i18n-ph="hero.champPh">
@@ -399,11 +371,6 @@
           </div>
         </section>
     </div>
-      <ul class="confiance">
-        <li data-i18n="hero.conf1">Apple et GSMA</li>
-        <li data-i18n="hero.conf2">Partage WhatsApp</li>
-        <li data-i18n="hero.conf3">Dès 700 FCFA</li>
-      </ul>
       <a class="paiements" href="/recharger">
         <span class="paiements-lib" data-i18n="hero.payer">Sans carte bancaire : paie par mobile money</span>
         <span class="op orange">Orange Money</span><span class="op mtn">MTN</span><span class="op moov">Moov</span><span class="op wave">Wave</span>
@@ -418,7 +385,6 @@
       <figure class="tel tel-avant">
         <picture><source srcset="/img/rapport-danger.webp" type="image/webp"><img src="/img/rapport-danger.jpg" width="600" height="832" alt="Rapport PhoneScore : Ne pas acheter, verrou iCloud actif" data-i18n-alt="hero.altDanger"></picture>
       </figure>
-      <p class="demo-legende" data-i18n="hero.demoLegende">Captures de l’application PhoneScore</p>
     </div>
   </div>
 </div>
@@ -429,16 +395,14 @@
 <div class="wrap">
   <section class="mm">
     <div class="mm-carte">
-      <h2 data-i18n="mm.titre">Pas de carte bancaire ? Pas de problème.</h2>
-      <p class="sub" data-i18n="mm.sub">Recharge tes pièces ici, par mobile money, en moins d’une minute.</p>
-      <ol class="mm-etapes">
-        <li><b data-i18n="mm.s1T">Connecte-toi</b><span data-i18n="mm.s1D">Avec Apple, Google ou ton e-mail.</span></li>
-        <li><b data-i18n="mm.s2T">Choisis ton pack</b><span data-i18n="mm.s2D">1 pièce 700 F · 3 pièces 2 000 F · 10 pièces 6 700 F</span></li>
-        <li><b data-i18n="mm.s3T">Paie avec ton téléphone</b><span data-i18n="mm.s3D">Orange Money, MTN, Moov ou Wave. Les pièces arrivent tout de suite.</span></li>
+      <h2 data-i18n="mm.titreCourt">Pas de carte ? Paie par mobile money</h2>
+      <ol class="mm-etapes court">
+        <li data-i18n="mm.c1">Connecte-toi</li>
+        <li data-i18n="mm.c2">Choisis un pack, dès 700 F</li>
+        <li data-i18n="mm.c3">Paie avec ton téléphone</li>
       </ol>
       <a class="btn-principal" href="/recharger" data-i18n="mm.btn">Recharger mes pièces</a>
-      <p class="mm-note" data-i18n="mm.note">Les pièces servent sur le site et dans l’application. Dans l’application iPhone, elles s’achètent aussi via l’App Store.</p>
-      <p class="cta-note u-margin-top-26px" data-i18n="cta.avant">Vous préférez l’application&nbsp;?</p>
+      <p class="mm-note" data-i18n="mm.noteCourte">Dans l’app iPhone, achat via l’App Store.</p>
       <p class="badge-zone u-margin-top-14px"><a href="https://apps.apple.com/app/id6795897093" aria-label="Télécharger dans l’App Store"><img class="badge-app" src="/appstore-badge-fr.svg" alt="Télécharger dans l’App Store" width="158" height="50"></a></p>
     </div>
   </section>
@@ -446,71 +410,17 @@
 
 <!-- ---------------- CE QU'ON VÉRIFIE ---------------- -->
 <div class="wrap">
-  <section>
-    <div class="narrow">
-      <h2 data-i18n="controles.titre">Ce que PhoneScore contrôle</h2>
-      <p class="sub" data-i18n="controles.sub">À partir du seul code IMEI, auprès des bases constructeur et GSMA.</p>
-      <ul class="controles">
-        <li><b data-i18n="controles.icloudT">Verrou iCloud</b> <span data-i18n="controles.icloudD">— le point le plus coûteux : un appareil lié à « Localiser » est inutilisable, et personne ne peut le débloquer.</span></li>
-        <li><b data-i18n="controles.voleT">Déclaré volé ou perdu</b> <span data-i18n="controles.voleD">— inscription sur liste noire GSMA. Un appareil signalé peut être coupé du réseau à tout moment.</span></li>
-        <li><b data-i18n="controles.simlockT">Verrou opérateur</b> <span data-i18n="controles.simlockD">— un téléphone SIM-locké n'accepte que l'opérateur d'origine, souvent étranger.</span></li>
-        <li><b data-i18n="controles.modeleT">Modèle et capacité réels</b> <span data-i18n="controles.modeleD">— ce qui a été fabriqué sous cet IMEI, quoi qu'annonce le vendeur.</span></li>
-        <li><b data-i18n="controles.esimT">Cartes SIM et eSIM</b> <span data-i18n="controles.esimD">— les iPhone américains depuis le 14 n'ont aucun tiroir SIM. Le rapport le signale.</span></li>
-        <li><b data-i18n="controles.garantieT">Garantie</b> <span data-i18n="controles.garantieD">— date d'achat et couverture Apple restante, quand l'information existe.</span></li>
-        <li><b data-i18n="controles.partageT">Rapport partageable</b> <span data-i18n="controles.partageD">— à envoyer au vendeur ou à l'acheteur par WhatsApp.</span></li>
-      </ul>
-      <p class="sub u-margin-18px-0-0">
-        <a href="/rapport" data-i18n="controles.lien">Ce que chaque ligne veut dire</a><span data-i18n="controles.lienSuite">, et quoi vérifier sur l'appareil.</span>
-      </p>
-    </div>
-  </section>
-</div>
-
-<!-- ---------------- COMMENT ---------------- -->
-<div class="wrap">
-  <section>
-    <div class="narrow">
-      <h2 data-i18n="comment.titre">Comment ça marche</h2>
-      <p class="sub" data-i18n="comment.sub">Trois gestes, moins d'une minute.</p>
-      <div class="steps">
-        <div class="step">
-          <div class="n">1</div>
-          <p><b data-i18n="comment.s1T">Relevez l'IMEI</b><span data-i18n="comment.s1Da">Composez </span><code>*#06#</code><span data-i18n="comment.s1Db"> sur le téléphone à vérifier, ou scannez le code-barres avec l'appareil photo.</span></p>
-        </div>
-        <div class="step">
-          <div class="n">2</div>
-          <p><b data-i18n="comment.s2T">Lancez la vérification</b><span data-i18n="comment.s2D">PhoneScore interroge les bases officielles et renvoie le rapport en quelques secondes.</span></p>
-        </div>
-        <div class="step">
-          <div class="n">3</div>
-          <p><b data-i18n="comment.s3T">Décidez</b><span data-i18n="comment.s3D">Verdict vert, vous pouvez conclure. Verdict rouge, passez votre chemin — et gardez le rapport comme preuve.</span>
-             <a href="/rapport" data-i18n="comment.s3Lien">Comprendre chaque ligne du rapport</a>.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-</div>
-
-<!-- ---------------- REVENDEURS ---------------- -->
-<div class="wrap">
-  <section>
-    <h2 data-i18n="revendeurs.titre">Pour les revendeurs</h2>
-    <p class="sub" data-i18n="revendeurs.sub">Les outils du métier, inclus dans l'application.</p>
-    <div class="grid">
-      <div class="card">
-        <h4 data-i18n="revendeurs.annuaireT">Votre boutique dans l'annuaire</h4>
-        <p data-i18n="revendeurs.annuaireD">Inscrivez votre boutique, indiquez sa position, et laissez vos clients vous contacter directement par WhatsApp. Les boutiques proches de l'acheteur apparaissent en premier. L'inscription demande le Pack Revendeur, qui ouvre 30 jours d'accès.</p>
-      </div>
-      <div class="card">
-        <h4 data-i18n="revendeurs.badgeT">Badge Certifiée</h4>
-        <p><span data-i18n="revendeurs.badgeD">Les boutiques qui vérifient régulièrement leurs appareils affichent un badge de confiance visible par les acheteurs.</span>
-           <a href="/revendeurs" data-i18n="revendeurs.badgeLien">Comment l&rsquo;obtenir</a>.</p>
-      </div>
-      <div class="card">
-        <h4 data-i18n="revendeurs.stockT">Stock et factures</h4>
-        <p data-i18n="revendeurs.stockD">Suivez vos appareils en stock, vos prix d'achat et de vente, et éditez une facture propre pour chaque client.</p>
-      </div>
-    </div>
+  <section class="controles-court">
+    <h2 data-i18n="controles.titreCourt">Ce qu’on vérifie</h2>
+    <ul class="puces">
+      <li data-i18n="controles.p1">iCloud</li>
+      <li data-i18n="controles.p2">Vol ou perte</li>
+      <li data-i18n="controles.p3">Opérateur</li>
+      <li data-i18n="controles.p4">Modèle réel</li>
+      <li data-i18n="controles.p5">Garantie</li>
+      <li data-i18n="controles.p6">Gestion à distance</li>
+    </ul>
+    <p class="lien-court"><a href="/revendeurs" data-i18n="revendeurs.lienCourt">Revendeur ? Badge boutique, stock, factures →</a></p>
   </section>
 </div>
 
@@ -539,7 +449,7 @@
 <script src="/vendor/supabase-2.112.3.js"></script>
 <!-- Traduction FR/EN de la coquille statique + PSI18N.t() pour les textes
      ecrits dynamiquement par accueil.js : doit se charger avant lui. -->
-<script src="/js/i18n.js?v=421e9516"></script>
+<script src="/js/i18n.js?v=9ccf425b"></script>
 <!-- Script classique (pas de type="module") : ses fonctions doivent rester
      visibles comme identifiants globaux pour accueil.js, charge apres lui. -->
 <script src="/js/rapport-commun.js?v=3e69fdac"></script>

@@ -372,6 +372,7 @@ const TRADUCTIONS = {
       limiteSansDate: 'Limite atteinte : 3 aperçus gratuits par semaine. Tu peux lancer la vérification complète à tout moment.',
     },
     mm: {
+      titreCourt: 'Pas de carte ? Paie par mobile money', c1: 'Connecte-toi', c2: 'Choisis un pack, dès 700 F', c3: 'Paie avec ton téléphone', noteCourte: 'Dans l’app iPhone, achat via l’App Store.',
       titre: 'Pas de carte bancaire ? Pas de problème.',
       sub: 'Recharge tes pièces ici, par mobile money, en moins d’une minute.',
       s1T: 'Connecte-toi', s1D: 'Avec Apple, Google ou ton e-mail.',
@@ -429,6 +430,7 @@ const TRADUCTIONS = {
       imeiPret: 'IMEI prêt :',
     },
     controles: {
+      titreCourt: 'Ce qu’on vérifie', p1: 'iCloud', p2: 'Vol ou perte', p3: 'Opérateur', p4: 'Modèle réel', p5: 'Garantie', p6: 'Gestion à distance',
       titre: 'Ce que PhoneScore contrôle',
       sub: 'À partir du seul code IMEI, auprès des bases constructeur et GSMA.',
       icloudT: 'Verrou iCloud', icloudD: "— le point le plus coûteux : un appareil lié à « Localiser » est inutilisable, et personne ne peut le débloquer.",
@@ -448,6 +450,7 @@ const TRADUCTIONS = {
       s3Lien: 'Comprendre chaque ligne du rapport',
     },
     revendeurs: {
+      lienCourt: 'Revendeur ? Badge boutique, stock, factures →',
       titre: 'Pour les revendeurs', sub: "Les outils du métier, inclus dans l'application.",
       annuaireT: "Votre boutique dans l'annuaire",
       annuaireD: "Inscrivez votre boutique, indiquez sa position, et laissez vos clients vous contacter directement par WhatsApp. Les boutiques proches de l'acheteur apparaissent en premier. L'inscription demande le Pack Revendeur, qui ouvre 30 jours d'accès.",
@@ -1071,6 +1074,7 @@ const TRADUCTIONS = {
       limiteSansDate: 'Limit reached: 3 free previews per week. You can run the full check at any time.',
     },
     mm: {
+      titreCourt: 'No card? Pay with mobile money', c1: 'Sign in', c2: 'Pick a pack, from 700 F', c3: 'Pay from your phone', noteCourte: 'In the iPhone app, buy through the App Store.',
       titre: 'No bank card? No problem.',
       sub: 'Top up your coins here with mobile money, in under a minute.',
       s1T: 'Sign in', s1D: 'With Apple, Google or your email.',
@@ -1128,6 +1132,7 @@ const TRADUCTIONS = {
       imeiPret: 'IMEI ready:',
     },
     controles: {
+      titreCourt: 'What we check', p1: 'iCloud', p2: 'Theft or loss', p3: 'Carrier', p4: 'Real model', p5: 'Warranty', p6: 'Remote management',
       titre: 'What PhoneScore checks',
       sub: 'From the IMEI alone, against the manufacturer and GSMA databases.',
       icloudT: 'iCloud lock', icloudD: '— the costliest issue: a device tied to "Find My" is unusable, and no one can unlock it.',
@@ -1147,6 +1152,7 @@ const TRADUCTIONS = {
       s3Lien: 'Understand every line of the report',
     },
     revendeurs: {
+      lienCourt: 'Reseller? Shop badge, stock, invoices →',
       titre: 'For resellers', sub: 'Professional tools, built into the app.',
       annuaireT: 'Your shop in the directory',
       annuaireD: "List your shop, set its location, and let customers reach you directly on WhatsApp. Shops closer to the buyer show up first. Listing requires the Reseller Pack, which unlocks 30 days of access.",
