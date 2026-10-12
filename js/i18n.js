@@ -373,7 +373,6 @@ const TRADUCTIONS = {
     },
     mm: {
       titreCourt: 'Pas de carte ? Paie par mobile money', c1: 'Connecte-toi', c2: 'Choisis un pack, dès 700 F', c3: 'Paie avec ton téléphone', noteCourte: 'Dans l’app iPhone, achat via l’App Store.',
-      titre: 'Pas de carte bancaire ? Pas de problème.',
       sub: 'Recharge tes pièces ici, par mobile money, en moins d’une minute.',
       s1T: 'Connecte-toi', s1D: 'Avec Apple, Google ou ton e-mail.',
       s2T: 'Choisis ton pack', s2D: '1 pièce 700 F · 3 pièces 2 000 F · 10 pièces 6 700 F',
@@ -1075,7 +1074,6 @@ const TRADUCTIONS = {
     },
     mm: {
       titreCourt: 'No card? Pay with mobile money', c1: 'Sign in', c2: 'Pick a pack, from 700 F', c3: 'Pay from your phone', noteCourte: 'In the iPhone app, buy through the App Store.',
-      titre: 'No bank card? No problem.',
       sub: 'Top up your coins here with mobile money, in under a minute.',
       s1T: 'Sign in', s1D: 'With Apple, Google or your email.',
       s2T: 'Pick a pack', s2D: '1 coin 700 F · 3 coins 2,000 F · 10 coins 6,700 F',
