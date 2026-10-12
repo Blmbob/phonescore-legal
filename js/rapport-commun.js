@@ -268,7 +268,7 @@ function decompteTexte(liste) {
   const nDanger = liste.filter(p => p.statut === 'danger').length;
   return nDanger > 0
     ? PSI18N.t(nDanger > 1 ? 'rapportCommun.decompteBloquantPlur' : 'rapportCommun.decompteBloquantSing', { n: nDanger })
-    : PSI18N.t(nOk > 1 ? 'rapportCommun.decompteOkPlur' : 'rapportCommun.decompteOkSing', { n: nOk });
+    : PSI18N.t(nOk > 1 ? 'rapportCommun.decompteOkPlur' : 'rapportCommun.decompteOkSing', { n: nOk, total: liste.length });
 }
 
 const SYMBOLE_STATUT = { ok: '✓', attention: '!', danger: '✕', inconnu: '–' };
