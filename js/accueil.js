@@ -10,6 +10,10 @@ const supabase = createClient(SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY);
 
 const $ = id => document.getElementById(id);
 let type = 'iphone';
+// Niveau MacBook : 'standard' (2 pieces) ou 'complet' (4 pieces).
+let niveau = 'standard';
+// Dernier solde lu (null tant qu'inconnu) : choisit ou mene « Debloquer ».
+let soldeActuel = null;
 
 function afficher(el, texte, classe) {
   el.textContent = texte;
@@ -71,6 +75,7 @@ async function rendre(session) {
     $('courriel').textContent = session.user.email ?? '';
     await rafraichirSolde();
     rafraichirStats();
+    majApercu();
   } else {
     $('vue-app').classList.add('hidden');
     $('vue-auth').classList.remove('hidden');
@@ -84,7 +89,11 @@ async function rafraichirSolde() {
   // explicitement evite un `single()` en echec si une policy evolue.
   const { data } = await supabase
     .from('profiles').select('pieces').eq('id', session.user.id).maybeSingle();
+  soldeActuel = data ? data.pieces : null;
   $('solde').textContent = data ? data.pieces : '—';
+  // Solde a zero : on montre la recharge mobile money au lieu de laisser
+  // le bouton Verifier echouer.
+  $('alerte-solde').classList.toggle('hidden', !(data && data.pieces === 0));
 }
 
 /* ---------------- authentification ---------------- */
@@ -202,6 +211,7 @@ async function rafraichirStats() {
   if (total.status === 'fulfilled' && sains.status === 'fulfilled') {
     const n = total.value.count ?? 0;
     $('stat-total').textContent = n;
+    $('stats').classList.toggle('hidden', n === 0);
 
     const bloc = $('stat-fiable');
     if (n === 0) {
@@ -222,6 +232,16 @@ for (const [id, valeur] of [['t-iphone', 'iphone'], ['t-macbook', 'macbook']]) {
     type = valeur;
     $('t-iphone').setAttribute('aria-pressed', String(valeur === 'iphone'));
     $('t-macbook').setAttribute('aria-pressed', String(valeur === 'macbook'));
+    $('niveaux').classList.toggle('hidden', valeur !== 'macbook');
+    majApercu();
+  });
+}
+
+for (const [id, valeur] of [['n-standard', 'standard'], ['n-complet', 'complet']]) {
+  $(id).addEventListener('click', () => {
+    niveau = valeur;
+    $('n-standard').setAttribute('aria-pressed', String(valeur === 'standard'));
+    $('n-complet').setAttribute('aria-pressed', String(valeur === 'complet'));
   });
 }
 
@@ -270,16 +290,39 @@ function arreterEtapesVerif() {
 }
 
 $('btn-verifier').addEventListener('click', async () => {
-  const imei = $('imei').value.trim();
   effacer($('msg-verif'));
   $('rapport').classList.add('hidden');
 
+  // Saisies qui ne peuvent pas aboutir : refusees avant le debit (memes
+  // regles que l'app, lib/imei-validation.ts).
+  const { valeur: imei, nature } = analyserSaisie($('imei').value);
+  if (nature === 'samsung') return afficher($('msg-verif'), PSI18N.t('verif.appleSeul'), 'err');
+  if (nature === 'eid' || nature === 'iccid') return afficher($('msg-verif'), PSI18N.t('verif.numeroSim'), 'err');
+  // « 354…784/01 », espaces, IMEISV : le champ montre le numero reellement verifie.
+  if (imei !== $('imei').value.trim()) $('imei').value = imei;
+
   if (imei.length < 8) return afficher($('msg-verif'), PSI18N.t('verif.imeiInvalide'), 'err');
+
+  const cout = type === 'macbook' ? (niveau === 'complet' ? 4 : 2) : 1;
+  if (soldeActuel !== null && soldeActuel < cout) {
+    $('alerte-solde').classList.remove('hidden');
+    return afficher($('msg-verif'), PSI18N.t('verif.soldeInsuffisant'), 'err');
+  }
+  // 15 chiffres mais cle de controle fausse : presque toujours un chiffre mal
+  // recopie, et la piece serait debitee pour un appareil qui n'existe pas.
+  if (type === 'iphone' && /^\d{15}$/.test(imei) && !estImeiValide(imei)
+      && !window.confirm(PSI18N.t('verif.cleFausse'))) return;
+
+  jetonApercu++;
+  masquerApercu();
 
   occupe($('btn-verifier'), true);
   $('chargement-verif').classList.remove('hidden');
   demarrerEtapesVerif();
-  const { data, error } = await supabase.functions.invoke('check-imei', { body: { imei, type } });
+  const { data, error } = await supabase.functions.invoke('check-imei', {
+    // Le niveau ne concerne que le MacBook cote site.
+    body: type === 'macbook' ? { imei, type, niveau } : { imei, type },
+  });
   arreterEtapesVerif();
   occupe($('btn-verifier'), false, PSI18N.t('verif.btn'));
   $('chargement-verif').classList.add('hidden');
@@ -295,4 +338,157 @@ $('btn-verifier').addEventListener('click', async () => {
   // Rendu partage avec la fiche d'un element de l'historique (profil.js) :
   // voir js/rapport-commun.js, charge avant ce script.
   afficherRapportDans('rapport', data.report);
+});
+
+/* ---------------- champ IMEI de l'accroche ---------------- */
+
+// Le visiteur tape l'IMEI des la premiere vue ; on le reporte dans l'outil,
+// plus bas, et on l'y emmene. Garde en sessionStorage : une connexion Apple
+// ou Google recharge la page, l'IMEI ne doit pas se perdre en route.
+const CLE_IMEI_ATTENTE = 'imei-attente';
+
+$('form-accroche')?.addEventListener('submit', (e) => {
+  e.preventDefault();
+  const imei = $('imei-accroche').value.trim();
+  if (imei) {
+    $('imei').value = imei;
+    montrerImeiPret(imei);
+    try { sessionStorage.setItem(CLE_IMEI_ATTENTE, imei); } catch { /* navigation privee */ }
+    majApercu();
+  }
+  $('verifier').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  // Connecte : le bouton Verifier ; sinon, le premier moyen de connexion.
+  const cible = $('vue-app').classList.contains('hidden') ? $('btn-apple') : $('btn-verifier');
+  setTimeout(() => cible?.focus({ preventScroll: true }), 600);
+});
+
+// Rappel cote connexion : le visiteur voit que son IMEI l'attend.
+function montrerImeiPret(imei) {
+  $('imei-pret-val').textContent = imei;
+  $('imei-pret').classList.remove('hidden');
+}
+
+try {
+  const enAttente = sessionStorage.getItem(CLE_IMEI_ATTENTE);
+  if (enAttente && !$('imei').value) {
+    $('imei').value = enAttente;
+    montrerImeiPret(enAttente);
+  }
+} catch { /* navigation privee */ }
+
+/* ---------------- controle de saisie ---------------- */
+
+// Portage de lib/imei-validation.ts (app) : garder les deux identiques.
+function sommeLuhn(chiffres) {
+  let total = 0;
+  for (let i = chiffres.length - 1, rang = 0; i >= 0; i--, rang++) {
+    let n = chiffres.charCodeAt(i) - 48;
+    if (rang % 2 === 1) { n *= 2; if (n > 9) n -= 9; }
+    total += n;
+  }
+  return total;
+}
+
+function estImeiValide(valeur) {
+  const v = (valeur ?? '').trim();
+  return /^\d{15}$/.test(v) && sommeLuhn(v) % 10 === 0;
+}
+
+function cleAttendue(quatorze) {
+  if (!/^\d{14}$/.test(quatorze)) return null;
+  return (10 - (sommeLuhn(quatorze + '0') % 10)) % 10;
+}
+
+function analyserSaisie(brut) {
+  const compacte = (brut ?? '').trim().toUpperCase().replace(/[\s\-./]/g, '');
+  if (/^\d+$/.test(compacte)) {
+    // EID d'une eSIM (32 chiffres) ou ICCID d'une carte SIM (19-20), tous deux en 89.
+    if (compacte.length === 32 && compacte.startsWith('89')) return { valeur: compacte, nature: 'eid' };
+    if ((compacte.length === 19 || compacte.length === 20) && compacte.startsWith('89')) return { valeur: compacte, nature: 'iccid' };
+    // IMEI suivi de la version logicielle (« 354…784/01 »).
+    if (compacte.length === 17 && estImeiValide(compacte.slice(0, 15))) return { valeur: compacte.slice(0, 15), nature: 'imei' };
+    // IMEISV : 14 chiffres + 2 de version, sans cle : on la recalcule.
+    if (compacte.length === 16) {
+      const cle = cleAttendue(compacte.slice(0, 14));
+      if (cle !== null) return { valeur: compacte.slice(0, 14) + cle, nature: 'imei' };
+    }
+    return { valeur: compacte, nature: compacte.length === 15 ? 'imei' : 'autre' };
+  }
+  // Numero de serie Samsung : « R », un chiffre, neuf caracteres.
+  if (/^R\d[A-Z0-9]{9}$/.test(compacte)) return { valeur: compacte, nature: 'samsung' };
+  return { valeur: compacte, nature: 'autre' };
+}
+
+/* ---------------- apercu gratuit ---------------- */
+
+// Modele lu dans la base TAC (8 premiers chiffres de l'IMEI), sans appel
+// payant. Seulement pour un IMEI complet et valide dans l'onglet iPhone. Le
+// serveur compte (3 par semaine et par compte) ; sans reponse de sa part, pas
+// d'apercu, jamais un apercu illimite. Portage de app/(tabs)/index.tsx.
+const APERCU_ATTENTE_MS = 2200;
+let baseTac = null;
+let jetonApercu = 0;
+let minuteurSaisie = null;
+
+function chargerBaseTac() {
+  baseTac ??= fetch('/data/tac.json').then(r => (r.ok ? r.json() : null)).catch(() => null);
+  return baseTac;
+}
+
+function lireReponseApercu(d) {
+  if (!d || typeof d !== 'object' || typeof d.allowed !== 'boolean' || typeof d.limit !== 'number') return null;
+  if (d.allowed) return typeof d.remaining === 'number' ? { autorise: true, restants: d.remaining } : null;
+  const date = typeof d.resets_at === 'string' ? new Date(d.resets_at) : null;
+  return { autorise: false, reprendLe: date && !Number.isNaN(date.getTime()) ? date : null };
+}
+
+function masquerApercu() {
+  for (const id of ['apercu', 'apercu-attente', 'apercu-limite']) $(id).classList.add('hidden');
+  $('btn-verifier').classList.remove('hidden');
+}
+
+async function majApercu() {
+  const jeton = ++jetonApercu;
+  masquerApercu();
+  const chiffres = $('imei').value.replace(/\D/g, '');
+  if (type !== 'iphone' || !estImeiValide(chiffres) || $('vue-app').classList.contains('hidden')) return;
+
+  const base = await chargerBaseTac();
+  const indice = base?.tac?.[chiffres.slice(0, 8)];
+  if (jeton !== jetonApercu || indice === undefined) return;
+
+  $('apercu-attente').classList.remove('hidden');
+  const debut = Date.now();
+  const { data, error } = await supabase.rpc('consume_demo_preview', { p_imei: chiffres });
+  const reste = APERCU_ATTENTE_MS - (Date.now() - debut);
+  if (reste > 0) await new Promise(r => setTimeout(r, reste));
+  if (jeton !== jetonApercu) return;
+  $('apercu-attente').classList.add('hidden');
+  if (error) return;
+
+  const reponse = lireReponseApercu(data);
+  if (!reponse) return;
+  if (reponse.autorise) {
+    $('apercu-modele').textContent = base.modeles[indice];
+    // Sans piece, « Debloquer » mene a la recharge plutot qu'a une impasse.
+    $('apercu-cout').textContent = PSI18N.t(soldeActuel === 0 ? 'apercu.coutZero' : 'apercu.coutUn');
+    $('apercu-restants').textContent = PSI18N.t(reponse.restants === 1 ? 'apercu.restantUn' : 'apercu.restants', { n: reponse.restants });
+    $('apercu').classList.remove('hidden');
+    $('btn-verifier').classList.add('hidden');
+  } else {
+    $('apercu-limite').textContent = reponse.reprendLe
+      ? PSI18N.t('apercu.limite', { date: reponse.reprendLe.toLocaleDateString(PSI18N.langueActuelle()) })
+      : PSI18N.t('apercu.limiteSansDate');
+    $('apercu-limite').classList.remove('hidden');
+  }
+}
+
+$('imei').addEventListener('input', () => {
+  clearTimeout(minuteurSaisie);
+  minuteurSaisie = setTimeout(majApercu, 350);
+});
+
+$('apercu-debloquer').addEventListener('click', () => {
+  if (soldeActuel === 0) { window.location.href = '/recharger'; return; }
+  $('btn-verifier').click();
 });

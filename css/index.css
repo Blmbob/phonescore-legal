@@ -443,3 +443,197 @@
 .badge-texte{display:inline-flex; align-items:center; gap:10px; height:50px; padding:0 20px; border-radius:10px;
   background:#000; border:1px solid #a6a6a6; color:#fff !important; font-weight:600; font-size:16px; text-decoration:none}
 .badge-texte svg{width:20px; height:20px; flex:none}
+
+/* =================== Accueil v2 : accroche (oct. 2026) =================== */
+.sr-only{position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0 0 0 0); white-space:nowrap}
+.hero{padding:28px 0 20px}
+.hero-grille{display:grid; grid-template-columns:minmax(0,1fr); gap:26px; align-items:center}
+.hero-texte{min-width:0}
+@media (min-width:860px){
+  .hero{padding:72px 0 80px; text-align:left}
+  .hero-grille{grid-template-columns:minmax(0,1.15fr) minmax(0,.85fr); gap:48px}
+  .hero .paiements{justify-content:flex-start}
+  .hero .lead{margin-left:0}
+}
+.pastille-direct{
+  display:inline-flex; align-items:center; gap:9px; margin:0 0 14px;
+  padding:6px 14px; border-radius:999px; font-size:13px; font-weight:600; letter-spacing:.2px;
+  background:rgba(85,174,96,.12); border:1px solid rgba(126,208,138,.35); color:var(--green-l);
+}
+.pulse{width:8px; height:8px; border-radius:50%; background:var(--green-l); animation:pulse 2s ease-out infinite}
+@keyframes pulse{ 0%{box-shadow:0 0 0 0 rgba(126,208,138,.6)} 100%{box-shadow:0 0 0 12px rgba(126,208,138,0)} }
+
+.hero h1{font-size:clamp(34px,7.4vw,58px); line-height:1.06; letter-spacing:-1.4px; margin:0 0 14px}
+.h1-debut{display:block}
+/* Les trois mots tournent dans une case de hauteur fixe : aucun saut de mise en page. */
+.mots{display:block; position:relative; height:1.2em; overflow:hidden}
+.mot{position:absolute; left:0; right:0; font-style:normal; white-space:nowrap; opacity:0; transform:translateY(100%); animation:mot 7.5s cubic-bezier(.2,.8,.2,1) infinite}
+.hero h1 .mot.rouge{color:#FF6B6F} .hero h1 .mot.ambre{color:#FBBF24} .hero h1 .mot.bleu{color:var(--blue-l)}
+.mot:nth-child(2){animation-delay:2.5s} .mot:nth-child(3){animation-delay:5s}
+@keyframes mot{
+  0%{opacity:0; transform:translateY(100%)} 5%,30%{opacity:1; transform:translateY(0)}
+  35%,100%{opacity:0; transform:translateY(-100%)}
+}
+.hero .lead{font-size:clamp(17px,2.2vw,20px); color:#C9D3E8; max-width:520px; margin:0 auto 20px}
+
+
+.paiements{display:flex; flex-wrap:wrap; gap:5px; justify-content:center; margin:16px 0 4px}
+.op{display:inline-flex; align-items:center; gap:5px; padding:5px 9px; border-radius:999px; font-size:12px; font-weight:700;
+  background:rgba(255,255,255,.06); border:1px solid var(--line)}
+.op::before{content:""; width:9px; height:9px; border-radius:50%}
+.op.orange::before{background:#FF7900} .op.mtn::before{background:#FFCC00} .op.moov::before{background:#2F80ED} .op.wave::before{background:#1DC8F2}
+
+/* ---- champ IMEI de l'accroche ---- */
+.accroche{display:flex; gap:8px; max-width:520px; margin:0 auto; padding:7px; border-radius:20px;
+  background:rgba(6,11,30,.75); border:1px solid rgba(126,165,245,.45); box-shadow:0 0 0 6px rgba(73,122,234,.12), 0 18px 50px rgba(0,0,0,.35)}
+.accroche input{flex:1; min-width:0; border:0; outline:0; background:transparent; color:var(--text); font-size:17px; padding:0 12px; font-family:inherit}
+.accroche input::placeholder{color:#8C99B8}
+.accroche button{flex:none; min-height:52px; padding:0 22px; border:0; border-radius:14px; cursor:pointer; color:#fff; font-weight:800; font-size:16.5px; font-family:inherit;
+  background:linear-gradient(180deg,#5B8CF5,#2F5FD8); box-shadow:0 8px 24px rgba(73,122,234,.45)}
+.accroche button:hover{filter:brightness(1.08)}
+.accroche:focus-within{border-color:var(--blue-l)}
+
+.confiance{list-style:none; padding:0; margin:16px auto 0; display:flex; flex-wrap:wrap; gap:6px 14px; justify-content:center; font-size:13.5px; line-height:1.4; color:#C9D3E8}
+.confiance li{display:inline-flex; align-items:center; gap:7px}
+.confiance li::before{content:""; width:16px; height:16px; border-radius:50%; flex:none;
+  background:var(--green) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M6 12.5l4 4L18 8' fill='none' stroke='white' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center/12px no-repeat}
+a.paiements{text-decoration:none; color:var(--text); align-items:center}
+.paiements-lib{width:100%; text-align:center; font-size:12px; color:var(--muted); letter-spacing:.3px}
+@media (min-width:860px){ .hero .confiance{justify-content:flex-start} .hero .accroche{margin-left:0} .paiements-lib{text-align:left} }
+
+/* ---- vraies captures de l'app ---- */
+.hero-visuel{position:relative; height:430px; max-width:420px; width:100%; margin:0 auto}
+.tel{position:absolute; margin:0; width:210px; border-radius:30px; padding:8px; background:linear-gradient(160deg,#2A3350,#0B1020);
+  box-shadow:0 30px 70px rgba(0,0,0,.55), 0 0 0 1.5px rgba(255,255,255,.1)}
+.tel img{display:block; width:100%; height:auto; border-radius:23px}
+.tel-arriere{right:6%; top:0; transform:rotate(7deg); opacity:.92; animation:flotteA 7s ease-in-out infinite}
+.tel-avant{left:4%; top:46px; transform:rotate(-5deg); box-shadow:0 30px 80px rgba(0,0,0,.6), 0 0 50px rgba(229,72,77,.28), 0 0 0 1.5px rgba(255,255,255,.12); animation:flotteB 6s ease-in-out infinite}
+@keyframes flotteA{ 0%,100%{transform:rotate(7deg) translateY(0)} 50%{transform:rotate(6deg) translateY(-8px)} }
+@keyframes flotteB{ 0%,100%{transform:rotate(-5deg) translateY(0)} 50%{transform:rotate(-4deg) translateY(-12px)} }
+.hero-visuel .demo-legende{position:absolute; left:0; right:0; bottom:-6px; text-align:center}
+.demo-legende{color:var(--muted); font-size:12.5px; margin:0; letter-spacing:.3px}
+@media (min-width:860px){ .hero-visuel{height:520px} .tel{width:240px} }
+
+/* ---- outil ---- */
+.zone-outil{text-align:center; padding-top:36px}
+.zone-outil h2{margin-bottom:18px}
+
+/* ---- mobile money ---- */
+.mm{border-top:0; padding-top:0}
+.mm-carte{
+  position:relative; overflow:hidden; border-radius:26px; padding:34px 22px; text-align:center;
+  background:radial-gradient(500px 260px at 0% 0%, rgba(255,121,0,.18), transparent 70%), radial-gradient(500px 260px at 100% 100%, rgba(29,200,242,.16), transparent 70%), var(--panel);
+  border:1px solid rgba(232,236,246,.16);
+}
+.mm-etapes{list-style:none; counter-reset:mm; padding:0; margin:0 auto 26px; max-width:560px; text-align:left; display:grid; gap:12px}
+.mm-etapes li{counter-increment:mm; position:relative; padding:14px 16px 14px 62px; border-radius:16px; background:rgba(6,11,30,.5); border:1px solid var(--line)}
+.mm-etapes li::before{content:counter(mm); position:absolute; left:16px; top:50%; margin-top:-17px; width:34px; height:34px; border-radius:50%;
+  display:flex; align-items:center; justify-content:center; font-weight:800; background:linear-gradient(180deg,#5B8CF5,#2F5FD8)}
+.mm-etapes b{display:block} .mm-etapes span{color:var(--muted); font-size:14.5px}
+.mm-note{color:var(--muted); font-size:13px; margin:18px auto 0; max-width:520px}
+
+@media (prefers-reduced-motion: reduce){
+  .pulse, .tel{animation:none !important}
+  .mot{animation:none !important} .mot:first-child{opacity:1; transform:none}
+}
+
+/* ---- bouton principal (accroche, mobile money, alerte solde) ---- */
+.btn-principal{
+  display:inline-flex; align-items:center; justify-content:center; min-height:54px; padding:0 26px;
+  border-radius:16px; font-weight:800; font-size:16.5px; text-decoration:none; color:#fff;
+  background:linear-gradient(180deg,#5B8CF5,#2F5FD8); box-shadow:0 10px 30px rgba(73,122,234,.45), inset 0 1px 0 rgba(255,255,255,.25);
+  transition:transform .15s, box-shadow .15s;
+}
+.btn-principal:hover{transform:translateY(-2px); box-shadow:0 14px 36px rgba(73,122,234,.55)}
+
+/* =================== Ecran de verification v2 (oct. 2026) =================== */
+.outil .console{padding:20px; border-radius:22px; text-align:left;
+  background:linear-gradient(180deg, rgba(36,54,118,.62), rgba(18,28,64,.72)); border:1px solid rgba(126,165,245,.28);
+  box-shadow:0 24px 60px rgba(0,0,0,.35)}
+.console-tete{display:flex; align-items:center; justify-content:space-between; gap:12px}
+.outil .console .solde{font-size:15px}
+.outil .console .solde svg{width:30px; height:30px; flex:none}
+.outil .console .solde b{font-size:22px}
+.btn-recharge{flex:none; padding:9px 14px; border-radius:12px; font-size:14px; font-weight:800; text-decoration:none; color:#fff;
+  background:linear-gradient(180deg,#FF8A1F,#E86A00); box-shadow:0 6px 18px rgba(255,121,0,.35)}
+.btn-recharge:hover{filter:brightness(1.08)}
+.outil .courriel{margin:4px 0 16px; font-size:12.5px}
+
+.alerte-solde{display:grid; gap:4px; margin:0 0 16px; padding:14px 16px; border-radius:16px; text-align:left;
+  background:rgba(255,121,0,.1); border:1px solid rgba(255,138,31,.45)}
+.alerte-solde b{color:#FFB066; font-size:15.5px}
+.alerte-solde span{color:#E3D3C2; font-size:14px}
+.alerte-solde .btn-principal{margin-top:10px; min-height:48px; font-size:15.5px; background:linear-gradient(180deg,#FF8A1F,#E86A00); box-shadow:0 8px 24px rgba(255,121,0,.35)}
+
+/* Tuiles iPhone / MacBook : l'icone est dessinee par la feuille, data-i18n
+   ecrase le contenu du bouton. */
+.outil .seg{gap:10px; margin-bottom:16px}
+.outil .seg button.tuile{display:flex; flex-direction:column; align-items:center; gap:8px; padding:14px 8px 12px; border-radius:16px;
+  font-size:14px; font-weight:700; line-height:1.25; color:var(--muted); background:rgba(6,11,30,.45); border:1.5px solid var(--line)}
+.outil .seg button.tuile::before{content:""; width:30px; height:30px; background:center/contain no-repeat; opacity:.7}
+.outil .seg button.tuile-iphone::before{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23E8ECF6' stroke-width='1.8' stroke-linecap='round'%3E%3Crect x='6' y='2' width='12' height='20' rx='3'/%3E%3Cpath d='M10 5h4'/%3E%3C/svg%3E")}
+.outil .seg button.tuile-mac::before{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23E8ECF6' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='4' y='5' width='16' height='11' rx='1.5'/%3E%3Cpath d='M2 19h20'/%3E%3C/svg%3E")}
+.outil .seg button.tuile[aria-pressed="true"]{color:var(--text); border-color:var(--blue-l); background:rgba(73,122,234,.2); box-shadow:0 0 0 4px rgba(73,122,234,.14)}
+.outil .seg button.tuile[aria-pressed="true"]::before{opacity:1}
+
+.outil input.champ-imei{font-size:20px; letter-spacing:1.5px; padding:15px 16px; border-radius:14px;
+  font-family:ui-monospace,Menlo,Consolas,monospace}
+.outil .aide{margin:8px 2px 0; font-size:12.5px; color:var(--muted); line-height:1.45}
+.outil button.btn-verifier{margin-top:16px; min-height:56px; border:0; border-radius:16px; font-size:17px; font-weight:800; color:#fff;
+  background:linear-gradient(180deg,#5B8CF5,#2F5FD8); box-shadow:0 10px 30px rgba(73,122,234,.45), inset 0 1px 0 rgba(255,255,255,.25)}
+.outil button.btn-verifier:hover:not(:disabled){background:linear-gradient(180deg,#6A97F7,#3767DE)}
+
+.outil .stats{margin:14px 0 0}
+.imei-pret{display:flex; width:fit-content; max-width:100%; flex-wrap:wrap; justify-content:center; gap:6px; margin:0 auto 10px; padding:7px 14px; border-radius:999px; font-size:13.5px;
+  background:rgba(85,174,96,.12); border:1px solid rgba(126,208,138,.35); color:var(--green-l)}
+.imei-pret b{font-family:ui-monospace,Menlo,Consolas,monospace; letter-spacing:.5px}
+.outil .stats.hidden{display:none}
+.outil a.btn-recharge, .outil a.btn-principal, a.btn-principal{color:#fff}
+
+/* ---- apercu gratuit (base TAC) ---- */
+.apercu-attente{display:flex; align-items:center; justify-content:center; gap:12px; margin:14px 0 0; padding:16px; border-radius:16px;
+  background:rgba(6,11,30,.45); border:1px dashed rgba(126,165,245,.4); color:var(--blue-l); font-weight:600; font-size:14.5px}
+.radar{position:relative; width:22px; height:22px; border-radius:50%; border:2px solid var(--blue-l)}
+.radar::after{content:""; position:absolute; inset:-2px; border-radius:50%; border:2px solid var(--blue-l); animation:radar 1.2s ease-out infinite}
+@keyframes radar{ from{transform:scale(1); opacity:.9} to{transform:scale(2.2); opacity:0} }
+
+.apercu{margin:14px 0 0; padding:18px; border-radius:20px; text-align:left;
+  background:radial-gradient(420px 200px at 100% 0%, rgba(74,222,128,.14), transparent 70%), rgba(6,11,30,.55);
+  border:1px solid rgba(126,208,138,.4); animation:apparait .45s cubic-bezier(.2,1.2,.4,1)}
+@keyframes apparait{ from{opacity:0; transform:translateY(10px) scale(.98)} to{opacity:1; transform:none} }
+.apercu-badges{display:flex; flex-wrap:wrap; gap:6px; margin-bottom:12px}
+.badge-gratuit, .badge-statut{padding:4px 10px; border-radius:999px; font-size:12px; font-weight:800; letter-spacing:.3px}
+.badge-gratuit{color:#0B1A10; background:linear-gradient(180deg,#86EFAC,#4ADE80)}
+.badge-statut{color:var(--green-l); background:rgba(85,174,96,.14); border:1px solid rgba(126,208,138,.35)}
+.apercu-modele{display:block; font-size:26px; line-height:1.15; font-weight:800; letter-spacing:-.4px; color:var(--text)}
+.apercu-source{display:block; margin-top:4px; font-size:13px; color:var(--muted)}
+.apercu-titre{margin:16px 0 8px; font-size:12.5px; font-weight:700; letter-spacing:.6px; text-transform:uppercase; color:var(--muted)}
+.apercu-tuiles{list-style:none; padding:0; margin:0; display:grid; grid-template-columns:1fr 1fr; gap:8px}
+.apercu-tuiles li{position:relative; overflow:hidden; padding:12px 12px 12px 36px; border-radius:12px; font-size:13px; line-height:1.3; color:#C9D3E8;
+  background:rgba(255,255,255,.05); border:1px solid var(--line)}
+/* Cadenas : la ligne est connue du rapport complet, pas de l'apercu. */
+.apercu-tuiles li::before{content:""; position:absolute; left:11px; top:50%; width:16px; height:16px; margin-top:-8px; background:center/contain no-repeat;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23A8B4CC' stroke-width='2.2' stroke-linecap='round'%3E%3Crect x='5' y='11' width='14' height='10' rx='2'/%3E%3Cpath d='M8 11V7a4 4 0 0 1 8 0v4'/%3E%3C/svg%3E")}
+.apercu-tuiles li::after{content:""; position:absolute; top:0; bottom:0; left:-60%; width:50%;
+  background:linear-gradient(100deg, transparent, rgba(255,255,255,.09), transparent); animation:reflet 2.6s ease-in-out infinite}
+.apercu-tuiles li:nth-child(2)::after{animation-delay:.3s} .apercu-tuiles li:nth-child(3)::after{animation-delay:.6s} .apercu-tuiles li:nth-child(4)::after{animation-delay:.9s}
+@keyframes reflet{ 0%{left:-60%} 60%,100%{left:120%} }
+.outil button.btn-debloquer{display:flex; flex-direction:column; align-items:center; gap:2px; margin-top:14px; min-height:60px; border:0; border-radius:16px;
+  color:#fff; background:linear-gradient(180deg,#4ADE80,#16A34A); box-shadow:0 10px 30px rgba(74,222,128,.35), inset 0 1px 0 rgba(255,255,255,.3)}
+.outil button.btn-debloquer:hover:not(:disabled){background:linear-gradient(180deg,#5EE590,#1AAE51)}
+.btn-debloquer span{font-size:16.5px; font-weight:800}
+.btn-debloquer small{font-size:12.5px; font-weight:600; opacity:.9}
+.apercu-restants{margin:10px 0 0; text-align:center; font-size:12.5px; color:var(--muted)}
+.apercu-limite{margin:14px 0 0; padding:12px 14px; border-radius:14px; font-size:13.5px; line-height:1.45; text-align:left;
+  color:#E3D3C2; background:rgba(255,121,0,.08); border:1px solid rgba(255,138,31,.35)}
+.outil .btn-verifier.hidden, .outil .apercu.hidden, .outil .apercu-attente.hidden, .outil .apercu-limite.hidden{display:none}
+@media (prefers-reduced-motion: reduce){ .radar::after, .apercu-tuiles li::after, .apercu{animation:none} }
+
+/* ---- niveaux MacBook ---- */
+.niveaux{display:grid; grid-template-columns:1fr 1fr; gap:10px; margin:0 0 16px}
+.outil .niveaux.hidden{display:none}
+.outil .niveaux button.niveau{display:flex; flex-direction:column; align-items:flex-start; gap:4px; margin:0; padding:12px; border-radius:14px; text-align:left;
+  background:rgba(6,11,30,.45); border:1.5px solid var(--line); color:var(--muted)}
+.outil .niveaux button.niveau b{font-size:14px; color:var(--text)}
+.outil .niveaux button.niveau span{font-size:12px; font-weight:500; line-height:1.35}
+.outil .niveaux button.niveau[aria-pressed="true"]{border-color:var(--green); background:rgba(85,174,96,.14); box-shadow:0 0 0 4px rgba(85,174,96,.12)}

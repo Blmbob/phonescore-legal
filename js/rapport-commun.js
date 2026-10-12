@@ -70,6 +70,48 @@ function configurationSim(r) {
   return { doubleSim, esimSeuleProbable };
 }
 
+function estMac(r) {
+  return r.deviceFamily === 'mac';
+}
+
+/* Un rapport « sur » alors que l'appareil est verrouille sur un operateur
+   s'affiche « A verifier » (lib/imei-report.ts, verdictEffectif). */
+function verdictAffiche(r) {
+  return r.verdict === 'safe' && r.simLockStatus === 'locked' ? 'warning' : r.verdict;
+}
+
+/* Numero de modele Apple (A2402...) et identifiant (iPhone13,2), lus dans la
+   ligne « Model: » du texte brut. Jamais deduit du nom (lib/numero-modele.ts). */
+function numeroModeleApple(raw) {
+  if (!raw) return null;
+  for (const l of String(raw).split(/\r?\n|<br\s*\/?>/i)) {
+    if (!/^\s*model\s*:/i.test(l)) continue;
+    const numero = l.match(/(?<![A-Za-z0-9])(A\d{4})(?![A-Za-z0-9])/)?.[1];
+    if (!numero) continue;
+    const identifiant = l.match(/\[?\b((?:iPhone|iPad)\d{1,2},\d{1,2})\b\]?/)?.[1];
+    return identifiant ? { numero, identifiant } : { numero };
+  }
+  return null;
+}
+
+/* Date d'achat impossible : avant le premier iPhone, ou dans le futur. Valeur
+   par defaut de la base d'Apple, vue sur des appareils reconditionnes hors
+   Apple ou de remplacement (lib/date-achat.ts). */
+const SORTIE_PREMIER_IPHONE = Date.UTC(2007, 5, 29);
+function problemeDateAchat(valeur) {
+  const texte = String(valeur ?? '').trim();
+  if (!texte) return null;
+  const iso = texte.match(/\b(\d{4})-(\d{2})-(\d{2})\b/);
+  const date = iso ? Date.UTC(+iso[1], +iso[2] - 1, +iso[3]) : new Date(texte).getTime();
+  if (!Number.isNaN(date)) {
+    if (date < SORTIE_PREMIER_IPHONE) return 'trop-ancienne';
+    if (date > Date.now() + 2 * 24 * 3600 * 1000) return 'future';
+    return null;
+  }
+  const annee = texte.match(/\b(19|20)\d{2}\b/);
+  return annee && Number(annee[0]) < 2007 ? 'trop-ancienne' : null;
+}
+
 function CONSEQUENCE() {
   return {
     fmiOn: PSI18N.t('rapportCommun.consFmiOn'),
@@ -80,28 +122,40 @@ function CONSEQUENCE() {
     esim: PSI18N.t('rapportCommun.consEsim'),
     clean: PSI18N.t('rapportCommun.consClean'),
     partial: PSI18N.t('rapportCommun.consPartial'),
+    mdm: PSI18N.t('rapportCommun.consMdm'),
+    mdmIphone: PSI18N.t('rapportCommun.consMdmIphone'),
+    macModele: PSI18N.t('rapportCommun.consMacModele'),
+    cleanMac: PSI18N.t('rapportCommun.consCleanMac'),
   };
 }
 // Meme table de tons que ADVICE_TEXT cote app (lib/imei-advice.ts) : colore
 // la phrase de consequence comme les autres conseils graves.
-const TON_CONSEQUENCE = { fmiOn: 'danger', blacklist: 'danger', esim: 'danger', fmiUnknown: 'warning', partial: 'warning' };
+const TON_CONSEQUENCE = { fmiOn: 'danger', mdm: 'danger', mdmIphone: 'danger', blacklist: 'danger', esim: 'danger', macModele: 'warning', fmiUnknown: 'warning', partial: 'warning' };
 // Le plus grave l'emporte : un appareil vole mais desimlocke doit annoncer
 // le vol, pas la compatibilite SIM. eSIM est une question de compatibilite,
 // pas de securite : elle passe apres simlock mais reste devant "infos
 // incompletes" et "bon signal" -- sur un appareil par ailleurs sain, c'est
 // l'info la plus utile a mettre en avant.
-const GRAVITE_CONSEQUENCE = ['fmiOn', 'blacklist', 'fmiUnknown', 'simlock', 'esim', 'partial', 'fmiOffConfirm', 'clean'];
+const GRAVITE_CONSEQUENCE = ['fmiOn', 'mdm', 'mdmIphone', 'blacklist', 'macModele', 'fmiUnknown', 'simlock', 'esim', 'partial', 'fmiOffConfirm', 'clean', 'cleanMac'];
 
 function clesConsequence(r) {
   const cles = [];
   if (r.fmiOn === true) cles.push('fmiOn');
   else if (r.fmiOn === null) cles.push('fmiUnknown');
   else cles.push('fmiOffConfirm');
+  if (r.mdmOn === true) cles.push(estMac(r) ? 'mdm' : 'mdmIphone');
+  if (r.modeleIncoherent === true) cles.push('macModele');
   if (r.blacklisted === true) cles.push('blacklist');
   if (r.simLockStatus === 'locked') cles.push('simlock');
   if (configurationSim(r)?.esimSeuleProbable) cles.push('esim');
-  if (r.blacklisted === null) cles.push('partial');
-  if (r.fmiOn === false && r.blacklisted === false && r.simLockStatus !== 'locked') cles.push('clean');
+  // Un Mac n'a ni IMEI ni liste noire operateur : l'absence de blacklist n'est
+  // pas une information manquante, et iCloud desactive sans MDM suffit.
+  if (!estMac(r) && r.blacklisted === null) cles.push('partial');
+  if (estMac(r)) {
+    if (r.fmiOn === false && r.mdmOn !== true) cles.push('cleanMac');
+  } else if (r.fmiOn === false && r.blacklisted === false && r.simLockStatus !== 'locked') {
+    cles.push('clean');
+  }
   return cles;
 }
 
@@ -133,6 +187,9 @@ function statutOperateur(simLockStatus) {
 // "Attention" des qu'un seul signal est positif : un appareil reconditionne
 // n'est pas forcement un probleme, mais merite d'etre su avant d'acheter.
 function statutHistorique(r) {
+  // Une date d'achat impossible n'est pas un simple signal : sans facture,
+  // l'acheteur n'a aucun moyen de savoir ce qu'il achete.
+  if (problemeDateAchat(r.estimatedPurchaseDate)) return 'danger';
   const champs = [r.refurbished, r.replaced, r.loanerDevice, r.demoUnit];
   if (champs.some(estOui)) return 'attention';
   if (champs.some(v => v !== undefined && v !== null)) return 'ok';
@@ -144,15 +201,17 @@ function detailsHistorique(r) {
   if (estOui(r.replaced)) signale.push(PSI18N.t('rapportCommun.histRemplace'));
   if (estOui(r.loanerDevice)) signale.push(PSI18N.t('rapportCommun.histPret'));
   if (estOui(r.demoUnit)) signale.push(PSI18N.t('rapportCommun.histDemo'));
+  if (problemeDateAchat(r.estimatedPurchaseDate)) signale.push(PSI18N.t('rapportCommun.histDateImpossible'));
   return signale.length ? PSI18N.t('rapportCommun.histSignaleComme', { liste: signale.join(', ') }) : '';
 }
 
 function piliers(r) {
   const histoire = statutHistorique(r);
   const t = PSI18N.t;
-  return [
+  const mac = estMac(r);
+  const tous = [
     {
-      nom: t('rapportCommun.pilierIcloudNom'), statut: statutIcloud(r.fmiOn),
+      cle: 'icloud', nom: t('rapportCommun.pilierIcloudNom'), statut: statutIcloud(r.fmiOn),
       etat: r.fmiOn === true ? t('rapportCommun.pilierIcloudEtatActif') : r.fmiOn === false ? t('rapportCommun.pilierIcloudEtatInactif') : t('rapportCommun.pilierEtatNonDisponible'),
       quoi: r.fmiOn === true
         ? t('rapportCommun.pilierIcloudQuoiActif')
@@ -161,7 +220,7 @@ function piliers(r) {
           : t('rapportCommun.pilierIcloudQuoiInconnu'),
     },
     {
-      nom: t('rapportCommun.pilierBlacklistNom'), statut: statutBlacklist(r.blacklisted),
+      cle: 'blacklist', nom: t('rapportCommun.pilierBlacklistNom'), statut: statutBlacklist(r.blacklisted),
       etat: r.blacklisted === true ? t('rapportCommun.pilierBlacklistEtatSignale') : r.blacklisted === false ? t('rapportCommun.pilierBlacklistEtatNonSignale') : t('rapportCommun.pilierEtatNonDisponible'),
       quoi: r.blacklisted === true
         ? t('rapportCommun.pilierBlacklistQuoiSignale')
@@ -170,7 +229,7 @@ function piliers(r) {
           : t('rapportCommun.pilierQuoiNonDisponible'),
     },
     {
-      nom: t('rapportCommun.pilierOperateurNom'), statut: statutOperateur(r.simLockStatus),
+      cle: 'operateur', nom: t('rapportCommun.pilierOperateurNom'), statut: statutOperateur(r.simLockStatus),
       etat: r.simLockStatus === 'locked' ? (r.carrier ? t('rapportCommun.pilierOperateurEtatBloqueSur', { carrier: r.carrier }) : t('rapportCommun.pilierOperateurEtatBloque'))
         : r.simLockStatus === 'unlocked' ? t('rapportCommun.pilierOperateurEtatDesimlocke') : t('rapportCommun.pilierEtatNonDisponible'),
       quoi: r.simLockStatus === 'locked'
@@ -180,13 +239,28 @@ function piliers(r) {
           : t('rapportCommun.pilierQuoiNonDisponible'),
     },
     {
-      nom: t('rapportCommun.pilierHistoriqueNom'), statut: histoire,
-      etat: histoire === 'attention' ? t('rapportCommun.pilierHistoriqueEtatAttention') : histoire === 'ok' ? t('rapportCommun.pilierHistoriqueEtatOk') : t('rapportCommun.pilierEtatNonDisponible'),
-      quoi: histoire === 'attention' ? detailsHistorique(r)
+      cle: 'historique', nom: t('rapportCommun.pilierHistoriqueNom'), statut: histoire,
+      etat: histoire === 'danger' ? t('rapportCommun.pilierHistoriqueEtatAnormal')
+        : histoire === 'attention' ? t('rapportCommun.pilierHistoriqueEtatAttention') : histoire === 'ok' ? t('rapportCommun.pilierHistoriqueEtatOk') : t('rapportCommun.pilierEtatNonDisponible'),
+      quoi: histoire === 'danger' || histoire === 'attention' ? detailsHistorique(r)
         : histoire === 'ok' ? t('rapportCommun.pilierHistoriqueQuoiOk')
           : t('rapportCommun.pilierQuoiNonDisponible'),
     },
+    {
+      cle: 'mdm', nom: t('rapportCommun.pilierMdmNom'),
+      statut: r.mdmOn === true ? 'danger' : r.mdmOn === false ? 'ok' : 'inconnu',
+      etat: r.mdmOn === true ? t('rapportCommun.pilierMdmEtatActif') : r.mdmOn === false ? t('rapportCommun.pilierMdmEtatInactif') : t('rapportCommun.pilierEtatNonDisponible'),
+      quoi: r.mdmOn === true ? t(mac ? 'rapportCommun.pilierMdmQuoiActif' : 'rapportCommun.pilierMdmQuoiActifIphone')
+        : r.mdmOn === false ? t('rapportCommun.pilierMdmQuoiInactif')
+          : t(mac ? 'rapportCommun.pilierMdmQuoiInconnu' : 'rapportCommun.pilierMdmQuoiInconnuIphone'),
+    },
   ];
+  return mac
+    // Mac : iCloud, MDM, et l'historique seulement si le fournisseur en a donne.
+    ? tous.filter(p => p.cle === 'icloud' || (p.cle === 'mdm' && r.mdmOn !== undefined)
+      || (p.cle === 'historique' && p.statut !== 'inconnu'))
+    // iPhone : le MDM n'apparait que dans un rapport qui le mentionne.
+    : tous.filter(p => p.cle !== 'mdm' || r.mdmOn !== undefined);
 }
 
 function decompteTexte(liste) {
@@ -214,17 +288,41 @@ function pilierHtml(p) {
    historique) + phrase de consequence, decompte plutot qu'indice sur 100. */
 function construireRapportHtml(r) {
   const t = PSI18N.t;
-  const v = LIBELLE()[r.verdict] ?? LIBELLE().warning;
   const sim = configurationSim(r);
   const liste = piliers(r);
+  const mac = estMac(r);
+  const probleme = problemeDateAchat(r.estimatedPurchaseDate);
+  // Date impossible sur un appareil par ailleurs ni verrouille ni vole :
+  // bandeau « Reconditionne », comme dans l'app.
+  const dateSuspecte = probleme !== null && r.fmiOn !== true && r.blacklisted !== true;
+  const verdictFinal = dateSuspecte ? 'danger' : verdictAffiche(r);
+  const v = dateSuspecte
+    ? { titre: t('rapportCommun.verdictReconditionneTitre'), detail: t('rapportCommun.verdictReconditionneDetail') }
+    : (LIBELLE()[verdictFinal] ?? LIBELLE().warning);
+  const numero = mac ? null : numeroModeleApple(r.raw);
+  const fabrication = mac && r.fabricationAnnee
+    ? (r.fabricationSemaine ? t('rapportCommun.fabricationSemaine', { semaine: r.fabricationSemaine, annee: r.fabricationAnnee }) : r.fabricationAnnee)
+    : '';
 
   const lignes = [
-    ligne(t('rapportCommun.champModele'), r.model),
+    ligne(t('rapportCommun.champModele'), (mac ? r.modeleApple : null) ?? r.model),
+    ligne(t('rapportCommun.champNumeroModele'), numero ? (numero.identifiant ? `${numero.numero} · ${numero.identifiant}` : numero.numero) : (mac ? r.identifiantModele : '')),
+    ligne(t('rapportCommun.champCouleur'), r.color),
     ligne(t('rapportCommun.champCapacite'), r.capacity),
     ligne(t('rapportCommun.champNumeroSerie'), r.serialNumber),
     ligne(t('rapportCommun.champPaysAchat'), r.purchaseCountry),
     sim ? ligne(t('rapportCommun.champCartesSim'), sim.doubleSim ? t('rapportCommun.doubleSim') : t('rapportCommun.simUnique')) : '',
     ligne(t('rapportCommun.champGarantie'), r.warranty),
+    ligne(t('rapportCommun.champDateAchat'), r.estimatedPurchaseDate, probleme ? 'danger' : ''),
+    ligne(t('rapportCommun.champFinReparations'), r.repairServiceExpiration),
+    ligne(t('rapportCommun.champAppleCare'), r.appleCareEligible),
+    ligne(t('rapportCommun.champFabrication'), fabrication),
+  ].join('');
+
+  const alertes = [
+    probleme ? `<div class="avert-sim">${echapper(t(probleme === 'future' ? 'rapportCommun.dateFuture' : 'rapportCommun.datePassee'))}</div>` : '',
+    r.modeleIncoherent === true && r.modeleApple
+      ? `<div class="avert-sim">${echapper(t('rapportCommun.macModeleIncoherent', { apple: r.modeleApple, annonce: r.model ?? '?' }))}</div>` : '',
   ].join('');
 
   const alerteSim = sim && sim.esimSeuleProbable
@@ -233,7 +331,7 @@ function construireRapportHtml(r) {
 
   /* Le verdict vient du serveur, mais il finit dans un attribut : on ne pose
      que l'une des trois valeurs connues, jamais la chaine recue telle quelle. */
-  const ton = ['safe', 'warning', 'danger'].includes(r.verdict) ? r.verdict : 'warning';
+  const ton = ['safe', 'warning', 'danger'].includes(verdictFinal) ? verdictFinal : 'warning';
 
   const barre = liste.map(p => `<span class="decompte-segment decompte-segment-${p.statut}"></span>`).join('');
 
@@ -248,7 +346,7 @@ function construireRapportHtml(r) {
     + `<div class="decompte"><div class="decompte-barre">${barre}</div>`
     + `<span class="decompte-texte">${decompteTexte(liste)}</span></div>`
     + `<div class="grille">${liste.map(pilierHtml).join('')}</div>`
-    + `<dl>${lignes}</dl>${alerteSim}`;
+    + alertes + `<dl>${lignes}</dl>${alerteSim}`;
 }
 
 /** Rend le rapport `r` dans l'element `id` et le fait apparaitre. */

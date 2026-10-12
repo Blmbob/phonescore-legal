@@ -94,6 +94,18 @@ canal reproduirait le rejet 3.1.1 du 4 août 2026.
 
 Pousser sur `main` suffit, Cloudflare Pages reconstruit.
 
+**Si l'app a mis à jour sa base TAC (`constants/tac-database.ts` dans
+`phonescore54`), lancer :**
+
+```bash
+node outils/generer-tac.mjs
+```
+
+Il régénère `data/tac.json`, la base de l'aperçu gratuit (modèle lu dans les
+8 premiers chiffres de l'IMEI). Le décompte des aperçus (3 par semaine et par
+compte) est tenu par le serveur, `consume_demo_preview`, commun à l'app et au
+site.
+
 **Si le poussé touche un fichier de `js/` ou `css/`, lancer d'abord :**
 
 ```bash

@@ -176,6 +176,14 @@ function traduirePlaceholders(html, manquantes) {
   });
 }
 
+function traduireAlts(html, manquantes) {
+  return html.replace(/<[^>]*\sdata-i18n-alt="([^"]+)"[^>]*>/g, (tag, cle) => {
+    const valeur = valeurEn(cle);
+    if (typeof valeur !== 'string') { manquantes.add(cle); return tag; }
+    return tag.replace(/alt="[^"]*"/, `alt="${echapperAttr(valeur)}"`);
+  });
+}
+
 // --- Balises hreflang, posees juste apres la canonique. --------------------
 const DEBUT_ALT = '<!-- hreflang : genere par outils/generer-en.mjs -->';
 const FIN_ALT = '<!-- /hreflang -->';
@@ -273,6 +281,7 @@ function versionAnglaise(fr, page, manquantes) {
 
   html = traduireElements(html, manquantes);
   html = traduirePlaceholders(html, manquantes);
+  html = traduireAlts(html, manquantes);
 
   // Liens internes vers les pages publiques : on reste dans la langue.
   html = html.replace(/href="(\/[a-z-]*)(#[^"]*)?"/g, (tout, chemin, ancre = '') =>

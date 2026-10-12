@@ -105,7 +105,7 @@
   ]
 }
 </script>
-<link rel="stylesheet" href="/css/index.css?v=8acd1d24">
+<link rel="stylesheet" href="/css/index.css?v=448c7bde">
 
 <!-- Outil de verification, isole par .outil : sa feuille et celle de
      l'accueil partagent sept noms de classe (card, pack, sub, wrap...). -->
@@ -170,43 +170,60 @@
 </div>
 
 <!-- ---------------- HERO ---------------- -->
+<!-- Accroche des la premiere vue : la question que se pose l'acheteur, une
+     demonstration animee du rapport, et les moyens de paiement locaux. -->
 <div class="hero">
   <div class="aurora" aria-hidden="true"><i></i><i></i><i></i></div>
   <div class="sweepline" aria-hidden="true"></div>
-  <div class="wrap">
-    <div class="marque">
-      <svg viewBox="0 0 200 200" aria-hidden="true">
-        <defs>
-          <linearGradient id="lSh" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0" stop-color="#3B82F6"/><stop offset="1" stop-color="#1D4ED8"/>
-          </linearGradient>
-          <linearGradient id="lShIn" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0" stop-color="#1E3A8A"/><stop offset="1" stop-color="#172B63"/>
-          </linearGradient>
-          <linearGradient id="lPh" x1="0" y1="0" x2="1" y2="1">
-            <stop offset="0" stop-color="#1F2937"/><stop offset="1" stop-color="#0B1220"/>
-          </linearGradient>
-          <linearGradient id="lCk" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0" stop-color="#4ADE80"/><stop offset="1" stop-color="#16A34A"/>
-          </linearGradient>
-        </defs>
-        <path d="M100 10 C120 24 146 30 166 31 C166 86 149 128 100 150 C51 128 34 86 34 31 C54 30 80 24 100 10 Z" fill="url(#lSh)"/>
-        <path d="M100 22 C117 33 138 38 154 39.4 C154 84 139.5 119 100 138 C60.5 119 46 84 46 39.4 C62 38 83 33 100 22 Z" fill="url(#lShIn)"/>
-        <rect x="70" y="34" width="60" height="104" rx="14" fill="url(#lPh)" stroke="#374151" stroke-width="3"/>
-        <rect x="76" y="42" width="48" height="88" rx="9" fill="#0D1526"/>
-        <rect x="88" y="38" width="24" height="6" rx="3" fill="#1F2937"/>
-        <path d="M78 44 L108 44 L84 126 L78 126 Z" fill="#FFFFFF" opacity=".05"/>
-        <circle cx="124" cy="128" r="34" fill="url(#lCk)" stroke="#0D1117" stroke-width="6"/>
-        <path d="M108 128 L120 140 L142 114" fill="none" stroke="#FFFFFF" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/>
-      </svg>
-      <h1>PhoneScore</h1>
+  <div class="wrap hero-grille">
+    <div class="hero-texte">
+      <p class="pastille-direct"><span class="pulse" aria-hidden="true"></span><span data-i18n="hero.pastille">Vérification IMEI · iPhone et MacBook</span></p>
+      <h1>
+        <span class="h1-debut" data-i18n="hero.titreA">Cet iPhone est-il</span>
+        <span class="mots" aria-hidden="true">
+          <em class="mot rouge" data-i18n="hero.mot1">volé ?</em>
+          <em class="mot ambre" data-i18n="hero.mot2">verrouillé iCloud ?</em>
+          <em class="mot bleu" data-i18n="hero.mot3">bloqué opérateur ?</em>
+        </span>
+        <span class="sr-only" data-i18n="hero.titreSr">volé, verrouillé iCloud ou bloqué opérateur ?</span>
+      </h1>
+      <p class="lead" data-i18n="hero.lead">Entre son IMEI. Le verdict tombe en quelques secondes.</p>
+      <form class="accroche" id="form-accroche" novalidate>
+        <label class="sr-only" for="imei-accroche" data-i18n="verif.imeiLabel">IMEI ou numéro de série</label>
+        <input id="imei-accroche" inputmode="numeric" autocomplete="off" placeholder="IMEI (compose *#06#)" data-i18n-ph="hero.champPh">
+        <button type="submit" data-i18n="hero.ctaVerifier">Vérifier</button>
+      </form>
+      <ul class="confiance">
+        <li data-i18n="hero.conf1">Apple et GSMA</li>
+        <li data-i18n="hero.conf2">Partage WhatsApp</li>
+        <li data-i18n="hero.conf3">Dès 700 FCFA</li>
+      </ul>
+      <a class="paiements" href="/recharger">
+        <span class="paiements-lib" data-i18n="hero.payer">Sans carte bancaire : paie par mobile money</span>
+        <span class="op orange">Orange Money</span><span class="op mtn">MTN</span><span class="op moov">Moov</span><span class="op wave">Wave</span>
+      </a>
     </div>
-    <p class="lead" data-i18n="hero.lead">Vérifie avant d’acheter</p>
-    <!-- L'outil, pas une brochure. Le visiteur type arrive d'un lien
-         partage sur les reseaux : lui proposer de telecharger l'app
-         alors qu'il en vient peut-etre n'a aucun sens. -->
+
+    <!-- Vraies captures de l'application : un rapport rouge devant un vert. -->
+    <div class="hero-visuel">
+      <figure class="tel tel-arriere">
+        <picture><source srcset="/img/rapport-safe.webp" type="image/webp"><img src="/img/rapport-safe.jpg" width="600" height="832" alt="Rapport PhoneScore : Appareil sûr, 4 contrôles passés" data-i18n-alt="hero.altSur"></picture>
+      </figure>
+      <figure class="tel tel-avant">
+        <picture><source srcset="/img/rapport-danger.webp" type="image/webp"><img src="/img/rapport-danger.jpg" width="600" height="832" alt="Rapport PhoneScore : Ne pas acheter, verrou iCloud actif" data-i18n-alt="hero.altDanger"></picture>
+      </figure>
+      <p class="demo-legende" data-i18n="hero.demoLegende">Captures de l’application PhoneScore</p>
+    </div>
+  </div>
+</div>
+
+<!-- ---------------- OUTIL ---------------- -->
+<div class="wrap">
+  <section id="verifier" class="zone-outil">
+    <h2 data-i18n="hero.outilTitre">Lance ta vérification</h2>
     <div class="outil">
       <section id="vue-auth" class="hidden">
+          <p class="imei-pret hidden" id="imei-pret"><span data-i18n="verif.imeiPret">IMEI prêt :</span> <b id="imei-pret-val"></b></p>
           <p class="o-sub" id="sous-titre-auth" data-i18n="auth.sousTitreConnexion">Connectez-vous pour vérifier un appareil.</p>
 
           <div class="o-card">
@@ -251,7 +268,101 @@
       
         <!-- ================= VERIFICATION ================= -->
         <section id="vue-app" class="hidden">
-          <div class="stats">
+          <div class="o-card console">
+            <div class="console-tete">
+              <div class="solde">
+                <svg viewBox="0 0 200 200" aria-hidden="true" class="porte-monnaie">
+                <defs>
+                  <linearGradient id="wBody" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0" stop-color="#3B82F6"/><stop offset="1" stop-color="#1D4ED8"/>
+                  </linearGradient>
+                  <linearGradient id="wFlap" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0" stop-color="#60A5FA"/><stop offset="1" stop-color="#2563EB"/>
+                  </linearGradient>
+                </defs>
+                <rect x="28" y="66" width="144" height="102" rx="20" fill="url(#wBody)"/>
+                <path d="M28 92 Q28 66 54 66 L146 66 Q172 66 172 92 L172 96 L28 96 Z" fill="url(#wFlap)"/>
+                <path d="M118 106 L172 106 L172 142 L118 142 Q104 142 104 124 Q104 106 118 106 Z" fill="#1E40AF"/>
+                <circle cx="126" cy="124" r="9" fill="#93C5FD"/>
+              </svg>
+                <span><span data-i18n="solde.prefixe">Solde : </span><b id="solde">—</b><span data-i18n="solde.suffixe"> pièce(s)</span></span>
+              </div>
+              <a class="btn-recharge" href="/recharger" data-i18n="verif.rechargerCourt">+ Recharger</a>
+            </div>
+            <p class="hint courriel" id="courriel"></p>
+
+            <!-- Affiche par accueil.js quand le solde est a zero : c'est la que
+                 l'inscrit sans carte bancaire decroche. -->
+            <div class="alerte-solde hidden" id="alerte-solde">
+              <b data-i18n="verif.zeroT">Plus de pièce pour vérifier</b>
+              <span data-i18n="verif.zeroD">Recharge par Orange Money, MTN, Moov ou Wave, dès 700 FCFA.</span>
+              <a class="btn-principal" href="/recharger" data-i18n="verif.zeroBtn">Recharger maintenant</a>
+            </div>
+
+            <div class="seg">
+              <button type="button" id="t-iphone" class="tuile tuile-iphone" aria-pressed="true" data-i18n="verif.iphone">iPhone — 1 pièce</button>
+              <button type="button" id="t-macbook" class="tuile tuile-mac" aria-pressed="false" data-i18n="verif.macbook">MacBook — dès 2 pièces</button>
+            </div>
+            <!-- Niveaux MacBook (check-imei, champ `niveau`) : Standard 2 pieces,
+                 Complet 4 pieces. Masque sur l'onglet iPhone. -->
+            <div class="niveaux hidden" id="niveaux">
+              <button type="button" id="n-standard" class="niveau" aria-pressed="true">
+                <b data-i18n="verif.nivStandard">Standard · 2 pièces</b>
+                <span data-i18n="verif.nivStandardD">iCloud, gestion à distance, modèle exact</span>
+              </button>
+              <button type="button" id="n-complet" class="niveau" aria-pressed="false">
+                <b data-i18n="verif.nivComplet">Complet · 4 pièces</b>
+                <span data-i18n="verif.nivCompletD">+ garantie, date d’achat, AppleCare, historique</span>
+              </button>
+            </div>
+            <div class="field">
+              <label for="imei" data-i18n="verif.imeiLabel">IMEI ou numéro de série</label>
+              <input id="imei" class="champ-imei" inputmode="numeric" autocomplete="off" placeholder="Composez *#06# sur l'appareil" data-i18n-ph="verif.imeiPh">
+              <p class="aide" data-i18n="verif.aide">iPhone : compose *#06#. MacBook : menu Pomme → À propos de ce Mac.</p>
+            </div>
+            <!-- Apercu gratuit : modele lu dans la base TAC (data/tac.json), sans
+                 appel payant. 3 par semaine et par compte, compte par le serveur
+                 (consume_demo_preview). Meme logique que l'app. -->
+            <div id="apercu-attente" class="apercu-attente hidden">
+              <span class="radar" aria-hidden="true"></span><span data-i18n="apercu.analyse">Analyse de l’IMEI…</span>
+            </div>
+            <div id="apercu" class="apercu hidden" aria-live="polite">
+              <div class="apercu-badges">
+                <span class="badge-gratuit" data-i18n="apercu.badge">Aperçu gratuit</span>
+                <span class="badge-statut" data-i18n="apercu.identifie">Modèle identifié</span>
+              </div>
+              <b class="apercu-modele" id="apercu-modele"></b>
+              <span class="apercu-source" data-i18n="apercu.source">Modèle identifié grâce à l’IMEI</span>
+              <p class="apercu-titre" data-i18n="apercu.verrouTitre">À débloquer dans le rapport complet</p>
+              <ul class="apercu-tuiles">
+                <li data-i18n="apercu.icloud">iCloud / Localiser mon iPhone</li>
+                <li data-i18n="apercu.blacklist">Liste noire (vol, perte)</li>
+                <li data-i18n="apercu.operateur">Verrouillage opérateur</li>
+                <li data-i18n="apercu.date">Date d’achat estimée</li>
+              </ul>
+              <button type="button" id="apercu-debloquer" class="btn-debloquer">
+                <span data-i18n="apercu.debloquer">Débloquer le rapport complet</span>
+                <small id="apercu-cout"></small>
+              </button>
+              <p class="apercu-restants" id="apercu-restants"></p>
+            </div>
+            <p id="apercu-limite" class="apercu-limite hidden"></p>
+            <button id="btn-verifier" class="btn-verifier" data-i18n="verif.btn">Vérifier maintenant</button>
+            <div id="chargement-verif" class="chargement-verif hidden">
+              <div class="etapes" id="etapes-verif">
+                <div class="etape" data-i="0"><span class="point"></span><span data-i18n="verif.etape0">Connexion au fournisseur…</span></div>
+                <div class="etape" data-i="1"><span class="point"></span><span data-i18n="verif.etape1">Vérification Apple (iCloud, garantie)…</span></div>
+                <div class="etape" data-i="2"><span class="point"></span><span data-i18n="verif.etape2">Vérification opérateur et liste noire…</span></div>
+                <div class="etape" data-i="3"><span class="point"></span><span data-i18n="verif.etape3">Compilation du rapport…</span></div>
+              </div>
+            </div>
+            <div id="msg-verif" class="msg"></div>
+          </div>
+
+          <div id="rapport" class="o-card hidden"></div>
+
+          <!-- Masquees tant que le compte n'a aucune verification (accueil.js). -->
+          <div class="stats hidden" id="stats">
             <div class="stat">
               <svg viewBox="0 0 200 200" aria-hidden="true">
                 <defs><linearGradient id="sG" x1="0" y1="0" x2="0" y2="1">
@@ -310,60 +421,31 @@
               <span data-i18n="stats.fiable">Fiable</span>
             </div>
           </div>
-
-          <div class="o-card">
-            <div class="solde">
-              <svg viewBox="0 0 200 200" aria-hidden="true" class="porte-monnaie">
-                <defs>
-                  <linearGradient id="wBody" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="0" stop-color="#3B82F6"/><stop offset="1" stop-color="#1D4ED8"/>
-                  </linearGradient>
-                  <linearGradient id="wFlap" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="0" stop-color="#60A5FA"/><stop offset="1" stop-color="#2563EB"/>
-                  </linearGradient>
-                </defs>
-                <rect x="28" y="66" width="144" height="102" rx="20" fill="url(#wBody)"/>
-                <path d="M28 92 Q28 66 54 66 L146 66 Q172 66 172 92 L172 96 L28 96 Z" fill="url(#wFlap)"/>
-                <path d="M118 106 L172 106 L172 142 L118 142 Q104 142 104 124 Q104 106 118 106 Z" fill="#1E40AF"/>
-                <circle cx="126" cy="124" r="9" fill="#93C5FD"/>
-              </svg>
-              <span><span data-i18n="solde.prefixe">Solde : </span><b id="solde">—</b><span data-i18n="solde.suffixe"> pièce(s)</span></span>
-            </div>
-            <p class="hint" id="courriel"></p>
-          </div>
-      
-          <div class="o-card">
-            <div class="seg">
-              <button type="button" id="t-iphone" aria-pressed="true" data-i18n="verif.iphone">iPhone — 1 pièce</button>
-              <button type="button" id="t-macbook" aria-pressed="false" data-i18n="verif.macbook">MacBook — 2 pièces</button>
-            </div>
-            <div class="field">
-              <label for="imei" data-i18n="verif.imeiLabel">IMEI ou numéro de série</label>
-              <input id="imei" inputmode="numeric" autocomplete="off" placeholder="Composez *#06# sur l'appareil" data-i18n-ph="verif.imeiPh">
-            </div>
-            <button id="btn-verifier" data-i18n="verif.btn">Vérifier maintenant</button>
-            <div id="chargement-verif" class="chargement-verif hidden">
-              <div class="etapes" id="etapes-verif">
-                <div class="etape" data-i="0"><span class="point"></span><span data-i18n="verif.etape0">Connexion au fournisseur…</span></div>
-                <div class="etape" data-i="1"><span class="point"></span><span data-i18n="verif.etape1">Vérification Apple (iCloud, garantie)…</span></div>
-                <div class="etape" data-i="2"><span class="point"></span><span data-i18n="verif.etape2">Vérification opérateur et liste noire…</span></div>
-                <div class="etape" data-i="3"><span class="point"></span><span data-i18n="verif.etape3">Compilation du rapport…</span></div>
-              </div>
-            </div>
-            <div id="msg-verif" class="msg"></div>
-          </div>
-
-          <div id="rapport" class="o-card hidden"></div>
-
-          <p class="recharge">
-            <a href="/recharger" data-i18n="verif.recharger">Recharger mes pièces</a>
-          </p>
         </section>
     </div>
 
     <p class="cta-note u-margin-top-26px" data-i18n="cta.avant">Vous préférez l’application&nbsp;?</p>
     <p class="badge-zone u-margin-top-14px"><a href="https://apps.apple.com/app/id6795897093" aria-label="Télécharger dans l’App Store"><img class="badge-app" src="/appstore-badge-fr.svg" alt="Télécharger dans l’App Store" width="158" height="50"></a></p>
-  </div>
+  </section>
+</div>
+
+<!-- ---------------- MOBILE MONEY ---------------- -->
+<!-- Le mobile money est le canal du site. Dans l'app iOS, les pieces passent
+     par l'achat integre : le dire, sinon rejet 3.1.1 (voir README). -->
+<div class="wrap">
+  <section class="mm">
+    <div class="mm-carte">
+      <h2 data-i18n="mm.titre">Pas de carte bancaire ? Pas de problème.</h2>
+      <p class="sub" data-i18n="mm.sub">Recharge tes pièces ici, par mobile money, en moins d’une minute.</p>
+      <ol class="mm-etapes">
+        <li><b data-i18n="mm.s1T">Connecte-toi</b><span data-i18n="mm.s1D">Avec Apple, Google ou ton e-mail.</span></li>
+        <li><b data-i18n="mm.s2T">Choisis ton pack</b><span data-i18n="mm.s2D">1 pièce 700 F · 3 pièces 2 000 F · 10 pièces 6 700 F</span></li>
+        <li><b data-i18n="mm.s3T">Paie avec ton téléphone</b><span data-i18n="mm.s3D">Orange Money, MTN, Moov ou Wave. Les pièces arrivent tout de suite.</span></li>
+      </ol>
+      <a class="btn-principal" href="/recharger" data-i18n="mm.btn">Recharger mes pièces</a>
+      <p class="mm-note" data-i18n="mm.note">Les pièces servent sur le site et dans l’application. Dans l’application iPhone, elles s’achètent aussi via l’App Store.</p>
+    </div>
+  </section>
 </div>
 
 <!-- ---------------- CE QU'ON VÉRIFIE ---------------- -->
@@ -461,11 +543,11 @@
 <script src="/vendor/supabase-2.112.3.js"></script>
 <!-- Traduction FR/EN de la coquille statique + PSI18N.t() pour les textes
      ecrits dynamiquement par accueil.js : doit se charger avant lui. -->
-<script src="/js/i18n.js?v=c0def02d"></script>
+<script src="/js/i18n.js?v=f1419f0d"></script>
 <!-- Script classique (pas de type="module") : ses fonctions doivent rester
      visibles comme identifiants globaux pour accueil.js, charge apres lui. -->
-<script src="/js/rapport-commun.js?v=5c33ed06"></script>
-<script type="module" src="/js/accueil.js?v=7c6e3486"></script>
+<script src="/js/rapport-commun.js?v=3e69fdac"></script>
+<script type="module" src="/js/accueil.js?v=165c3526"></script>
 
 <script src="/js/menu.js?v=88bca18d"></script>
 </body>
