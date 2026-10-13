@@ -23,6 +23,8 @@ async function rendre(session) {
     return;
   }
   montrer('achat');
+  /* Mesure d'entonnoir : un echec ne doit jamais gener la page. */
+  supabase.rpc('log_funnel_event', { p_event: 'recharge_view', p_canal: 'site' }).then(() => {}, () => {});
 
   const { data } = await supabase
     .from('profiles').select('pieces').eq('id', session.user.id).single();
@@ -39,6 +41,7 @@ for (const bouton of document.querySelectorAll('.offre')) {
        le trait d'union du nom d'attribut disparait dans dataset. */
     const pack_id = bouton.dataset.pack;
     bouton.disabled = true;
+    supabase.rpc('log_funnel_event', { p_event: 'pack_tap', p_canal: 'site' }).then(() => {}, () => {});
 
     const { data, error } = await supabase.functions
       .invoke('create-payment', { body: { pack_id } });
