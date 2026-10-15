@@ -1,3 +1,19 @@
+/* Source de campagne : premier contact gagnant. ?src=... (ou utm_campaign), sinon le site
+   d'origine quand il est externe. Conserve dans le navigateur, envoye au serveur a la
+   connexion (accueil.js -> set_signup_campaign). Rien ne casse si le stockage est refuse. */
+(function () {
+  try {
+    if (localStorage.getItem('ps_campaign')) return;
+    var q = new URLSearchParams(location.search);
+    var v = q.get('src') || q.get('utm_campaign') || '';
+    if (!v && document.referrer) {
+      var h = new URL(document.referrer).hostname.replace(/^www\./, '');
+      if (h && h.indexOf('phonescore.app') === -1) v = 'ref.' + h;
+    }
+    v = v.toLowerCase().replace(/[^a-z0-9_.:-]/g, '').slice(0, 60);
+    if (v) localStorage.setItem('ps_campaign', v);
+  } catch (e) {}
+})();
 /* Sorti de la barre de chaque page pour que la CSP puisse refuser le script en ligne.
    Ne pas remettre ce code dans la page : script-src vaut 'self'. */
 /* Menu de la barre. Volontairement sans dependance et en fin de page :

@@ -39,6 +39,14 @@ async function marquerOrigineWeb(userId) {
   if (error) console.warn('marquerOrigineWeb error', error.message);
 }
 
+// Campagne d'origine (voir js/menu.js) : la fonction serveur n'ecrit qu'une fois.
+function marquerCampagneWeb() {
+  let c = null;
+  try { c = localStorage.getItem('ps_campaign'); } catch (e) {}
+  if (!c) return;
+  supabase.rpc('set_signup_campaign', { p_campaign: c }).then(() => {}, () => {});
+}
+
 // Meme logique write-once que marquerOrigineWeb, pour le pays. cf-ipcountry
 // n'atteint jamais le JS client (c'est un en-tete de la requete, pas une
 // donnee exposee au navigateur) : /geo (functions/geo.js, une fonction
@@ -63,6 +71,7 @@ supabase.auth.onAuthStateChange((evt, session) => {
   rendre(session);
   if (evt === 'SIGNED_IN' && session) {
     marquerOrigineWeb(session.user.id);
+    marquerCampagneWeb();
     marquerPaysWeb(session.user.id);
   }
 });
