@@ -78,6 +78,10 @@ supabase.auth.onAuthStateChange((evt, session) => {
 supabase.auth.getSession().then(({ data }) => rendre(data.session));
 
 async function rendre(session) {
+  // Les 3 etapes « Connecte-toi / Choisis un pack / Paie » ne servent qu'avant la connexion :
+  // une fois connecte, on les masque (l'acces a la recharge est deja dans la vue du compte).
+  const mm = $('section-mm');
+  if (mm) mm.hidden = !!session;
   if (session) {
     $('vue-auth').classList.add('hidden');
     $('form-accroche').classList.add('hidden');
