@@ -605,6 +605,12 @@ a.paiements{text-decoration:none; color:var(--text); align-items:center}
 .badge-statut{color:var(--green-l); background:rgba(85,174,96,.14); border:1px solid rgba(126,208,138,.35)}
 .apercu-modele{display:block; font-size:26px; line-height:1.15; font-weight:800; letter-spacing:-.4px; color:var(--text)}
 .apercu-source{display:block; margin-top:4px; font-size:13px; color:var(--muted)}
+.apercu-fiche{display:flex; gap:8px; margin-top:14px}
+.apercu-fiche.hidden{display:none}
+.apercu-fiche > div{flex:1; min-width:0; padding:9px 11px; border-radius:12px; background:rgba(255,255,255,.05); border:1px solid var(--line)}
+.apercu-fiche > div[hidden]{display:none}
+.apercu-fiche small{display:block; font-size:11px; font-weight:600; color:var(--muted)}
+.apercu-fiche b{display:block; margin-top:2px; font-size:14px; font-weight:700; color:var(--text); white-space:nowrap; overflow:hidden; text-overflow:ellipsis}
 .apercu-titre{margin:16px 0 8px; font-size:12.5px; font-weight:700; letter-spacing:.6px; text-transform:uppercase; color:var(--muted)}
 .apercu-tuiles{list-style:none; padding:0; margin:0; display:grid; grid-template-columns:1fr 1fr; gap:8px}
 .apercu-tuiles li{position:relative; overflow:hidden; padding:12px 12px 12px 36px; border-radius:12px; font-size:13px; line-height:1.3; color:#C9D3E8;

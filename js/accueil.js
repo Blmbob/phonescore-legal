@@ -451,6 +451,60 @@ function analyserSaisie(brut) {
   return { valeur: compacte, nature: 'autre' };
 }
 
+/* ---------------- fiche du modele (apercu gratuit) ---------------- */
+
+// Copie de lib/fiche-modele.ts + lib/sortie-modeles.ts de l'app (26 oct. 2026) : annee, puce et diagonale
+// d'ecran d'apres le seul nom du modele, aucun appel payant. Un modele sans fiche sure (17e, 18 Pro, 18 Pro
+// Max, Duo) n'affiche que l'annee ; un modele inconnu n'affiche rien. A garder en phase avec l'app.
+const FICHES = {
+  'iphone x': { annee: '2017', puce: 'A11 Bionic', ecran: '5.8' },
+  'iphone xs': { annee: '2018', puce: 'A12 Bionic', ecran: '5.8' },
+  'iphone xs max': { annee: '2018', puce: 'A12 Bionic', ecran: '6.5' },
+  'iphone xr': { annee: '2018', puce: 'A12 Bionic', ecran: '6.1' },
+  'iphone 11': { annee: '2019', puce: 'A13 Bionic', ecran: '6.1' },
+  'iphone 11 pro': { annee: '2019', puce: 'A13 Bionic', ecran: '5.8' },
+  'iphone 11 pro max': { annee: '2019', puce: 'A13 Bionic', ecran: '6.5' },
+  'iphone 12': { annee: '2020', puce: 'A14 Bionic', ecran: '6.1' },
+  'iphone 12 pro': { annee: '2020', puce: 'A14 Bionic', ecran: '6.1' },
+  'iphone 12 mini': { annee: '2020', puce: 'A14 Bionic', ecran: '5.4' },
+  'iphone 12 pro max': { annee: '2020', puce: 'A14 Bionic', ecran: '6.7' },
+  'iphone 13 mini': { annee: '2021', puce: 'A15 Bionic', ecran: '5.4' },
+  'iphone 13': { annee: '2021', puce: 'A15 Bionic', ecran: '6.1' },
+  'iphone 13 pro': { annee: '2021', puce: 'A15 Bionic', ecran: '6.1' },
+  'iphone 13 pro max': { annee: '2021', puce: 'A15 Bionic', ecran: '6.7' },
+  'iphone 14': { annee: '2022', puce: 'A15 Bionic', ecran: '6.1' },
+  'iphone 14 pro': { annee: '2022', puce: 'A16 Bionic', ecran: '6.1' },
+  'iphone 14 pro max': { annee: '2022', puce: 'A16 Bionic', ecran: '6.7' },
+  'iphone 14 plus': { annee: '2022', puce: 'A15 Bionic', ecran: '6.7' },
+  'iphone 15': { annee: '2023', puce: 'A16 Bionic', ecran: '6.1' },
+  'iphone 15 plus': { annee: '2023', puce: 'A16 Bionic', ecran: '6.7' },
+  'iphone 15 pro': { annee: '2023', puce: 'A17 Pro', ecran: '6.1' },
+  'iphone 15 pro max': { annee: '2023', puce: 'A17 Pro', ecran: '6.7' },
+  'iphone 16': { annee: '2024', puce: 'A18', ecran: '6.1' },
+  'iphone 16 plus': { annee: '2024', puce: 'A18', ecran: '6.7' },
+  'iphone 16 pro': { annee: '2024', puce: 'A18 Pro', ecran: '6.3' },
+  'iphone 16 pro max': { annee: '2024', puce: 'A18 Pro', ecran: '6.9' },
+  'iphone 16e': { annee: '2025', puce: 'A18', ecran: '6.1' },
+  'iphone 17': { annee: '2025', puce: 'A19', ecran: '6.3' },
+  'iphone 17 pro': { annee: '2025', puce: 'A19 Pro', ecran: '6.3' },
+  'iphone 17 pro max': { annee: '2025', puce: 'A19 Pro', ecran: '6.9' },
+  'iphone air': { annee: '2025', puce: 'A19 Pro', ecran: '6.5' },
+  'iphone 17e': { annee: '2026' },
+  'iphone 18 pro': { annee: '2026' },
+  'iphone 18 pro max': { annee: '2026' },
+  'iphone duo': { annee: '2026' },
+};
+
+function afficherFiche(modele) {
+  const f = FICHES[String(modele).toLowerCase().trim()];
+  const cases = [['sortie', f?.annee], ['puce', f?.puce], ['ecran', f?.ecran ? `${f.ecran}"` : null]];
+  for (const [nom, valeur] of cases) {
+    $(`apercu-fiche-${nom}`).hidden = !valeur;
+    $(`apercu-fiche-${nom}-v`).textContent = valeur ?? '';
+  }
+  $('apercu-fiche').classList.toggle('hidden', !cases.some(([, v]) => v));
+}
+
 /* ---------------- apercu gratuit ---------------- */
 
 // Modele lu dans la base TAC (8 premiers chiffres de l'IMEI), sans appel
@@ -502,6 +556,7 @@ async function majApercu() {
   if (!reponse) return;
   if (reponse.autorise) {
     $('apercu-modele').textContent = base.modeles[indice];
+    afficherFiche(base.modeles[indice]);
     // Sans piece, « Debloquer » mene a la recharge plutot qu'a une impasse.
     $('apercu-cout').textContent = PSI18N.t(soldeActuel === 0 ? 'apercu.coutZero' : 'apercu.coutUn');
     $('apercu-restants').textContent = PSI18N.t(reponse.restants === 1 ? 'apercu.restantUn' : 'apercu.restants', { n: reponse.restants });
