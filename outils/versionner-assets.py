@@ -42,9 +42,19 @@ def empreinte(chemin_relatif):
 total = 0
 pages_touchees = []
 
-for nom in sorted(os.listdir(RACINE)):
-    if not nom.endswith('.html'):
-        continue
+# Les pages anglaises (en/, produites par generer-en.mjs) chargent les mêmes
+# js/ et css/ : oubliées jusqu'au 3 nov. 2026, elles servaient des empreintes
+# périmées, donc du script en cache plus ancien que la page.
+SOUS_DOSSIERS = ['', 'en']
+
+pages = sorted(
+    os.path.join(dossier, nom)
+    for dossier in SOUS_DOSSIERS
+    for nom in os.listdir(os.path.join(RACINE, dossier))
+    if nom.endswith('.html')
+)
+
+for nom in pages:
     chemin = os.path.join(RACINE, nom)
     source = io.open(chemin, encoding='utf-8').read()
 
