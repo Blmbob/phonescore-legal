@@ -24,6 +24,16 @@ function echapper(valeur) {
   return String(valeur).replace(/[&<>"']/g, c => ENTITES[c]);
 }
 
+/* « Activated » / « Not Activated » de Sickw, traduits ; toute autre valeur
+   est affichée telle quelle plutôt que devinée. */
+function statutActivation(valeur) {
+  const v = String(valeur ?? '').trim();
+  if (!v) return '';
+  if (/^not\s+activated$/i.test(v)) return PSI18N.t('rapportCommun.nonActive');
+  if (/^activated$/i.test(v)) return PSI18N.t('rapportCommun.active');
+  return v;
+}
+
 function ligne(cle, valeur, ton) {
   if (valeur === undefined || valeur === null || valeur === '') return '';
   const classe = ton ? ` class="${ton}"` : '';
@@ -314,6 +324,9 @@ function construireRapportHtml(r) {
     sim ? ligne(t('rapportCommun.champCartesSim'), sim.doubleSim ? t('rapportCommun.doubleSim') : t('rapportCommun.simUnique')) : '',
     ligne(t('rapportCommun.champGarantie'), r.warranty),
     ligne(t('rapportCommun.champDateAchat'), r.estimatedPurchaseDate, probleme ? 'danger' : ''),
+    /* Activation : manquait sur le site, et dans l'app elle était trop bas pour
+       être vue (3 nov. 2026). Juste après la date d'achat, qu'elle explique. */
+    ligne(t('rapportCommun.champActivation'), statutActivation(r.activationStatus)),
     ligne(t('rapportCommun.champFinReparations'), r.repairServiceExpiration),
     ligne(t('rapportCommun.champAppleCare'), r.appleCareEligible),
     ligne(t('rapportCommun.champFabrication'), fabrication),
