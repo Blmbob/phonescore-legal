@@ -13,7 +13,8 @@
      laisse suivre les liens legaux. -->
 <meta name="robots" content="noindex, follow">
 <meta name="theme-color" content="#0A1028">
-<link rel="stylesheet" href="/css/recharger.css?v=b7daa5f8">
+<meta name="apple-itunes-app" content="app-id=6795897093">
+<link rel="stylesheet" href="/css/recharger.css?v=2521ee9e">
 </head>
 <body>
 
@@ -91,6 +92,18 @@
         <span><b id="solde">—</b><span data-i18n="solde.suffixe"> pièce(s)</span></span>
       </div>
 
+      <!-- Hors zone FCFA, le paiement mobile money est impossible : on renvoie
+           vers l'app iPhone (Apple), où les pièces achetées valent aussi ici.
+           Constaté le 4 nov. 2026 : 8 clics sur un pack depuis le site, tous
+           hors zone FCFA (Bolivie, Irlande, Argentine, Indonésie...), 0 achat. -->
+      <div id="hors-zone" class="hors-zone hidden">
+        <p class="hors-zone-titre" data-i18n="rechargerPage.horsZoneTitre">Payer depuis votre pays</p>
+        <p class="hors-zone-texte" data-i18n="rechargerPage.horsZoneTexte">Le paiement mobile money n’est disponible qu’en Afrique de l’Ouest (zone FCFA). Achetez vos pièces dans l’app iPhone : elles sont valables ici avec le même compte.</p>
+        <p class="badge-zone"><a href="https://apps.apple.com/app/id6795897093" aria-label="Télécharger dans l’App Store"><img class="badge-app" src="/appstore-badge-fr.svg" alt="Télécharger dans l’App Store" width="158" height="50"></a></p>
+        <button type="button" class="lien-zone" id="afficher-fcfa" data-i18n="rechargerPage.horsZoneLien">Je suis en Afrique de l’Ouest : afficher le paiement mobile money</button>
+      </div>
+
+      <div id="paiement-fcfa" class="hidden">
       <div class="offres">
         <button type="button" class="offre" data-pack="decouverte">
           <span>
@@ -120,6 +133,7 @@
       <p class="moyens" data-i18n="rechargerPage.moyens">
         Paiement par mobile money — Orange Money, MTN, Moov, Wave.
       </p>
+      </div>
       <div id="msg" class="msg"></div>
     </div>
 
@@ -146,8 +160,8 @@
      depuis un CDN ne peut pas etre verifie par integrity.
      Empreinte dans vendor/SHA256SUMS.txt. -->
 <script src="/vendor/supabase-2.112.3.js"></script>
-<script src="/js/i18n.js?v=7165265f"></script>
-<script type="module" src="/js/recharger.js?v=279d2f57"></script>
+<script src="/js/i18n.js?v=6c6359d9"></script>
+<script type="module" src="/js/recharger.js?v=7abf7dd3"></script>
 
 <script src="/js/menu.js?v=8538ff57"></script>
 </body>

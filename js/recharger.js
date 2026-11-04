@@ -17,12 +17,40 @@ function montrer(quoi) {
 supabase.auth.onAuthStateChange((_evt, session) => rendre(session));
 supabase.auth.getSession().then(({ data }) => rendre(data.session));
 
+/* Pays de la zone FCFA (UEMOA), les seuls où GeniusPay propose un moyen de
+   paiement utilisable (Orange Money, MTN, Moov, Wave). */
+const ZONE_FCFA = ['CI', 'SN', 'ML', 'BF', 'BJ', 'TG', 'NE', 'GW'];
+
+/* Pays du visiteur d'après Cloudflare (functions/geo.js). null si inconnu :
+   on montre alors le paiement mobile money, comme avant. */
+async function paysVisiteur() {
+  try {
+    return (await (await fetch('/geo')).json()).country ?? null;
+  } catch {
+    return null;
+  }
+}
+
+function afficherPaiement(fcfa) {
+  $('paiement-fcfa').classList.toggle('hidden', !fcfa);
+  $('hors-zone').classList.toggle('hidden', fcfa);
+}
+
+async function appliquerZone() {
+  const pays = await paysVisiteur();
+  afficherPaiement(!pays || ZONE_FCFA.includes(String(pays).toUpperCase()));
+}
+
+/* Détection fausse (VPN, voyage) : le visiteur peut quand même payer. */
+$('afficher-fcfa').addEventListener('click', () => afficherPaiement(true));
+
 async function rendre(session) {
   if (!session) {
     montrer('deconnecte');
     return;
   }
   montrer('achat');
+  appliquerZone();
   /* Mesure d'entonnoir : un echec ne doit jamais gener la page. */
   supabase.rpc('log_funnel_event', { p_event: 'recharge_view', p_canal: 'site' }).then(() => {}, () => {});
 
