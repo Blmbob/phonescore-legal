@@ -67,6 +67,43 @@ async function marquerPaysWeb(userId) {
   if (error) console.warn('marquerPaysWeb error', error.message);
 }
 
+/* Question « Comment as-tu connu PhoneScore ? » : la plupart des comptes se creent ici, et
+   sans lien balise (?src=) ni site d'origine, rien ne dit d'ou ils viennent. Posee aux comptes
+   connectes sans origine ; une touche suffit, « Plus tard » la repose deux fois au plus.
+   Meme principe que components/question-source.tsx cote app, avec le prefixe « web- ». */
+const CLE_QUESTION_SOURCE = 'ps_question_source';
+const SOURCES_QUESTION = ['facebook', 'tiktok', 'whatsapp', 'instagram', 'ami', 'appstore', 'google', 'autre'];
+
+async function proposerQuestionSource(userId) {
+  const bloc = $('question-source');
+  if (!bloc) return;
+  let etat = null;
+  try {
+    etat = localStorage.getItem(CLE_QUESTION_SOURCE);
+    // Une campagne gardee par js/menu.js part au serveur a la connexion : pas de question.
+    if (localStorage.getItem('ps_campaign')) return;
+  } catch (e) { return; }
+  const reports = etat && etat.startsWith('plus-tard-') ? Number(etat.slice(10)) || 0 : 0;
+  if (etat && (!etat.startsWith('plus-tard-') || reports > 2)) return;
+  const { data, error } = await supabase.from('profiles').select('signup_campaign').eq('id', userId).maybeSingle();
+  if (error || !data || data.signup_campaign) return;
+
+  const fermer = valeur => {
+    bloc.classList.add('hidden');
+    try { localStorage.setItem(CLE_QUESTION_SOURCE, valeur); } catch (e) {}
+  };
+  bloc.querySelectorAll('.qs-choix').forEach(bouton => {
+    bouton.onclick = () => {
+      const source = bouton.getAttribute('data-source');
+      if (!SOURCES_QUESTION.includes(source)) return;
+      supabase.rpc('set_signup_campaign', { p_campaign: 'web-' + source }).then(() => {}, () => {});
+      fermer(source);
+    };
+  });
+  $('qs-plus-tard').onclick = () => fermer('plus-tard-' + (reports + 1));
+  bloc.classList.remove('hidden');
+}
+
 supabase.auth.onAuthStateChange((evt, session) => {
   rendre(session);
   if (evt === 'SIGNED_IN' && session) {
@@ -91,8 +128,10 @@ async function rendre(session) {
     await rafraichirSolde();
     rafraichirStats();
     majApercu();
+    proposerQuestionSource(session.user.id).catch(() => {});
   } else {
     $('vue-app').classList.add('hidden');
+    if ($('question-source')) $('question-source').classList.add('hidden');
     // La connexion ne s'affiche qu'a la demande (IMEI saisi, ou « Deja un
     // compte ») : sinon la page montrerait deux fois « verifier ».
     if (imeiEnAttente()) montrerConnexion();

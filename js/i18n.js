@@ -406,6 +406,11 @@ const TRADUCTIONS = {
     },
     stats: { jour: "Aujourd'hui", total: 'Vérifiés', fiable: 'Fiable' },
     solde: { prefixe: 'Solde : ', suffixe: ' pièce(s)' },
+    questionSource: {
+      title: 'Comment as-tu connu PhoneScore ?', plusTard: 'Plus tard', merci: 'Merci !',
+      facebook: 'Facebook', tiktok: 'TikTok', whatsapp: 'WhatsApp', instagram: 'Instagram',
+      ami: 'Un ami ou un collègue', appstore: 'L’App Store', google: 'Une recherche sur internet', autre: 'Autre',
+    },
     verif: {
       iphone: 'iPhone — 1 pièce', macbook: 'MacBook — dès 2 pièces',
       imeiLabel: 'IMEI ou numéro de série', imeiPh: "Composez *#06# sur l'appareil",
@@ -1115,6 +1120,11 @@ const TRADUCTIONS = {
     },
     stats: { jour: 'Today', total: 'Checked', fiable: 'Clean rate' },
     solde: { prefixe: 'Balance: ', suffixe: ' coin(s)' },
+    questionSource: {
+      title: 'How did you hear about PhoneScore?', plusTard: 'Later', merci: 'Thanks!',
+      facebook: 'Facebook', tiktok: 'TikTok', whatsapp: 'WhatsApp', instagram: 'Instagram',
+      ami: 'A friend or colleague', appstore: 'The App Store', google: 'An internet search', autre: 'Other',
+    },
     verif: {
       iphone: 'iPhone — 1 coin', macbook: 'MacBook — from 2 coins',
       imeiLabel: 'IMEI or serial number', imeiPh: 'Dial *#06# on the device',

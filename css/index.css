@@ -559,6 +559,16 @@ a.paiements{text-decoration:none; color:var(--text); align-items:center}
 
 .alerte-solde{display:grid; gap:4px; margin:0 0 16px; padding:14px 16px; border-radius:16px; text-align:left;
   background:rgba(255,121,0,.1); border:1px solid rgba(255,138,31,.45)}
+.question-source{display:grid; gap:10px; margin:0 0 16px; padding:14px 16px; border-radius:16px; text-align:left;
+  background:rgba(255,255,255,.05); border:1px solid rgba(255,255,255,.14)}
+.question-source.hidden{display:none}
+.question-source b{font-size:15px}
+.qs-liste{display:flex; flex-wrap:wrap; gap:8px}
+.outil button.qs-choix{width:auto; margin:0; min-height:40px; padding:8px 13px; border-radius:999px; font:inherit; font-size:14px; font-weight:700; cursor:pointer;
+  color:inherit; background:rgba(255,255,255,.08); border:1px solid rgba(255,255,255,.2)}
+.outil button.qs-choix:hover{background:rgba(255,255,255,.16)}
+.outil button.qs-plus-tard{width:auto; margin:0; min-height:0; justify-self:start; padding:6px 0; font:inherit; font-size:13px; cursor:pointer; color:inherit; opacity:.7;
+  background:none; border:0; text-decoration:underline}
 .alerte-solde b{color:#FFB066; font-size:15.5px}
 .alerte-solde span{color:#E3D3C2; font-size:14px}
 .alerte-solde .btn-principal{margin-top:10px; min-height:48px; font-size:15.5px; background:linear-gradient(180deg,#FF8A1F,#E86A00); box-shadow:0 8px 24px rgba(255,121,0,.35)}

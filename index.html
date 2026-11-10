@@ -79,7 +79,7 @@
   ]
 }
 </script>
-<link rel="stylesheet" href="/css/index.css?v=f03d042e">
+<link rel="stylesheet" href="/css/index.css?v=180a3456">
 
 <!-- Outil de verification, isole par .outil : sa feuille et celle de
      l'accueil partagent sept noms de classe (card, pack, sub, wrap...). -->
@@ -238,6 +238,22 @@
               <a class="btn-recharge" href="/recharger" data-i18n="verif.rechargerCourt">+ Recharger</a>
             </div>
             <p class="hint courriel" id="courriel"></p>
+
+            <!-- Affichee par accueil.js aux comptes sans origine connue : une touche, ignorable. -->
+            <div class="question-source hidden" id="question-source">
+              <b data-i18n="questionSource.title">Comment as-tu connu PhoneScore ?</b>
+              <div class="qs-liste">
+                <button type="button" class="qs-choix" data-source="facebook" data-i18n="questionSource.facebook">Facebook</button>
+                <button type="button" class="qs-choix" data-source="tiktok" data-i18n="questionSource.tiktok">TikTok</button>
+                <button type="button" class="qs-choix" data-source="whatsapp" data-i18n="questionSource.whatsapp">WhatsApp</button>
+                <button type="button" class="qs-choix" data-source="instagram" data-i18n="questionSource.instagram">Instagram</button>
+                <button type="button" class="qs-choix" data-source="ami" data-i18n="questionSource.ami">Un ami ou un collègue</button>
+                <button type="button" class="qs-choix" data-source="appstore" data-i18n="questionSource.appstore">L'App Store</button>
+                <button type="button" class="qs-choix" data-source="google" data-i18n="questionSource.google">Une recherche sur internet</button>
+                <button type="button" class="qs-choix" data-source="autre" data-i18n="questionSource.autre">Autre</button>
+              </div>
+              <button type="button" class="qs-plus-tard" id="qs-plus-tard" data-i18n="questionSource.plusTard">Plus tard</button>
+            </div>
 
             <!-- Affiche par accueil.js quand le solde est a zero : c'est la que
                  l'inscrit sans carte bancaire decroche. -->
@@ -453,11 +469,11 @@
 <script src="/vendor/supabase-2.112.3.js"></script>
 <!-- Traduction FR/EN de la coquille statique + PSI18N.t() pour les textes
      ecrits dynamiquement par accueil.js : doit se charger avant lui. -->
-<script src="/js/i18n.js?v=6c6359d9"></script>
+<script src="/js/i18n.js?v=461671d8"></script>
 <!-- Script classique (pas de type="module") : ses fonctions doivent rester
      visibles comme identifiants globaux pour accueil.js, charge apres lui. -->
 <script src="/js/rapport-commun.js?v=20e277f2"></script>
-<script type="module" src="/js/accueil.js?v=6937d0b6"></script>
+<script type="module" src="/js/accueil.js?v=b1623036"></script>
 
 <script src="/js/menu.js?v=0138fe7d"></script>
 </body>
