@@ -66,7 +66,7 @@
   ]
 }
 </script>
-<link rel="stylesheet" href="/css/index.css?v=180a3456">
+<link rel="stylesheet" href="/css/index.css?v=f858860e">
 
 <!-- Outil de verification, isole par .outil : sa feuille et celle de
      l'accueil partagent sept noms de classe (card, pack, sub, wrap...). -->
@@ -245,9 +245,14 @@
             <!-- Affiche par accueil.js quand le solde est a zero : c'est la que
                  l'inscrit sans carte bancaire decroche. -->
             <div class="alerte-solde hidden" id="alerte-solde">
-              <b data-i18n="verif.zeroT">No coins left to run a check</b>
-              <span data-i18n="verif.zeroD">Top up with Orange Money, MTN, Moov or Wave, from 700 FCFA.</span>
-              <a class="btn-principal" href="/recharger" data-i18n="verif.zeroBtn">Top up now</a>
+              <b data-i18n="verif.zeroT">You need 1 coin to run a check</b>
+              <span data-i18n="verif.zeroQuoi">The report tells you whether the device is iCloud locked, reported stolen or carrier locked, in under a minute.</span>
+              <!-- Zone FCFA : mobile money. Ailleurs : l'achat se fait dans l'app iPhone (accueil.js). -->
+              <span id="zero-fcfa" data-i18n="verif.zeroD">Top up with Orange Money, MTN, Moov or Wave, from 700 FCFA.</span>
+              <a class="btn-principal" id="zero-btn-fcfa" href="/recharger" data-i18n="verif.zeroBtn">Top up now</a>
+              <span class="hidden" id="zero-app" data-i18n="verif.zeroApp">Card payment happens in the iPhone app, through the App Store.</span>
+              <a class="btn-principal hidden" id="zero-btn-app" href="https://apps.apple.com/app/id6795897093" data-i18n="verif.zeroBtnApp">Buy in the iPhone app</a>
+              <a class="zero-exemple" href="/en/rapport" data-i18n="verif.zeroExemple">See what a report looks like</a>
             </div>
 
             <div class="seg">
@@ -456,11 +461,11 @@
 <script src="/vendor/supabase-2.112.3.js"></script>
 <!-- Traduction FR/EN de la coquille statique + PSI18N.t() pour les textes
      ecrits dynamiquement par accueil.js : doit se charger avant lui. -->
-<script src="/js/i18n.js?v=461671d8"></script>
+<script src="/js/i18n.js?v=42a31886"></script>
 <!-- Script classique (pas de type="module") : ses fonctions doivent rester
      visibles comme identifiants globaux pour accueil.js, charge apres lui. -->
 <script src="/js/rapport-commun.js?v=20e277f2"></script>
-<script type="module" src="/js/accueil.js?v=b1623036"></script>
+<script type="module" src="/js/accueil.js?v=e1287897"></script>
 
 <script src="/js/menu.js?v=0138fe7d"></script>
 </body>

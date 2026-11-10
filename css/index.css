@@ -571,7 +571,9 @@ a.paiements{text-decoration:none; color:var(--text); align-items:center}
   background:none; border:0; text-decoration:underline}
 .alerte-solde b{color:#FFB066; font-size:15.5px}
 .alerte-solde span{color:#E3D3C2; font-size:14px}
-.alerte-solde .btn-principal{margin-top:10px; min-height:48px; font-size:15.5px; background:linear-gradient(180deg,#FF8A1F,#E86A00); box-shadow:0 8px 24px rgba(255,121,0,.35)}
+.alerte-solde .hidden{display:none}
+.alerte-solde .zero-exemple{justify-self:start; margin-top:6px; font-size:13.5px; color:#E3D3C2; text-decoration:underline}
+.alerte-solde .btn-principal{margin-top:10px; text-align:center; min-height:48px; font-size:15.5px; background:linear-gradient(180deg,#FF8A1F,#E86A00); box-shadow:0 8px 24px rgba(255,121,0,.35)}
 
 /* Tuiles iPhone / MacBook : l'icone est dessinee par la feuille, data-i18n
    ecrase le contenu du bouton. */

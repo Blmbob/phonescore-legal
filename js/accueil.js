@@ -138,6 +138,21 @@ async function rendre(session) {
   }
 }
 
+/* Solde a zero : le mobile money n'existe qu'en zone FCFA (meme liste que js/recharger.js).
+   Ailleurs, proposer « Orange Money » a un visiteur de Paris ou de Lagos ne mene nulle part :
+   on l'envoie vers l'app iPhone, ou l'achat se fait par l'App Store. Pays inconnu : mobile money. */
+const ZONE_FCFA = ['CI', 'SN', 'ML', 'BF', 'BJ', 'TG', 'NE', 'GW'];
+let zoneAlerteReglee = false;
+async function reglerZoneAlerte() {
+  if (zoneAlerteReglee) return;
+  zoneAlerteReglee = true;
+  let pays = null;
+  try { pays = (await (await fetch('/geo')).json()).country ?? null; } catch (e) {}
+  const fcfa = !pays || ZONE_FCFA.includes(String(pays).toUpperCase());
+  for (const id of ['zero-fcfa', 'zero-btn-fcfa']) $(id).classList.toggle('hidden', !fcfa);
+  for (const id of ['zero-app', 'zero-btn-app']) $(id).classList.toggle('hidden', fcfa);
+}
+
 async function rafraichirSolde() {
   const { data: { session } } = await supabase.auth.getSession();
   if (!session) return;
@@ -150,6 +165,7 @@ async function rafraichirSolde() {
   // Solde a zero : on montre la recharge mobile money au lieu de laisser
   // le bouton Verifier echouer.
   $('alerte-solde').classList.toggle('hidden', !(data && data.pieces === 0));
+  if (data && data.pieces === 0) reglerZoneAlerte();
 }
 
 /* ---------------- authentification ---------------- */
@@ -362,6 +378,7 @@ $('btn-verifier').addEventListener('click', async () => {
   const cout = type === 'macbook' ? (niveau === 'complet' ? 4 : 2) : 1;
   if (soldeActuel !== null && soldeActuel < cout) {
     $('alerte-solde').classList.remove('hidden');
+    reglerZoneAlerte();
     return afficher($('msg-verif'), PSI18N.t('verif.soldeInsuffisant'), 'err');
   }
   // 15 chiffres mais cle de controle fausse : presque toujours un chiffre mal
