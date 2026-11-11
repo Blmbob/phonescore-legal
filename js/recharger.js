@@ -41,6 +41,7 @@ function afficherPaiement(fcfa) {
   $('moyens-fcfa').classList.toggle('hidden', !fcfa);
   $('moyens-carte').classList.toggle('hidden', fcfa);
   $('hors-zone').classList.toggle('hidden', fcfa);
+  $('afficher-fcfa').classList.toggle('hidden', fcfa);
 }
 
 async function appliquerZone() {

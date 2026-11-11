@@ -342,7 +342,9 @@
 .u-text-align-center-margin-top-22px{text-align:center !important; margin-top:22px !important}
 
 /* Visiteur hors zone FCFA : renvoi vers l'app iPhone (voir recharger.html). */
-.hors-zone{text-align:center; padding:18px 0 4px; margin-top:16px; border-top:1px solid rgba(255,255,255,.12)}
+.hors-zone{text-align:center; padding:6px 0 4px}
+.hors-zone .hors-zone-titre{margin:18px 0 12px}
+.lien-zone.hidden{display:none}
 .moyens.hidden{display:none}
 .hors-zone-titre{font-weight:700; margin:0 0 8px}
 .hors-zone-texte{margin:0; line-height:1.5; opacity:.85}

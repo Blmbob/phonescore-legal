@@ -150,6 +150,7 @@ async function reglerZoneAlerte() {
   try { pays = (await (await fetch('/geo')).json()).country ?? null; } catch (e) {}
   const fcfa = !pays || ZONE_FCFA.includes(String(pays).toUpperCase());
   $('zero-fcfa').classList.toggle('hidden', !fcfa);
+  if (!fcfa) $('zero-btn-fcfa').textContent = PSI18N.t('verif.zeroBtnCarte');
   for (const id of ['zero-app', 'zero-btn-app']) $(id).classList.toggle('hidden', fcfa);
 }
 
