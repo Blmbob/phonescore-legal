@@ -31,8 +31,15 @@ async function paysVisiteur() {
   }
 }
 
+/* Hors zone FCFA, les packs se paient par carte : GeniusPay ouvre alors directement la
+   carte internationale au lieu de Wave et d'un numero en +225 (cause probable des abandons). */
+let paiementParCarte = false;
+
 function afficherPaiement(fcfa) {
-  $('paiement-fcfa').classList.toggle('hidden', !fcfa);
+  paiementParCarte = !fcfa;
+  $('paiement-fcfa').classList.remove('hidden');
+  $('moyens-fcfa').classList.toggle('hidden', !fcfa);
+  $('moyens-carte').classList.toggle('hidden', fcfa);
   $('hors-zone').classList.toggle('hidden', fcfa);
 }
 
@@ -72,7 +79,7 @@ for (const bouton of document.querySelectorAll('.offre')) {
     supabase.rpc('log_funnel_event', { p_event: 'pack_tap', p_canal: 'site' }).then(() => {}, () => {});
 
     const { data, error } = await supabase.functions
-      .invoke('create-payment', { body: { pack_id } });
+      .invoke('create-payment', { body: paiementParCarte ? { pack_id, payment_method: 'card' } : { pack_id } });
 
     bouton.disabled = false;
 

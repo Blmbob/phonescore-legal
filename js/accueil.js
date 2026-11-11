@@ -149,7 +149,7 @@ async function reglerZoneAlerte() {
   let pays = null;
   try { pays = (await (await fetch('/geo')).json()).country ?? null; } catch (e) {}
   const fcfa = !pays || ZONE_FCFA.includes(String(pays).toUpperCase());
-  for (const id of ['zero-fcfa', 'zero-btn-fcfa']) $(id).classList.toggle('hidden', !fcfa);
+  $('zero-fcfa').classList.toggle('hidden', !fcfa);
   for (const id of ['zero-app', 'zero-btn-app']) $(id).classList.toggle('hidden', fcfa);
 }
 
