@@ -122,6 +122,31 @@ function problemeDateAchat(valeur) {
   return annee && Number(annee[0]) < 2007 ? 'trop-ancienne' : null;
 }
 
+/* Memes regles que l'app (lib/date-achat.ts, decision du 20 oct. 2026) :
+   - date trop ancienne (avant 2007) ou anterieure a la sortie du modele (verdict
+     serveur « date-avant-sortie ») : achat non verifie, bandeau « Reconditionne » ;
+   - date dans le futur : simple indice, « a verifier », jamais « Reconditionne » ;
+   - iPhone jamais active dont l'achat est estime dans les 60 jours : profil d'un
+     appareil neuf, rien a signaler.
+   Avant le 18 nov. 2026, le site traitait toute date future comme impossible et
+   affichait « Reconditionne — ne pas acheter » sur des iPhone neufs que l'app
+   donnait « Sur ». */
+const FUTUR_NEUF_MAX_MS = 60 * 24 * 3600 * 1000;
+function dateImpossible(r) {
+  return problemeDateAchat(r.estimatedPurchaseDate) === 'trop-ancienne'
+    || r.verdictRaison === 'date-avant-sortie' || r.verdictRaison === 'date-impossible';
+}
+function neufNonActive(r) {
+  if (problemeDateAchat(r.estimatedPurchaseDate) !== 'future') return false;
+  if (!/^(not\s*activated|non\s*activ)/i.test(String(r.activationStatus ?? '').trim())) return false;
+  const iso = String(r.estimatedPurchaseDate).match(/\b(\d{4})-(\d{2})-(\d{2})\b/);
+  const date = iso ? Date.UTC(+iso[1], +iso[2] - 1, +iso[3]) : new Date(r.estimatedPurchaseDate).getTime();
+  return !Number.isNaN(date) && date <= Date.now() + FUTUR_NEUF_MAX_MS;
+}
+function dateFutureASignaler(r) {
+  return problemeDateAchat(r.estimatedPurchaseDate) === 'future' && !neufNonActive(r);
+}
+
 function CONSEQUENCE() {
   return {
     fmiOn: PSI18N.t('rapportCommun.consFmiOn'),
@@ -200,7 +225,9 @@ function statutOperateur(simLockStatus) {
 function statutHistorique(r) {
   // Une date d'achat impossible n'est pas un simple signal : sans facture,
   // l'acheteur n'a aucun moyen de savoir ce qu'il achete.
-  if (problemeDateAchat(r.estimatedPurchaseDate)) return 'danger';
+  if (dateImpossible(r)) return 'danger';
+  // Date estimée dans le futur : une estimation d'Apple, pas une preuve -> à vérifier.
+  if (dateFutureASignaler(r)) return 'attention';
   // « Appareil de remplacement » (Replacement Device) : fourni par Apple en echange d'un
   // appareil defectueux, comme la lettre N du numero de modele.
   const champs = [r.refurbished, r.replaced, r.replacementDevice, r.loanerDevice, r.demoUnit];
@@ -215,7 +242,8 @@ function detailsHistorique(r) {
   if (estOui(r.replacementDevice)) signale.push(PSI18N.t('rapportCommun.histRemplacement'));
   if (estOui(r.loanerDevice)) signale.push(PSI18N.t('rapportCommun.histPret'));
   if (estOui(r.demoUnit)) signale.push(PSI18N.t('rapportCommun.histDemo'));
-  if (problemeDateAchat(r.estimatedPurchaseDate)) signale.push(PSI18N.t('rapportCommun.histDateImpossible'));
+  if (dateImpossible(r)) signale.push(PSI18N.t('rapportCommun.histDateImpossible'));
+  if (dateFutureASignaler(r)) signale.push(PSI18N.t('rapportCommun.histDateFuture'));
   return signale.length ? PSI18N.t('rapportCommun.histSignaleComme', { liste: signale.join(', ') }) : '';
 }
 
@@ -305,10 +333,10 @@ function construireRapportHtml(r) {
   const sim = configurationSim(r);
   const liste = piliers(r);
   const mac = estMac(r);
-  const probleme = problemeDateAchat(r.estimatedPurchaseDate);
   // Date impossible sur un appareil par ailleurs ni verrouille ni vole :
   // bandeau « Reconditionne », comme dans l'app.
-  const dateSuspecte = probleme !== null && r.fmiOn !== true && r.blacklisted !== true;
+  // Seule une date IMPOSSIBLE donne « Reconditionné » ; une date future non.
+  const dateSuspecte = dateImpossible(r) && r.fmiOn !== true && r.blacklisted !== true;
   const verdictFinal = dateSuspecte ? 'danger' : verdictAffiche(r);
   const v = dateSuspecte
     ? { titre: t('rapportCommun.verdictReconditionneTitre'), detail: t('rapportCommun.verdictReconditionneDetail') }
@@ -327,7 +355,7 @@ function construireRapportHtml(r) {
     ligne(t('rapportCommun.champPaysAchat'), r.purchaseCountry),
     sim ? ligne(t('rapportCommun.champCartesSim'), sim.doubleSim ? t('rapportCommun.doubleSim') : t('rapportCommun.simUnique')) : '',
     ligne(t('rapportCommun.champGarantie'), r.warranty),
-    ligne(t('rapportCommun.champDateAchat'), r.estimatedPurchaseDate, probleme ? 'danger' : ''),
+    ligne(t('rapportCommun.champDateAchat'), r.estimatedPurchaseDate, dateImpossible(r) ? 'danger' : dateFutureASignaler(r) ? 'warning' : ''),
     /* Activation : manquait sur le site, et dans l'app elle était trop bas pour
        être vue (3 nov. 2026). Juste après la date d'achat, qu'elle explique. */
     ligne(t('rapportCommun.champActivation'), statutActivation(r.activationStatus)),
@@ -337,7 +365,8 @@ function construireRapportHtml(r) {
   ].join('');
 
   const alertes = [
-    probleme ? `<div class="avert-sim">${echapper(t(probleme === 'future' ? 'rapportCommun.dateFuture' : 'rapportCommun.datePassee'))}</div>` : '',
+    dateImpossible(r) ? `<div class="avert-sim">${echapper(t('rapportCommun.datePassee'))}</div>`
+      : dateFutureASignaler(r) ? `<div class="avert-sim">${echapper(t('rapportCommun.dateFuture'))}</div>` : '',
     r.modeleIncoherent === true && r.modeleApple
       ? `<div class="avert-sim">${echapper(t('rapportCommun.macModeleIncoherent', { apple: r.modeleApple, annonce: r.model ?? '?' }))}</div>` : '',
   ].join('');
