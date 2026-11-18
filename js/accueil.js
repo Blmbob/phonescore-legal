@@ -111,6 +111,18 @@ async function proposerQuestionSource(userId) {
    (apply_referral_code) refuse lui-meme un compte qui a deja achete. */
 const CLE_PARRAINAGE = 'phonescore:code-parrainage-en-attente';
 
+/* Lien de parrainage partagé depuis l'app ou le profil : phonescore.app/?ref=CODE
+   (18 nov. 2026). Le code est gardé tout de suite (appliqué à la première connexion,
+   Google et Apple compris) et pré-remplit le champ de l'inscription. Le serveur ne
+   l'accepte que pour un compte de moins de 7 jours, sans achat. */
+let codeDuLien = null;
+(function lireLienParrainage() {
+  const ref = (new URLSearchParams(location.search).get('ref') || '').trim().toUpperCase();
+  if (!/^[A-Z0-9]{4,12}$/.test(ref)) return;
+  codeDuLien = ref;
+  try { localStorage.setItem(CLE_PARRAINAGE, ref); } catch (e) {}
+})();
+
 function codeParrainageSaisi() {
   return modeInscription ? $('code-parrainage').value.trim().toUpperCase() : '';
 }
@@ -183,7 +195,7 @@ async function rendre(session) {
     if ($('question-source')) $('question-source').classList.add('hidden');
     // La connexion ne s'affiche qu'a la demande (IMEI saisi, ou « Deja un
     // compte ») : sinon la page montrerait deux fois « verifier ».
-    if (imeiEnAttente()) montrerConnexion();
+    if (imeiEnAttente() || codeDuLien) montrerConnexion();
   }
 }
 
@@ -228,6 +240,10 @@ let modeInscription = false;
 
 function basculerModeAuth(inscription) {
   modeInscription = inscription;
+  if (inscription && codeDuLien && !$('code-parrainage').value.trim()) {
+    $('code-parrainage').value = codeDuLien;
+    verifierCodeParrainage();
+  }
   $('champ-confirmation').classList.toggle('hidden', !modeInscription);
   $('champ-parrainage').classList.toggle('hidden', !modeInscription);
   $('btn-connexion').classList.toggle('hidden', modeInscription);
@@ -519,6 +535,8 @@ function montrerConnexion() {
   $('form-accroche').classList.add('hidden');
   $('deja-compte').classList.add('hidden');
   $('vue-auth').classList.remove('hidden');
+  // Arrivé par le lien d'un ami : on ouvre directement l'inscription, code pré-rempli.
+  if (codeDuLien && !modeInscription) basculerModeAuth(true);
   $('verifier').scrollIntoView({ behavior: 'smooth', block: 'center' });
 }
 

@@ -14,7 +14,7 @@
 <meta name="robots" content="noindex, follow">
 <meta name="theme-color" content="#0A1028">
 <meta name="apple-itunes-app" content="app-id=6795897093">
-<link rel="stylesheet" href="/css/profil.css?v=10ae6d27">
+<link rel="stylesheet" href="/css/profil.css?v=47752372">
 </head>
 <body>
 
@@ -107,6 +107,11 @@
         <span data-i18n="profilPage.codeParrainage">Code de parrainage</span>
         <b class="code" id="code">—</b>
       </div>
+      <!-- Lien d'invitation (18 nov. 2026) : ouvre l'inscription avec le code pré-rempli. -->
+      <div class="invitation hidden" id="invitation">
+        <p data-i18n="profilPage.invitationTexte">Invitez un ami : à son premier achat, vous gagnez chacun 1 pièce.</p>
+        <div class="invitation-lien"><code id="lien-invitation"></code><button type="button" class="bouton" id="btn-copier" data-i18n="profilPage.copier">Copier le lien</button></div>
+      </div>
       <div class="ligne">
         <span data-i18n="profilPage.filleuls">Filleuls récompensés</span>
         <b id="filleuls">—</b>
@@ -143,8 +148,8 @@
      depuis un CDN ne peut pas etre verifie par integrity.
      Empreinte dans vendor/SHA256SUMS.txt. -->
 <script src="/vendor/supabase-2.112.3.js"></script>
-<script src="/js/i18n.js?v=37388cdf"></script>
-<script type="module" src="/js/profil.js?v=b06b7a62"></script>
+<script src="/js/i18n.js?v=a49b42e2"></script>
+<script type="module" src="/js/profil.js?v=24dd3dac"></script>
 
 <script src="/js/menu.js?v=0138fe7d"></script>
 </body>

@@ -55,6 +55,10 @@ async function charger(uid) {
 
   if (code.status === 'fulfilled' && typeof code.value.data === 'string') {
     $('code').textContent = code.value.data;
+    // Lien d'invitation : la page d'accueil de la langue du profil, code pré-rempli.
+    const base = PSI18N.langueActuelle() === 'en' ? 'https://phonescore.app/en/' : 'https://phonescore.app/';
+    $('lien-invitation').textContent = base + '?ref=' + encodeURIComponent(code.value.data);
+    $('invitation').classList.remove('hidden');
   }
 
   if (filleuls.status === 'fulfilled') {
@@ -100,6 +104,14 @@ $('btn-activer').addEventListener('click', async () => {
   msg.className = 'msg ok';
   const { data: { session } } = await supabase.auth.getSession();
   if (session) charger(session.user.id);
+});
+
+$('btn-copier').addEventListener('click', async () => {
+  try {
+    await navigator.clipboard.writeText($('lien-invitation').textContent);
+    $('btn-copier').textContent = PSI18N.t('profilPage.copie');
+    setTimeout(() => { $('btn-copier').textContent = PSI18N.t('profilPage.copier'); }, 2000);
+  } catch (e) { /* presse-papiers refusé : le lien reste affiché, à copier à la main */ }
 });
 
 $('btn-deconnexion').addEventListener('click', () => supabase.auth.signOut());
