@@ -257,6 +257,13 @@ $('btn-connexion').addEventListener('click', async () => {
 // `occupe()` remplace tout le contenu du bouton par le libelle donne : garder
 // l'icone sous la main pour la restaurer si la tentative echoue, plutot que
 // de laisser le bouton perdre son logo Apple apres une erreur.
+// Retour apres Google / Apple sur l'accueil de la langue de la page (18 nov. 2026 :
+// une connexion lancee depuis /en/ revenait sur l'accueil francais). Meme domaine que
+// l'adresse du site configuree dans Supabase : accepte sans entree supplementaire.
+function adresseRetourConnexion() {
+  return PSI18N.langueActuelle() === 'en' ? 'https://phonescore.app/en/' : 'https://phonescore.app/';
+}
+
 const CONTENU_BTN_APPLE = $('btn-apple').innerHTML;
 
 $('btn-apple').addEventListener('click', async () => {
@@ -265,7 +272,7 @@ $('btn-apple').addEventListener('click', async () => {
   occupe($('btn-apple'), true);
   const { error } = await supabase.auth.signInWithOAuth({
     provider: 'apple',
-    options: { redirectTo: 'https://phonescore.app/' },
+    options: { redirectTo: adresseRetourConnexion() },
   });
   // Pas de reactivation du bouton en cas de succes : la page part vers Apple.
   if (error) {
@@ -282,7 +289,7 @@ $('btn-google').addEventListener('click', async () => {
   occupe($('btn-google'), true);
   const { error } = await supabase.auth.signInWithOAuth({
     provider: 'google',
-    options: { redirectTo: 'https://phonescore.app/' },
+    options: { redirectTo: adresseRetourConnexion() },
   });
   // Pas de reactivation du bouton en cas de succes : la page part vers Google.
   if (error) {

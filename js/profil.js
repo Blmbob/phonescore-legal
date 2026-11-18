@@ -60,7 +60,47 @@ async function charger(uid) {
   if (filleuls.status === 'fulfilled') {
     $('filleuls').textContent = filleuls.value.count ?? 0;
   }
+
+  chercherPackAActiver(uid);
 }
+
+/* Pack Revendeur paye mais jamais active : meme regle que l'app
+   (contexts/pieces-context.tsx). L'achat de 10 pieces non rembourse et non encore
+   utilise ; activate_reseller_mode le marque utilise et ajoute 30 jours (cumulables). */
+let packAActiver = null;
+
+async function chercherPackAActiver(uid) {
+  const { data } = await supabase
+    .from('transactions')
+    .select('id')
+    .eq('user_id', uid)
+    .eq('type', 'achat')
+    .eq('pieces', 10)
+    .eq('reseller_activated', false)
+    .is('refunded_at', null)
+    .order('created_at', { ascending: false })
+    .limit(1)
+    .maybeSingle();
+  packAActiver = data?.id ?? null;
+  $('activer-revendeur').classList.toggle('hidden', !packAActiver);
+}
+
+$('btn-activer').addEventListener('click', async () => {
+  if (!packAActiver) return;
+  const msg = $('msg-activer');
+  $('btn-activer').disabled = true;
+  const { error } = await supabase.rpc('activate_reseller_mode', { p_transaction_id: packAActiver });
+  $('btn-activer').disabled = false;
+  if (error) {
+    msg.textContent = PSI18N.t('profilPage.activerEchec');
+    msg.className = 'msg err';
+    return;
+  }
+  msg.textContent = PSI18N.t('profilPage.activerOk');
+  msg.className = 'msg ok';
+  const { data: { session } } = await supabase.auth.getSession();
+  if (session) charger(session.user.id);
+});
 
 $('btn-deconnexion').addEventListener('click', () => supabase.auth.signOut());
 

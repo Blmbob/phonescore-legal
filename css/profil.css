@@ -336,6 +336,10 @@
   }
   .supprimer:hover{color:var(--red)}
 
+  .activer-revendeur{margin:4px 0 14px; padding:14px; border:1px solid var(--border, #30363D); border-radius:12px}
+  .activer-revendeur p{font-size:13.5px; color:var(--muted); margin:0 0 10px}
+  .activer-revendeur .msg{margin:10px 0 0}
+  .msg.ok{color:#7EE787}
   .msg{margin-top:14px; font-size:13.5px; min-height:1em}
   .msg.err{color:#FFB4B4}
   .attente{text-align:center; color:var(--muted); padding:40px 0}

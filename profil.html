@@ -14,7 +14,7 @@
 <meta name="robots" content="noindex, follow">
 <meta name="theme-color" content="#0A1028">
 <meta name="apple-itunes-app" content="app-id=6795897093">
-<link rel="stylesheet" href="/css/profil.css?v=cf5644cc">
+<link rel="stylesheet" href="/css/profil.css?v=10ae6d27">
 </head>
 <body>
 
@@ -96,6 +96,13 @@
         <span data-i18n="profilPage.accesRevendeur">Accès revendeur</span>
         <b id="revendeur">—</b>
       </div>
+      <!-- Pack Revendeur acheté mais pas encore activé (18 nov. 2026) : le site le
+           vend, l'activation n'existait que dans l'app iPhone. -->
+      <div class="activer-revendeur hidden" id="activer-revendeur">
+        <p data-i18n="profilPage.activerTexte">Vous avez un pack Revendeur non utilisé : activez vos 30 jours d'accès revendeur quand vous le souhaitez.</p>
+        <button type="button" class="bouton" id="btn-activer" data-i18n="profilPage.activerBouton">Activer l'accès revendeur</button>
+        <p class="msg" id="msg-activer"></p>
+      </div>
       <div class="ligne">
         <span data-i18n="profilPage.codeParrainage">Code de parrainage</span>
         <b class="code" id="code">—</b>
@@ -136,8 +143,8 @@
      depuis un CDN ne peut pas etre verifie par integrity.
      Empreinte dans vendor/SHA256SUMS.txt. -->
 <script src="/vendor/supabase-2.112.3.js"></script>
-<script src="/js/i18n.js?v=0f8e8829"></script>
-<script type="module" src="/js/profil.js?v=604ed36f"></script>
+<script src="/js/i18n.js?v=37388cdf"></script>
+<script type="module" src="/js/profil.js?v=b06b7a62"></script>
 
 <script src="/js/menu.js?v=0138fe7d"></script>
 </body>
