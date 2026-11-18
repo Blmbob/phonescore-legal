@@ -384,10 +384,21 @@ for (const [id, valeur] of [['n-standard', 'standard'], ['n-complet', 'complet']
 // supabase-js ne l'expose que via error.context.
 async function messageErreur(error, defaut) {
   try {
-    const corps = await error?.context?.json();
-    if (corps?.message) return corps.message;
+    return messageServeur(await error?.context?.json(), defaut);
   } catch { /* corps illisible : on garde le message par defaut */ }
   return defaut;
+}
+
+// check-imei ecrit son `message` en francais ; depuis le 18 nov. 2026 il joint un
+// `code` stable, traduit ici dans la langue de la page (serverErrors.* de i18n.js).
+// Sans code connu : le message du serveur, puis le texte par defaut.
+function messageServeur(corps, defaut) {
+  if (typeof corps?.code === 'string') {
+    const cle = 'serverErrors.' + corps.code;
+    const texte = PSI18N.t(cle);
+    if (texte !== cle) return texte;
+  }
+  return corps?.message || defaut;
 }
 
 // Etapes qui s'enchainent pendant l'attente (jusqu'a une minute) plutot
@@ -467,7 +478,7 @@ $('btn-verifier').addEventListener('click', async () => {
     return afficher($('msg-verif'), await messageErreur(error, PSI18N.t('verif.erreurDefaut')), 'err');
   }
   if (!data?.success) {
-    return afficher($('msg-verif'), data?.message || PSI18N.t('verif.introuvable'), 'err');
+    return afficher($('msg-verif'), messageServeur(data, PSI18N.t('verif.introuvable')), 'err');
   }
 
   await rafraichirSolde();
