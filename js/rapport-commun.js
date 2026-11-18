@@ -200,7 +200,9 @@ function statutHistorique(r) {
   // Une date d'achat impossible n'est pas un simple signal : sans facture,
   // l'acheteur n'a aucun moyen de savoir ce qu'il achete.
   if (problemeDateAchat(r.estimatedPurchaseDate)) return 'danger';
-  const champs = [r.refurbished, r.replaced, r.loanerDevice, r.demoUnit];
+  // « Appareil de remplacement » (Replacement Device) : fourni par Apple en echange d'un
+  // appareil defectueux, comme la lettre N du numero de modele.
+  const champs = [r.refurbished, r.replaced, r.replacementDevice, r.loanerDevice, r.demoUnit];
   if (champs.some(estOui)) return 'attention';
   if (champs.some(v => v !== undefined && v !== null)) return 'ok';
   return 'inconnu';
@@ -209,6 +211,7 @@ function detailsHistorique(r) {
   const signale = [];
   if (estOui(r.refurbished)) signale.push(PSI18N.t('rapportCommun.histReconditionne'));
   if (estOui(r.replaced)) signale.push(PSI18N.t('rapportCommun.histRemplace'));
+  if (estOui(r.replacementDevice)) signale.push(PSI18N.t('rapportCommun.histRemplacement'));
   if (estOui(r.loanerDevice)) signale.push(PSI18N.t('rapportCommun.histPret'));
   if (estOui(r.demoUnit)) signale.push(PSI18N.t('rapportCommun.histDemo'));
   if (problemeDateAchat(r.estimatedPurchaseDate)) signale.push(PSI18N.t('rapportCommun.histDateImpossible'));
