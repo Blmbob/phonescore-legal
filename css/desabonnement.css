@@ -1,0 +1,29 @@
+/* Page de désinscription des e-mails de campagne (desabonnement.html). */
+
+  :root{
+    --bg:#0D1117; --panel:#161B22; --text:#E6EDF3; --muted:#8B949E;
+    --green:#2EA043; --red:#F85149; --border:#30363D;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{
+    background:var(--bg);color:var(--text);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    min-height:100vh;display:flex;align-items:center;justify-content:center;padding:24px;
+  }
+  .card{
+    background:var(--panel);border:1px solid var(--border);border-radius:16px;
+    padding:32px 28px;max-width:440px;width:100%;text-align:center;
+  }
+  .marque{font-size:1.4rem;font-weight:700;margin-bottom:22px}
+  .marque span{color:var(--green)}
+  h1{font-size:1.15rem;font-weight:700;margin-bottom:10px}
+  p{color:var(--muted);font-size:.95rem;line-height:1.55}
+  button{
+    margin-top:22px;width:100%;padding:13px 18px;border-radius:10px;border:1px solid var(--border);
+    background:#21262D;color:var(--text);font-size:1rem;font-weight:600;cursor:pointer;
+  }
+  button:disabled{opacity:.6;cursor:default}
+  .hidden{display:none}
+  .fait h1{color:var(--green)}
+  .erreur h1{color:var(--red)}
+  [dir="rtl"] .card{text-align:center}

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self' https://static.cloudflareinsights.com; style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src 'self' https://bvriicetjcnxrbhelokh.supabase.co https://cloudflareinsights.com; base-uri 'none'; form-action 'none'">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PhoneScore — E-mails</title>
+<link rel="icon" href="/favicon.png" type="image/png">
+<link rel="apple-touch-icon" href="/favicon.png">
+<meta name="robots" content="noindex, nofollow">
+<meta name="referrer" content="no-referrer">
+<meta name="theme-color" content="#0A1028">
+<link rel="stylesheet" href="/css/desabonnement.css?v=c28efa5a">
+</head>
+<body>
+<!--
+  Désinscription des e-mails de campagne (18 nov. 2026). Le lien des e-mails ouvre
+  cette page au lieu de désinscrire directement : les antivirus de messagerie
+  (Outlook / Microsoft Defender notamment) ouvrent les liens pour les analyser, ce
+  qui désinscrivait le destinataire à son insu. Ici, rien ne se passe sans un clic
+  sur le bouton (js/desabonnement.js -> POST vers la fonction unsubscribe).
+-->
+<main class="card" id="carte">
+  <div class="marque">Phone<span>Score</span></div>
+  <h1 id="titre">…</h1>
+  <p id="texte"></p>
+  <button type="button" id="bouton" class="hidden"></button>
+</main>
+<script src="/js/desabonnement.js?v=03dca2cb"></script>
+</body>
+</html>
