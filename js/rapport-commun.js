@@ -176,7 +176,8 @@ function consequence(r) {
 }
 
 function estOui(valeur) {
-  return /^(yes|oui)$/i.test(String(valeur ?? '').trim());
+  // Préfixe et non valeur exacte : une variante « Yes (…) » reste un signal.
+  return /^(yes|oui)\b/i.test(String(valeur ?? '').trim());
 }
 
 function statutIcloud(fmiOn) {
