@@ -246,7 +246,11 @@ $('btn-inscription').addEventListener('click', async () => {
   if (password !== $('mdp-confirmation').value) return afficher($('msg-auth'), PSI18N.t('auth.mdpDifferents'), 'err');
 
   occupe($('btn-inscription'), true);
-  const { data, error } = await supabase.auth.signUp({ email, password });
+  // Langue de l'e-mail de confirmation ({{ .Data.langue }} dans le modèle Supabase) :
+  // celle du navigateur si un texte existe (fr, en, es, ar), sinon celle du site.
+  const navig = String(navigator.language || '').slice(0, 2).toLowerCase();
+  const langue = ['fr', 'en', 'es', 'ar'].includes(navig) ? navig : PSI18N.langueActuelle();
+  const { data, error } = await supabase.auth.signUp({ email, password, options: { data: { langue } } });
   occupe($('btn-inscription'), false, PSI18N.t('auth.inscription'));
 
   if (error) return afficher($('msg-auth'), PSI18N.t('auth.inscriptionEchec'), 'err');
