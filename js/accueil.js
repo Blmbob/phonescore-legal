@@ -104,9 +104,58 @@ async function proposerQuestionSource(userId) {
   bloc.classList.remove('hidden');
 }
 
+/* Parrainage (18 nov. 2026, meme regle que l'app : contexts/auth-context.tsx). Le code saisi a
+   l'inscription est garde dans le navigateur jusqu'a la premiere connexion : avec la confirmation
+   d'e-mail, signUp() ne donne pas de session, et Google/Apple quittent la page. Applique une seule
+   fois puis efface, succes ou echec : un code refuse ne bloque jamais la connexion. Le serveur
+   (apply_referral_code) refuse lui-meme un compte qui a deja achete. */
+const CLE_PARRAINAGE = 'phonescore:code-parrainage-en-attente';
+
+function codeParrainageSaisi() {
+  return modeInscription ? $('code-parrainage').value.trim().toUpperCase() : '';
+}
+
+function memoriserParrainage() {
+  const code = codeParrainageSaisi();
+  try {
+    if (code) localStorage.setItem(CLE_PARRAINAGE, code);
+  } catch (e) {}
+}
+
+async function appliquerParrainageEnAttente() {
+  let code = null;
+  try {
+    code = localStorage.getItem(CLE_PARRAINAGE);
+    if (code) localStorage.removeItem(CLE_PARRAINAGE);
+  } catch (e) {}
+  if (!code) return;
+  const { error } = await supabase.rpc('apply_referral_code', { p_code: code });
+  if (error) console.warn('parrainage refusé', error.message);
+}
+
+let verifParrainage = 0;
+async function verifierCodeParrainage() {
+  const etat = $('etat-parrainage');
+  const code = $('code-parrainage').value.trim();
+  const n = ++verifParrainage;
+  if (!code) { etat.classList.add('hidden'); return; }
+  etat.classList.remove('hidden');
+  etat.style.color = '';
+  etat.textContent = PSI18N.t('auth.parrainageVerif');
+  const { data, error } = await supabase.rpc('referral_code_exists', { p_code: code });
+  if (n !== verifParrainage) return; // une saisie plus recente a pris le relais
+  const valide = !error && data === true;
+  etat.textContent = PSI18N.t(valide ? 'auth.parrainageValide' : 'auth.parrainageInvalide');
+  etat.style.color = valide ? 'var(--green-l)' : '#FFB4B4';
+}
+
+$('code-parrainage').addEventListener('change', verifierCodeParrainage);
+$('code-parrainage').addEventListener('input', () => $('etat-parrainage').classList.add('hidden'));
+
 supabase.auth.onAuthStateChange((evt, session) => {
   rendre(session);
   if (evt === 'SIGNED_IN' && session) {
+    appliquerParrainageEnAttente();
     marquerOrigineWeb(session.user.id);
     marquerCampagneWeb();
     marquerPaysWeb(session.user.id);
@@ -180,6 +229,7 @@ let modeInscription = false;
 function basculerModeAuth(inscription) {
   modeInscription = inscription;
   $('champ-confirmation').classList.toggle('hidden', !modeInscription);
+  $('champ-parrainage').classList.toggle('hidden', !modeInscription);
   $('btn-connexion').classList.toggle('hidden', modeInscription);
   $('btn-inscription').classList.toggle('hidden', !modeInscription);
   $('btn-basculer').textContent = PSI18N.t(modeInscription ? 'auth.basculerVersConnexion' : 'auth.basculerVersInscription');
@@ -211,6 +261,7 @@ const CONTENU_BTN_APPLE = $('btn-apple').innerHTML;
 
 $('btn-apple').addEventListener('click', async () => {
   effacer($('msg-auth'));
+  memoriserParrainage();
   occupe($('btn-apple'), true);
   const { error } = await supabase.auth.signInWithOAuth({
     provider: 'apple',
@@ -227,6 +278,7 @@ const CONTENU_BTN_GOOGLE = $('btn-google').innerHTML;
 
 $('btn-google').addEventListener('click', async () => {
   effacer($('msg-auth'));
+  memoriserParrainage();
   occupe($('btn-google'), true);
   const { error } = await supabase.auth.signInWithOAuth({
     provider: 'google',
@@ -245,6 +297,7 @@ $('btn-inscription').addEventListener('click', async () => {
   if (password.length < 8) return afficher($('msg-auth'), PSI18N.t('auth.mdpTropCourt'), 'err');
   if (password !== $('mdp-confirmation').value) return afficher($('msg-auth'), PSI18N.t('auth.mdpDifferents'), 'err');
 
+  memoriserParrainage();
   occupe($('btn-inscription'), true);
   // Langue de l'e-mail de confirmation ({{ .Data.langue }} dans le modèle Supabase) :
   // celle du navigateur si un texte existe (fr, en, es, ar), sinon celle du site.
@@ -253,7 +306,12 @@ $('btn-inscription').addEventListener('click', async () => {
   const { data, error } = await supabase.auth.signUp({ email, password, options: { data: { langue } } });
   occupe($('btn-inscription'), false, PSI18N.t('auth.inscription'));
 
-  if (error) return afficher($('msg-auth'), PSI18N.t('auth.inscriptionEchec'), 'err');
+  if (error) {
+    // Inscription refusee (adresse deja prise...) : le code ne doit pas suivre une connexion
+    // ulterieure a un autre compte.
+    try { localStorage.removeItem(CLE_PARRAINAGE); } catch (e) {}
+    return afficher($('msg-auth'), PSI18N.t('auth.inscriptionEchec'), 'err');
+  }
   // Selon le reglage de confirmation d'e-mail, la session peut etre nulle :
   // le compte existe mais rien n'est encore signe. On repasse sur l'ecran de
   // connexion, ou l'utilisateur atterrira de toute facon apres avoir confirme.
