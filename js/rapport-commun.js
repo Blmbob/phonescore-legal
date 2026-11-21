@@ -392,7 +392,8 @@ function construireRapportHtml(r) {
     + `<div class="decompte"><div class="decompte-barre">${barre}</div>`
     + `<span class="decompte-texte">${decompteTexte(liste)}</span></div>`
     + `<div class="grille">${liste.map(pilierHtml).join('')}</div>`
-    + alertes + `<dl>${lignes}</dl>${alerteSim}`;
+    + alertes + `<dl>${lignes}</dl>${alerteSim}`
+    + `<p class="offre-parrainage">${echapper(t('rapportCommun.offreParrainage'))}</p>`;
 }
 
 /** Rend le rapport `r` dans l'element `id` et le fait apparaitre. */

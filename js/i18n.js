@@ -570,6 +570,7 @@ const TRADUCTIONS = {
       paiementEchec: "Le paiement n'a pas pu être lancé. Réessayez dans un instant.",
     },
     rapportCommun: {
+      offreParrainage: "Tu peux aussi gagner 1 pièce : inscris-toi avec le code de parrainage d’un ami, et tu reçois 1 pièce à ton premier achat.",
       verdictSafeTitre: 'Appareil sûr', verdictSafeDetail: 'Aucun blocage détecté.',
       verdictWarningTitre: 'À vérifier', verdictWarningDetail: 'Des points demandent votre attention.',
       verdictDangerTitre: 'Ne pas acheter', verdictDangerDetail: 'Cet appareil présente un blocage.',
@@ -1314,6 +1315,7 @@ const TRADUCTIONS = {
       paiementEchec: "The payment couldn't be started. Try again in a moment.",
     },
     rapportCommun: {
+      offreParrainage: "You can also earn 1 piece: sign up with a friend’s referral code, and you get 1 piece on your first purchase.",
       verdictSafeTitre: 'Safe device', verdictSafeDetail: 'No block detected.',
       verdictWarningTitre: 'To verify', verdictWarningDetail: 'Some points need your attention.',
       verdictDangerTitre: "Don't buy", verdictDangerDetail: 'This device has a block.',
