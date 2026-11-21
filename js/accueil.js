@@ -175,6 +175,98 @@ supabase.auth.onAuthStateChange((evt, session) => {
 });
 supabase.auth.getSession().then(({ data }) => rendre(data.session));
 
+/* ---------------- pop-ups : pièce offerte et parrainage ---------------- */
+
+/* Ouvre un pop-up (même contenu que dans l'app). Un seul à la fois. */
+function ouvrirPopup({ badge, titre, texte, bouton, code, onFermer }) {
+  document.querySelector('.popup-fond')?.remove();
+  const fond = document.createElement('div');
+  fond.className = 'popup-fond';
+  const carte = document.createElement('div');
+  carte.className = 'popup-carte';
+  const fermer = () => { fond.remove(); if (onFermer) onFermer(); };
+  const ajouter = (tag, classe, texteLibre) => {
+    const el = document.createElement(tag);
+    if (classe) el.className = classe;
+    if (texteLibre !== undefined) el.textContent = texteLibre;
+    carte.appendChild(el);
+    return el;
+  };
+  if (badge) ajouter('span', 'popup-badge', badge);
+  ajouter('p', 'popup-titre', titre);
+  ajouter('p', 'popup-texte', texte);
+  if (code) {
+    const ligne = ajouter('div', 'popup-code');
+    const etiquette = document.createElement('span');
+    etiquette.textContent = code.libelle;
+    const valeur = document.createElement('span');
+    valeur.textContent = code.valeur;
+    ligne.append(etiquette, valeur);
+  }
+  const principal = ajouter('button', 'popup-bouton', bouton.libelle);
+  principal.type = 'button';
+  principal.addEventListener('click', () => { if (bouton.action) bouton.action(); fermer(); });
+  if (bouton.secondaire) {
+    const plus = ajouter('button', 'popup-plus-tard', bouton.secondaire);
+    plus.type = 'button';
+    plus.addEventListener('click', fermer);
+  }
+  fond.appendChild(carte);
+  fond.addEventListener('click', e => { if (e.target === fond) fermer(); });
+  document.body.appendChild(fond);
+}
+
+/* Code de parrainage du compte connecté, et lien de partage. */
+async function popupParrainage() {
+  const { data: code, error } = await supabase.rpc('ensure_referral_code');
+  if (error || typeof code !== 'string') return;
+  ouvrirPopup({
+    titre: PSI18N.t('popups.parrainageTitre'),
+    texte: PSI18N.t('popups.parrainageTexte'),
+    code: { libelle: PSI18N.t('popups.codeLabel'), valeur: code },
+    bouton: {
+      libelle: PSI18N.t('popups.parrainageBouton'),
+      action: () => {
+        const message = PSI18N.t('popups.partage', { code });
+        if (navigator.share) navigator.share({ text: message }).catch(() => {});
+        else navigator.clipboard?.writeText(message).catch(() => {});
+      },
+      secondaire: PSI18N.t('popups.plusTard'),
+    },
+  });
+}
+
+/* Ouverture : pièce offerte une fois par compte, sinon parrainage une fois par jour
+   tant que le compte n'a fait aucune vérification. */
+async function popupsOuverture(userId) {
+  const jour = new Date().toISOString().slice(0, 10);
+  if (localStorage.getItem('parrainage_jour_' + userId) === jour) return;
+  localStorage.setItem('parrainage_jour_' + userId, jour);
+
+  if (!localStorage.getItem('offre_vue_' + userId)) {
+    const { data } = await supabase.rpc('mon_offre_inscription').then(r => r, () => ({ data: 0 }));
+    if (typeof data === 'number' && data > 0) {
+      localStorage.setItem('offre_vue_' + userId, '1');
+      ouvrirPopup({
+        badge: PSI18N.t('popups.offreBadge'),
+        titre: PSI18N.t('popups.offreTitre'),
+        texte: PSI18N.t('popups.offreTexte'),
+        bouton: { libelle: PSI18N.t('popups.offreBouton') },
+      });
+      return;
+    }
+  }
+
+  const { count } = await supabase.from('checks').select('id', { count: 'exact', head: true }).then(r => r, () => ({ count: null }));
+  if (count === 0) popupParrainage();
+}
+
+/* Après une vérification : première, puis chaque 3e. */
+async function popupsApresVerif() {
+  const { count } = await supabase.from('checks').select('id', { count: 'exact', head: true }).then(r => r, () => ({ count: null }));
+  if (count === 1 || (count ?? 0) % 3 === 0) popupParrainage();
+}
+
 async function rendre(session) {
   // Les 3 etapes « Connecte-toi / Choisis un pack / Paie » ne servent qu'avant la connexion :
   // une fois connecte, on les masque (l'acces a la recharge est deja dans la vue du compte).
@@ -190,6 +282,7 @@ async function rendre(session) {
     rafraichirStats();
     majApercu();
     proposerQuestionSource(session.user.id).catch(() => {});
+    popupsOuverture(session.user.id).catch(() => {});
   } else {
     $('vue-app').classList.add('hidden');
     if ($('question-source')) $('question-source').classList.add('hidden');
@@ -508,6 +601,7 @@ $('btn-verifier').addEventListener('click', async () => {
   // Rendu partage avec la fiche d'un element de l'historique (profil.js) :
   // voir js/rapport-commun.js, charge avant ce script.
   afficherRapportDans('rapport', data.report);
+  popupsApresVerif().catch(() => {});
 });
 
 /* ---------------- champ IMEI de l'accroche ---------------- */
