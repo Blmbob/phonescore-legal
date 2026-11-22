@@ -502,17 +502,16 @@ a.paiements{text-decoration:none; color:var(--text); align-items:center}
 @media (min-width:860px){ .hero .confiance{justify-content:flex-start} .hero .accroche{margin-left:0} .paiements-lib{text-align:left} }
 
 /* ---- vraies captures de l'app ---- */
-.hero-visuel{position:relative; height:430px; max-width:420px; width:100%; margin:0 auto}
-.tel{position:absolute; margin:0; width:210px; border-radius:30px; padding:8px; background:linear-gradient(160deg,#2A3350,#0B1020);
-  box-shadow:0 30px 70px rgba(0,0,0,.55), 0 0 0 1.5px rgba(255,255,255,.1)}
-.tel img{display:block; width:100%; height:auto; border-radius:23px}
+.hero-visuel{position:relative; height:470px; max-width:420px; width:100%; margin:0 auto}
+.tel{position:absolute; margin:0; width:190px; filter:drop-shadow(0 26px 40px rgba(0,0,0,.55))}
+.tel img{display:block; width:100%; height:auto}
 .tel-arriere{right:6%; top:0; transform:rotate(7deg); opacity:.92; animation:flotteA 7s ease-in-out infinite}
-.tel-avant{left:4%; top:46px; transform:rotate(-5deg); box-shadow:0 30px 80px rgba(0,0,0,.6), 0 0 50px rgba(229,72,77,.28), 0 0 0 1.5px rgba(255,255,255,.12); animation:flotteB 6s ease-in-out infinite}
+.tel-avant{left:4%; top:46px; transform:rotate(-5deg); filter:drop-shadow(0 26px 40px rgba(0,0,0,.6)) drop-shadow(0 0 30px rgba(229,72,77,.28)); animation:flotteB 6s ease-in-out infinite}
 @keyframes flotteA{ 0%,100%{transform:rotate(7deg) translateY(0)} 50%{transform:rotate(6deg) translateY(-8px)} }
 @keyframes flotteB{ 0%,100%{transform:rotate(-5deg) translateY(0)} 50%{transform:rotate(-4deg) translateY(-12px)} }
 .hero-visuel .demo-legende{position:absolute; left:0; right:0; bottom:-6px; text-align:center}
 .demo-legende{color:var(--muted); font-size:12.5px; margin:0; letter-spacing:.3px}
-@media (min-width:860px){ .hero-visuel{height:520px} .tel{width:240px} }
+@media (min-width:860px){ .hero-visuel{height:560px} .tel{width:220px} }
 
 /* ---- outil ---- */
 
