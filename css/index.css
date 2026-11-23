@@ -315,6 +315,8 @@
   .outil dt, .outil dd{margin:0; padding:10px 0; border-bottom:1px solid rgba(168,180,204,.14); font-size:14.5px}
   .outil dt{color:var(--muted)}
   .outil dd{text-align:right; font-weight:600}
+  .outil dd.warning{color:var(--amber)}
+  .outil dd.danger{color:var(--red)}
   .outil dl > :nth-last-child(-n+2){border-bottom:0}
   .outil .ok-v{color:var(--green-l)} .outil .ko-v{color:#FFB4B4}
 

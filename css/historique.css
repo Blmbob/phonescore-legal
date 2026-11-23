@@ -188,6 +188,8 @@
   .hist-detail dt, .hist-detail dd{margin:0; padding:10px 0; border-bottom:1px solid rgba(168,180,204,.14); font-size:14.5px}
   .hist-detail dt{color:var(--muted)}
   .hist-detail dd{text-align:right; font-weight:600}
+  .hist-detail dd.warning{color:var(--amber)}
+  .hist-detail dd.danger{color:var(--red)}
   .hist-detail dl > :nth-last-child(-n+2){border-bottom:0}
 
   footer{

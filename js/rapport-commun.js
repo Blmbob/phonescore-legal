@@ -40,31 +40,72 @@ function ligne(cle, valeur, ton) {
   return `<dt>${cle}</dt><dd${classe}>${echapper(valeur)}</dd>`;
 }
 
-/* Configuration SIM — meme regle que l'application (lib/sim-config.ts).
+/* Configuration SIM — meme regle que l'application (lib/sim-config.ts, 23 nov. 2026).
 
-   Un iPhone achete aux Etats-Unis depuis l'iPhone 14 n'a aucun tiroir SIM et ne
-   fonctionne qu'en eSIM. Revendu ici a un acheteur dont l'operateur ne propose
-   pas l'eSIM, l'appareil est inutilisable.
+   Sans tiroir SIM (eSIM uniquement) : iPhone Air et Duo partout ; iPhone 14 a 16
+   vendus aux Etats-Unis ; iPhone 17 et suivants vendus aux Etats-Unis, Canada,
+   Mexique, Japon, Guam, iles Vierges americaines et pays du Golfe.
 
-   IMEI2 est la donnee sure : un second IMEI prouve deux lignes. La forme exacte
-   de ces deux lignes (nano + eSIM, double eSIM, double nano) depend de la
-   reference regionale, que Sickw ne fournit pas : elle n'est pas deduite.
+   Le PAYS D'ACHAT decide quand il est connu. Sinon, la ZONE DE VENTE : d'abord
+   celle du numero de modele Apple (js/zones-vente.js, page officielle Apple),
+   a defaut le code region du libelle (NAUS = Etats-Unis ; NAJP = Amerique du
+   Nord, Japon et Golfe, decisif seulement a partir de l'iPhone 17 : le Japon et
+   le Canada ont garde leur tiroir jusqu'a l'iPhone 16).
 
-   Le critere est le PAYS D'ACHAT et non le code region du modele : NAJP couvre
-   l'Amerique du Nord ET le Japon, or les iPhone japonais ont garde leur tiroir. */
+   IMEI2 est la donnee sure : un second IMEI prouve deux lignes. */
 const PREMIERE_GENERATION_SANS_TIROIR = 14;
+const PREMIERE_GENERATION_ELARGIE = 17;
+const MARCHES_SANS_TIROIR_DES_17 = [
+  /^(usa|us|united states|etats[-\s]?unis|états[-\s]?unis)\b/i,
+  /^canada\b/i, /^mexico\b|^mexique\b|^méxico\b/i, /^japan\b|^japon\b/i, /^guam\b/i,
+  /virgin islands/i, /^bahrain\b|^bahre[iï]n\b/i, /^kuwait\b|^kowe[iï]t\b/i, /^oman\b/i,
+  /^qatar\b/i, /^saudi arabia\b|^arabie saoudite\b/i, /^(uae|united arab emirates|emirats|émirats)\b/i,
+];
 
 function generationIphone(modele) {
-  const m = String(modele || '').trim().match(/^IPHONE[ ]+([0-9]{1,2})/i);
+  // « IPHONE 17 PRO,ROW,… », « SVC,IPHONE 17E,NAJP,… » : préfixe possible, « E » collé.
+  const m = String(modele || '').trim().match(/(?:^|,)\s*IPHONE\s+(\d{1,2})(?!\d)/i);
   return m ? Number(m[1]) : null;
 }
 
 function estEtatsUnis(pays) {
-  const p = String(pays || '').trim().toLowerCase();
-  return p === 'us' || p === 'usa'
-    || p.startsWith('united states')
-    || p.startsWith('etats-unis') || p.startsWith('etats unis')
-    || p.startsWith('états-unis') || p.startsWith('états unis');
+  return /^(usa|us|united states|etats[-\s]?unis|états[-\s]?unis)\b/i.test(String(pays || '').trim());
+}
+
+function estIphoneAir(modele) {
+  return /^IPHONE\s+(AIR|DUO)\b/i.test(String(modele || '').trim());
+}
+
+/* « N/A » (anciens rapports) n'est pas un pays. */
+function paysConnu(pays) {
+  const p = String(pays || '').trim();
+  return p && !/^(n\s*\/\s*a|not available|unknown|none|-{1,2})$/i.test(p) ? p : '';
+}
+
+function zoneVente(numero) {
+  if (!numero || typeof ZONES_VENTE === 'undefined') return null;
+  return ZONES_VENTE[String(numero).trim().toUpperCase()] || null;
+}
+
+function zoneDuRapport(r) {
+  const parNumero = zoneVente(numeroModeleApple(r.raw)?.numero || r.numeroModele);
+  if (parNumero) return parNumero;
+  const code = String(r.model || '').toUpperCase().split(',').map(s => s.trim()).find(s => s === 'NAUS' || s === 'NAJP');
+  return code === 'NAUS' ? 'usa' : code === 'NAJP' ? 'canada-japon' : null;
+}
+
+function sansTiroirProbable(r, generation) {
+  if (estIphoneAir(r.model)) return true;
+  if (generation === null) return false;
+  const pays = paysConnu(r.purchaseCountry);
+  if (!pays) {
+    const zone = zoneDuRapport(r);
+    if (!zone) return false;
+    if (generation >= PREMIERE_GENERATION_ELARGIE) return !['monde', 'chine', 'chine-hk', 'russie'].includes(zone);
+    return generation >= PREMIERE_GENERATION_SANS_TIROIR && zone === 'usa';
+  }
+  if (generation >= PREMIERE_GENERATION_ELARGIE) return MARCHES_SANS_TIROIR_DES_17.some(re => re.test(pays));
+  return generation >= PREMIERE_GENERATION_SANS_TIROIR && estEtatsUnis(pays);
 }
 
 function configurationSim(r) {
@@ -72,9 +113,7 @@ function configurationSim(r) {
 
   const generation = generationIphone(r.model);
   const doubleSim = typeof r.imei2 === 'string' && r.imei2.trim() !== '';
-  const esimSeuleProbable = estEtatsUnis(r.purchaseCountry)
-    && generation !== null
-    && generation >= PREMIERE_GENERATION_SANS_TIROIR;
+  const esimSeuleProbable = sansTiroirProbable(r, generation);
 
   if (!doubleSim && !esimSeuleProbable) return null;
   return { doubleSim, esimSeuleProbable };
@@ -277,7 +316,8 @@ function piliers(r) {
       quoi: r.simLockStatus === 'locked'
         ? t('rapportCommun.pilierOperateurQuoiBloque')
         : r.simLockStatus === 'unlocked'
-          ? t('rapportCommun.pilierOperateurQuoiDesimlocke')
+          // Sans tiroir SIM, « toutes les cartes SIM » contredirait l'alerte eSIM.
+          ? t(configurationSim(r)?.esimSeuleProbable ? 'rapportCommun.pilierOperateurQuoiDesimlockeEsim' : 'rapportCommun.pilierOperateurQuoiDesimlocke')
           : t('rapportCommun.pilierQuoiNonDisponible'),
     },
     {
@@ -341,7 +381,10 @@ function construireRapportHtml(r) {
   const v = dateSuspecte
     ? { titre: t('rapportCommun.verdictReconditionneTitre'), detail: t('rapportCommun.verdictReconditionneDetail') }
     : (LIBELLE()[verdictFinal] ?? LIBELLE().warning);
-  const numero = mac ? null : numeroModeleApple(r.raw);
+  // Repli sur le numéro lu chez Sickw (service 54) quand le texte brut n'en a pas.
+  const numero = mac ? null : (numeroModeleApple(r.raw) || (r.numeroModele ? { numero: r.numeroModele } : null));
+  // Zone de vente d'origine : Apple la publie par numéro de modèle.
+  const zone = mac ? null : zoneVente(numero?.numero);
   const fabrication = mac && r.fabricationAnnee
     ? (r.fabricationSemaine ? t('rapportCommun.fabricationSemaine', { semaine: r.fabricationSemaine, annee: r.fabricationAnnee }) : r.fabricationAnnee)
     : '';
@@ -352,8 +395,11 @@ function construireRapportHtml(r) {
     ligne(t('rapportCommun.champCouleur'), r.color),
     ligne(t('rapportCommun.champCapacite'), r.capacity),
     ligne(t('rapportCommun.champNumeroSerie'), r.serialNumber),
-    ligne(t('rapportCommun.champPaysAchat'), r.purchaseCountry),
-    sim ? ligne(t('rapportCommun.champCartesSim'), sim.doubleSim ? t('rapportCommun.doubleSim') : t('rapportCommun.simUnique')) : '',
+    ligne(t('rapportCommun.champPaysAchat'), paysConnu(r.purchaseCountry)),
+    zone ? ligne(t('rapportCommun.champZoneVente'), t(`rapportCommun.zone_${zone}`)) : '',
+    sim ? ligne(t('rapportCommun.champCartesSim'),
+      sim.esimSeuleProbable ? t('rapportCommun.esimUniquement') : sim.doubleSim ? t('rapportCommun.doubleSim') : t('rapportCommun.simUnique'),
+      sim.esimSeuleProbable ? 'warning' : '') : '',
     ligne(t('rapportCommun.champGarantie'), r.warranty),
     ligne(t('rapportCommun.champDateAchat'), r.estimatedPurchaseDate, dateImpossible(r) ? 'danger' : dateFutureASignaler(r) ? 'warning' : ''),
     /* Activation : manquait sur le site, et dans l'app elle était trop bas pour
