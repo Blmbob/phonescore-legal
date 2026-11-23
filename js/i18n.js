@@ -582,7 +582,7 @@ const TRADUCTIONS = {
       partage: "Vérifie ton iPhone avant d'acheter avec PhoneScore. Inscris-toi avec mon code {{code}} : on gagne chacun 1 pièce à ton premier achat ! https://phonescore.app/?ref={{code}}",
     },
     rapportCommun: {
-      offreParrainage: "Tu peux aussi gagner 1 pièce : inscris-toi avec le code de parrainage d’un ami, et tu reçois 1 pièce à ton premier achat.",
+      offreParrainage: "Gagne des pièces : partage ton code de parrainage. À chaque ami qui fait son premier achat, vous recevez chacun 1 pièce.",
       verdictSafeTitre: 'Appareil sûr', verdictSafeDetail: 'Aucun blocage détecté.',
       verdictWarningTitre: 'À vérifier', verdictWarningDetail: 'Des points demandent votre attention.',
       verdictDangerTitre: 'Ne pas acheter', verdictDangerDetail: 'Cet appareil présente un blocage.',
@@ -1339,7 +1339,7 @@ const TRADUCTIONS = {
       partage: "Check an iPhone before you buy it with PhoneScore. Sign up with my code {{code}}: we each earn 1 piece on your first purchase! https://phonescore.app/en/?ref={{code}}",
     },
     rapportCommun: {
-      offreParrainage: "You can also earn 1 piece: sign up with a friend’s referral code, and you get 1 piece on your first purchase.",
+      offreParrainage: "Earn pieces: share your referral code. For every friend who makes their first purchase, you each get 1 piece.",
       verdictSafeTitre: 'Safe device', verdictSafeDetail: 'No block detected.',
       verdictWarningTitre: 'To verify', verdictWarningDetail: 'Some points need your attention.',
       verdictDangerTitre: "Don't buy", verdictDangerDetail: 'This device has a block.',
