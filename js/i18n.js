@@ -579,6 +579,7 @@ const TRADUCTIONS = {
       parrainageBouton: "Partager mon code",
       plusTard: "Plus tard",
       codeLabel: "Ton code",
+      copie: "Message copié : colle-le dans WhatsApp ou Messenger pour l'envoyer à un ami.",
       affiche: {
         fermer: 'Fermer', uneUnite: 'pièce', unites: 'pièces',
         offreCadre: 'Cadeau de bienvenue', offreLigne: 'Vérifie un iPhone', offreAccent: 'sans payer', offreCta: 'Vérifier', offreCtaAccent: 'maintenant',
@@ -1345,6 +1346,7 @@ const TRADUCTIONS = {
       parrainageBouton: "Share my code",
       plusTard: "Later",
       codeLabel: "Your code",
+      copie: "Message copied: paste it into WhatsApp or Messenger to send it to a friend.",
       affiche: {
         fermer: 'Close', uneUnite: 'piece', unites: 'pieces',
         offreCadre: 'Welcome gift', offreLigne: 'Check an iPhone', offreAccent: 'without paying', offreCta: 'Check', offreCtaAccent: 'now',

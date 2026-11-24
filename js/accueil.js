@@ -252,6 +252,17 @@ function ouvrirAffiche({ cadre, chiffre, unite, ligne, accent, cta, ctaAccent, c
   barre.focus();
 }
 
+/* Petite bulle de confirmation en bas de l'écran, 4 s. */
+function afficherBulle(texte) {
+  document.querySelector('.bulle-info')?.remove();
+  const b = document.createElement('div');
+  b.className = 'bulle-info';
+  b.setAttribute('role', 'status');
+  b.textContent = texte;
+  document.body.append(b);
+  setTimeout(() => b.remove(), 4000);
+}
+
 const unitePieces = n => PSI18N.t(n > 1 ? 'popups.affiche.unites' : 'popups.affiche.uneUnite');
 
 /* Code de parrainage du compte connecté, et lien de partage. */
@@ -270,8 +281,12 @@ async function popupParrainage() {
     photo: '/img/affiches/parrainage.jpg',
     action: () => {
       const message = PSI18N.t('popups.partage', { code });
-      if (navigator.share) navigator.share({ text: message }).catch(() => {});
-      else navigator.clipboard?.writeText(message).catch(() => {});
+      // navigator.share doit partir dans le clic lui-même (activation utilisateur).
+      if (navigator.share) { navigator.share({ text: message }).catch(() => {}); return; }
+      // Ordinateur sans menu de partage : on copie, et on le DIT (avant, rien ne s'affichait).
+      const fait = () => afficherBulle(PSI18N.t('popups.copie'));
+      if (navigator.clipboard) navigator.clipboard.writeText(message).then(fait, () => afficherBulle(message));
+      else afficherBulle(message);
     },
   });
 }
@@ -299,7 +314,8 @@ async function popupsOuverture(userId) {
         ctaAccent: PSI18N.t('popups.affiche.offreCtaAccent'),
         photo: '/img/affiches/cadeau.jpg',
         action: () => {
-          const champ = document.getElementById('imei') || document.getElementById('imei-accroche');
+          // Le premier champ IMEI réellement affiché (celui du compte, sinon celui de l'accroche).
+          const champ = ['imei', 'imei-accroche'].map(id => document.getElementById(id)).find(c => c && c.offsetParent !== null);
           if (champ) { champ.scrollIntoView({ behavior: 'smooth', block: 'center' }); champ.focus({ preventScroll: true }); }
         },
       });
