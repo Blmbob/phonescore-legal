@@ -679,13 +679,23 @@ a.paiements{text-decoration:none; color:var(--text); align-items:center}
 .lien-court a{font-weight:600}
 
 /* Pop-ups de parrainage et de pièce offerte (js/accueil.js) */
-.popup-fond { position: fixed; inset: 0; background: rgba(0, 0, 0, 0.6); display: flex; align-items: center; justify-content: center; padding: 24px; z-index: 1000; }
-.popup-carte { background: var(--surface-2, #fff); color: var(--text-primary, #111); border-radius: 16px; padding: 24px; width: 100%; max-width: 340px; display: flex; flex-direction: column; align-items: center; gap: 12px; text-align: center; }
-.popup-icone { width: 64px; height: 64px; border-radius: 50%; background: #E6F4EA; display: flex; align-items: center; justify-content: center; font-size: 30px; }
-.popup-badge { font-size: 13px; font-weight: 500; padding: 4px 12px; border-radius: 999px; background: #FFF4D6; color: #7A5A00; }
-.popup-titre { font-size: 20px; font-weight: 500; margin: 0; line-height: 1.3; }
-.popup-texte { font-size: 15px; line-height: 1.6; margin: 0; color: var(--text-secondary, #555); }
-.popup-code { width: 100%; background: #F3F3F1; border-radius: 8px; padding: 10px 12px; display: flex; justify-content: space-between; align-items: center; }
-.popup-code span:last-child { font-size: 16px; font-weight: 500; letter-spacing: 1px; }
-.popup-bouton { width: 100%; padding: 13px; border: none; border-radius: 8px; background: #111; color: #fff; font-size: 15px; font-weight: 500; cursor: pointer; }
-.popup-plus-tard { width: 100%; padding: 8px; border: none; background: transparent; color: var(--text-secondary, #555); font-size: 14px; cursor: pointer; }
+/* Pop-ups en style « affiche » (24 nov. 2026), comme dans l'app : components/popup-affiche.tsx */
+.popup-fond { position: fixed; inset: 0; background: rgba(0, 0, 0, 0.72); display: flex; align-items: center; justify-content: center; padding: 20px; z-index: 1000; }
+.affiche { width: 100%; max-width: 380px; border-radius: 22px; overflow: hidden; background: #0E1B3D; box-shadow: 0 24px 60px rgba(0, 0, 0, 0.5); font-family: inherit; }
+.affiche-haut { position: relative; display: flex; flex-direction: column; min-height: 440px; padding: 54px 22px 24px; overflow: hidden; background: radial-gradient(70% 60% at 78% 42%, rgba(36, 87, 197, 0.55), rgba(14, 27, 61, 0) 70%), #0E1B3D; }
+.affiche-bouclier { position: absolute; right: -50px; top: 130px; width: 240px; height: 240px; transform: rotate(10deg); pointer-events: none; }
+.affiche-fermer { position: absolute; top: 14px; right: 14px; z-index: 2; width: 42px; height: 42px; border: none; border-radius: 50%; background: #fff; color: #111318; font-size: 20px; font-weight: 900; line-height: 1; cursor: pointer; }
+.affiche-cadre { position: relative; align-self: flex-start; max-width: 78%; margin: 0; padding: 16px; border: 5px solid #4ADE80; transform: rotate(-4deg); color: #fff; font-size: 32px; line-height: 1.12; font-weight: 900; letter-spacing: -0.8px; }
+.affiche-espace { flex: 1; min-height: 80px; }
+.affiche-rangee { position: relative; display: flex; align-items: flex-end; }
+.affiche-nombre { color: #4ADE80; font-size: 112px; line-height: 1; font-weight: 900; letter-spacing: -5px; }
+.affiche-unite { color: #4ADE80; font-size: 30px; font-weight: 900; margin: 0 6px 14px; }
+.affiche-ligne { position: relative; margin: 4px 0 0; color: #fff; font-size: 21px; line-height: 1.3; font-weight: 800; }
+.affiche-accent { color: #4ADE80; }
+.affiche-code { position: relative; margin: 12px 0 0; color: rgba(255, 255, 255, 0.72); font-size: 15px; font-weight: 700; }
+.affiche-code b { color: #fff; letter-spacing: 1.5px; font-size: 17px; }
+.affiche-barre { display: flex; width: 100%; align-items: center; justify-content: space-between; gap: 12px; padding: 16px 22px; border: none; background: #F2F4F6; cursor: pointer; text-align: left; font-family: inherit; }
+.affiche-cta { color: #111318; font-size: 23px; font-weight: 900; letter-spacing: -0.5px; }
+.affiche-cta-accent { color: #16A34A; }
+.affiche-tuile { flex: none; display: flex; align-items: center; justify-content: center; width: 60px; height: 60px; border-radius: 14px; background: #fff; box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15); }
+.affiche-tuile-logo { width: 42px; height: 42px; }

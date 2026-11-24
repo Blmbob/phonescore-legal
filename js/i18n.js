@@ -579,6 +579,11 @@ const TRADUCTIONS = {
       parrainageBouton: "Partager mon code",
       plusTard: "Plus tard",
       codeLabel: "Ton code",
+      affiche: {
+        fermer: 'Fermer', uneUnite: 'pièce', unites: 'pièces',
+        offreCadre: 'Cadeau de bienvenue', offreLigne: 'Vérifie un iPhone', offreAccent: 'sans payer', offreCta: 'Vérifier', offreCtaAccent: 'maintenant',
+        parrCadre: 'Parraine tes amis', parrLigne: 'Pour toi et ton ami,', parrAccent: 'à son premier achat', parrCta: 'Partager', parrCtaAccent: 'mon code',
+      },
       partage: "Vérifie ton iPhone avant d'acheter avec PhoneScore. Inscris-toi avec mon code {{code}} : on gagne chacun 1 pièce à ton premier achat ! https://phonescore.app/?ref={{code}}",
     },
     rapportCommun: {
@@ -1340,6 +1345,11 @@ const TRADUCTIONS = {
       parrainageBouton: "Share my code",
       plusTard: "Later",
       codeLabel: "Your code",
+      affiche: {
+        fermer: 'Close', uneUnite: 'piece', unites: 'pieces',
+        offreCadre: 'Welcome gift', offreLigne: 'Check an iPhone', offreAccent: 'without paying', offreCta: 'Check', offreCtaAccent: 'now',
+        parrCadre: 'Invite your friends', parrLigne: 'For you and your friend,', parrAccent: 'on their first purchase', parrCta: 'Share', parrCtaAccent: 'my code',
+      },
       partage: "Check an iPhone before you buy it with PhoneScore. Sign up with my code {{code}}: we each earn 1 piece on your first purchase! https://phonescore.app/en/?ref={{code}}",
     },
     rapportCommun: {

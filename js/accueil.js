@@ -177,61 +177,91 @@ supabase.auth.getSession().then(({ data }) => rendre(data.session));
 
 /* ---------------- pop-ups : pièce offerte et parrainage ---------------- */
 
-/* Ouvre un pop-up (même contenu que dans l'app). Un seul à la fois. */
-function ouvrirPopup({ badge, titre, texte, bouton, code, onFermer }) {
-  document.querySelector('.popup-fond')?.remove();
-  const fond = document.createElement('div');
-  fond.className = 'popup-fond';
-  const carte = document.createElement('div');
-  carte.className = 'popup-carte';
-  const fermer = () => { fond.remove(); if (onFermer) onFermer(); };
-  const ajouter = (tag, classe, texteLibre) => {
-    const el = document.createElement(tag);
-    if (classe) el.className = classe;
-    if (texteLibre !== undefined) el.textContent = texteLibre;
-    carte.appendChild(el);
-    return el;
-  };
-  if (badge) ajouter('span', 'popup-badge', badge);
-  ajouter('p', 'popup-titre', titre);
-  ajouter('p', 'popup-texte', texte);
-  if (code) {
-    const ligne = ajouter('div', 'popup-code');
-    const etiquette = document.createElement('span');
-    etiquette.textContent = code.libelle;
-    const valeur = document.createElement('span');
-    valeur.textContent = code.valeur;
-    ligne.append(etiquette, valeur);
-  }
-  const principal = ajouter('button', 'popup-bouton', bouton.libelle);
-  principal.type = 'button';
-  principal.addEventListener('click', () => { if (bouton.action) bouton.action(); fermer(); });
-  if (bouton.secondaire) {
-    const plus = ajouter('button', 'popup-plus-tard', bouton.secondaire);
-    plus.type = 'button';
-    plus.addEventListener('click', fermer);
-  }
-  fond.appendChild(carte);
-  fond.addEventListener('click', e => { if (e.target === fond) fermer(); });
-  document.body.appendChild(fond);
+/* Pop-up en style « affiche », comme dans l'app (24 nov. 2026, components/popup-affiche.tsx) :
+   fond bleu nuit, titre dans un cadre vert incliné, très grand chiffre, bouclier en grand,
+   croix blanche, barre blanche d'action. Un seul à la fois. Aucun prix chiffré. */
+function bouclierClone(classe) {
+  const logo = document.querySelector('.brand svg');
+  if (!logo) return null;
+  const s = logo.cloneNode(true);
+  s.removeAttribute('class');
+  s.classList.add(classe);
+  return s;
 }
+
+function ouvrirAffiche({ cadre, chiffre, unite, ligne, accent, cta, ctaAccent, code, action }) {
+  document.querySelector('.popup-fond')?.remove();
+  const el = (tag, classe, texte) => {
+    const e = document.createElement(tag);
+    if (classe) e.className = classe;
+    if (texte !== undefined) e.textContent = texte;
+    return e;
+  };
+  const fond = el('div', 'popup-fond');
+  const carte = el('div', 'affiche');
+  carte.setAttribute('role', 'dialog');
+  carte.setAttribute('aria-modal', 'true');
+  carte.setAttribute('aria-label', cadre);
+  const fermer = () => { fond.remove(); document.removeEventListener('keydown', echap); };
+  const echap = e => { if (e.key === 'Escape') fermer(); };
+
+  const haut = el('div', 'affiche-haut');
+  const grand = bouclierClone('affiche-bouclier');
+  if (grand) haut.append(grand);
+  const croix = el('button', 'affiche-fermer', '✕');
+  croix.type = 'button';
+  croix.setAttribute('aria-label', PSI18N.t('popups.affiche.fermer'));
+  croix.addEventListener('click', fermer);
+  haut.append(croix, el('p', 'affiche-cadre', cadre), el('div', 'affiche-espace'));
+
+  const rangee = el('div', 'affiche-rangee');
+  rangee.append(el('span', 'affiche-nombre', chiffre), el('span', 'affiche-unite', unite));
+  const phrase = el('p', 'affiche-ligne', ligne + ' ');
+  phrase.append(el('span', 'affiche-accent', accent));
+  haut.append(rangee, phrase);
+  if (code) {
+    const ligneCode = el('p', 'affiche-code', code.libelle + ' ');
+    ligneCode.append(el('b', '', code.valeur));
+    haut.append(ligneCode);
+  }
+
+  const barre = el('button', 'affiche-barre');
+  barre.type = 'button';
+  const texteBarre = el('span', 'affiche-cta', cta + ' ');
+  texteBarre.append(el('span', 'affiche-cta-accent', ctaAccent));
+  const tuile = el('span', 'affiche-tuile');
+  const petit = bouclierClone('affiche-tuile-logo');
+  if (petit) tuile.append(petit);
+  barre.append(texteBarre, tuile);
+  barre.addEventListener('click', () => { if (action) action(); fermer(); });
+
+  carte.append(haut, barre);
+  fond.append(carte);
+  fond.addEventListener('click', e => { if (e.target === fond) fermer(); });
+  document.addEventListener('keydown', echap);
+  document.body.append(fond);
+  barre.focus();
+}
+
+const unitePieces = n => PSI18N.t(n > 1 ? 'popups.affiche.unites' : 'popups.affiche.uneUnite');
 
 /* Code de parrainage du compte connecté, et lien de partage. */
 async function popupParrainage() {
   const { data: code, error } = await supabase.rpc('ensure_referral_code');
   if (error || typeof code !== 'string') return;
-  ouvrirPopup({
-    titre: PSI18N.t('popups.parrainageTitre'),
-    texte: PSI18N.t('popups.parrainageTexte'),
+  ouvrirAffiche({
+    cadre: PSI18N.t('popups.affiche.parrCadre'),
+    chiffre: '+1',
+    unite: unitePieces(1),
+    ligne: PSI18N.t('popups.affiche.parrLigne'),
+    accent: PSI18N.t('popups.affiche.parrAccent'),
+    cta: PSI18N.t('popups.affiche.parrCta'),
+    ctaAccent: PSI18N.t('popups.affiche.parrCtaAccent'),
     code: { libelle: PSI18N.t('popups.codeLabel'), valeur: code },
-    bouton: {
-      libelle: PSI18N.t('popups.parrainageBouton'),
-      action: () => {
-        const message = PSI18N.t('popups.partage', { code });
-        if (navigator.share) navigator.share({ text: message }).catch(() => {});
-        else navigator.clipboard?.writeText(message).catch(() => {});
-      },
-      secondaire: PSI18N.t('popups.plusTard'),
+    action: () => {
+      const message = PSI18N.t('popups.partage', { code });
+      if (navigator.share) navigator.share({ text: message }).catch(() => {});
+      else navigator.clipboard?.writeText(message).catch(() => {});
     },
   });
 }
@@ -247,11 +277,20 @@ async function popupsOuverture(userId) {
     const { data } = await supabase.rpc('mon_offre_inscription').then(r => r, () => ({ data: 0 }));
     if (typeof data === 'number' && data > 0) {
       localStorage.setItem('offre_vue_' + userId, '1');
-      ouvrirPopup({
-        badge: PSI18N.t('popups.offreBadge'),
-        titre: PSI18N.t('popups.offreTitre'),
-        texte: PSI18N.t('popups.offreTexte'),
-        bouton: { libelle: PSI18N.t('popups.offreBouton') },
+      // Le nombre réel de pièces offertes selon le pays (10 en Côte d'Ivoire, 5 en France et aux
+      // États-Unis) : l'ancien pop-up annonçait toujours « +1 pièce ».
+      ouvrirAffiche({
+        cadre: PSI18N.t('popups.affiche.offreCadre'),
+        chiffre: '+' + data,
+        unite: unitePieces(data),
+        ligne: PSI18N.t('popups.affiche.offreLigne'),
+        accent: PSI18N.t('popups.affiche.offreAccent'),
+        cta: PSI18N.t('popups.affiche.offreCta'),
+        ctaAccent: PSI18N.t('popups.affiche.offreCtaAccent'),
+        action: () => {
+          const champ = document.getElementById('imei') || document.getElementById('imei-accroche');
+          if (champ) { champ.scrollIntoView({ behavior: 'smooth', block: 'center' }); champ.focus({ preventScroll: true }); }
+        },
       });
       return;
     }
