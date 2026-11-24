@@ -699,3 +699,7 @@ a.paiements{text-decoration:none; color:var(--text); align-items:center}
 .affiche-cta-accent { color: #16A34A; }
 .affiche-tuile { flex: none; display: flex; align-items: center; justify-content: center; width: 60px; height: 60px; border-radius: 14px; background: #fff; box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15); }
 .affiche-tuile-logo { width: 42px; height: 42px; }
+.affiche-photo { position: absolute; top: 0; left: 13%; width: 100%; height: 100%; object-fit: cover; pointer-events: none; }
+.affiche-voile { position: absolute; inset: 0; pointer-events: none; background: linear-gradient(to bottom, rgba(14, 27, 61, 0) 35%, rgba(14, 27, 61, 0.92) 92%), linear-gradient(to right, rgba(14, 27, 61, 0.75), rgba(14, 27, 61, 0) 55%); }
+.affiche-haut.avec-photo { background: #0E1B3D; }
+.affiche-haut.avec-photo > :not(.affiche-photo):not(.affiche-voile) { z-index: 1; }

@@ -189,7 +189,7 @@ function bouclierClone(classe) {
   return s;
 }
 
-function ouvrirAffiche({ cadre, chiffre, unite, ligne, accent, cta, ctaAccent, code, action }) {
+function ouvrirAffiche({ cadre, chiffre, unite, ligne, accent, cta, ctaAccent, code, action, photo }) {
   document.querySelector('.popup-fond')?.remove();
   const el = (tag, classe, texte) => {
     const e = document.createElement(tag);
@@ -206,8 +206,17 @@ function ouvrirAffiche({ cadre, chiffre, unite, ligne, accent, cta, ctaAccent, c
   const echap = e => { if (e.key === 'Escape') fermer(); };
 
   const haut = el('div', 'affiche-haut');
-  const grand = bouclierClone('affiche-bouclier');
-  if (grand) haut.append(grand);
+  if (photo) {
+    // Personnage plein cadre (même photo que dans l'app) ; le dégradé CSS garde le texte lisible.
+    const img = el('img', 'affiche-photo');
+    img.src = photo;
+    img.alt = '';
+    haut.classList.add('avec-photo');
+    haut.append(img, el('div', 'affiche-voile'));
+  } else {
+    const grand = bouclierClone('affiche-bouclier');
+    if (grand) haut.append(grand);
+  }
   const croix = el('button', 'affiche-fermer', '✕');
   croix.type = 'button';
   croix.setAttribute('aria-label', PSI18N.t('popups.affiche.fermer'));
@@ -258,6 +267,7 @@ async function popupParrainage() {
     cta: PSI18N.t('popups.affiche.parrCta'),
     ctaAccent: PSI18N.t('popups.affiche.parrCtaAccent'),
     code: { libelle: PSI18N.t('popups.codeLabel'), valeur: code },
+    photo: '/img/affiches/parrainage.jpg',
     action: () => {
       const message = PSI18N.t('popups.partage', { code });
       if (navigator.share) navigator.share({ text: message }).catch(() => {});
@@ -287,6 +297,7 @@ async function popupsOuverture(userId) {
         accent: PSI18N.t('popups.affiche.offreAccent'),
         cta: PSI18N.t('popups.affiche.offreCta'),
         ctaAccent: PSI18N.t('popups.affiche.offreCtaAccent'),
+        photo: '/img/affiches/cadeau.jpg',
         action: () => {
           const champ = document.getElementById('imei') || document.getElementById('imei-accroche');
           if (champ) { champ.scrollIntoView({ behavior: 'smooth', block: 'center' }); champ.focus({ preventScroll: true }); }
