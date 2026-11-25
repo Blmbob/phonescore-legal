@@ -36,15 +36,18 @@ function pageErreur(message, status) {
   return new Response(html, { status, headers: ENTETES });
 }
 
-export async function onRequestGet({ params }) {
+export async function onRequestGet({ params, request }) {
   const id = String(params.id || '');
+  // ?src=annonce (texte d'annonce de l'app) ou ?src=facture (QR des factures) :
+  // transmis pour que le bouton de la page vers le site garde la source.
+  const src = (new URL(request.url).searchParams.get('src') || '').toLowerCase().replace(/[^a-z0-9_.:-]/g, '').slice(0, 40);
   if (!UUID.test(id)) {
     return pageErreur('Lien invalide.', 404);
   }
 
   let reponse;
   try {
-    reponse = await fetch(`${SOURCE}?id=${encodeURIComponent(id)}`, { headers: { accept: 'text/html' } });
+    reponse = await fetch(`${SOURCE}?id=${encodeURIComponent(id)}${src ? `&src=${encodeURIComponent(src)}` : ''}`, { headers: { accept: 'text/html' } });
   } catch (e) {
     return pageErreur('Le rapport est momentanément indisponible. Réessayez dans un instant.', 502);
   }
