@@ -202,3 +202,12 @@
   .u-margin-0-0-16px{margin:0 0 16px !important}
   .u-margin-top-14px{margin-top:14px !important}
   .u-text-align-center{text-align:center !important}
+
+  .hist-detail .garantie-restante{margin:0 0 14px; border-radius:12px; padding:12px 14px; text-align:center;
+    color:var(--green-l, #7EE787); background:rgba(85,174,96,.13); border:1px solid rgba(85,174,96,.45)}
+  .hist-detail .garantie-restante b{display:block; font-size:15px}
+  .hist-detail .garantie-restante span{display:block; color:var(--muted); font-size:12.5px; margin-top:2px}
+  .hist-detail .annonce{margin-top:14px; text-align:center}
+  .hist-detail .btn-annonce{width:100%; border-radius:12px; padding:12px 14px; font:inherit; font-weight:700; font-size:15px; cursor:pointer;
+    color:inherit; background:rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.18)}
+  .hist-detail .annonce-retour{margin:8px 0 0; font-size:13px; color:var(--muted); white-space:pre-line; text-align:left}

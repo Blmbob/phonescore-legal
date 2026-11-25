@@ -666,7 +666,7 @@ $('btn-verifier').addEventListener('click', async () => {
   await rafraichirSolde();
   // Rendu partage avec la fiche d'un element de l'historique (profil.js) :
   // voir js/rapport-commun.js, charge avant ce script.
-  afficherRapportDans('rapport', data.report);
+  afficherRapportDans('rapport', data.report, { checkId: data.checkId, verifieLe: new Date().toISOString() });
   popupsApresVerif().catch(() => {});
 });
 

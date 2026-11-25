@@ -81,7 +81,7 @@ function fermer(entree) {
   });
 }
 
-function basculer(entree, report) {
+function basculer(entree, item) {
   const detail = entree.querySelector('.hist-detail');
   const dejaOuverte = entree === entreeOuverte;
 
@@ -95,7 +95,7 @@ function basculer(entree, report) {
 
   // Rendu partage avec le resultat d'une nouvelle verification (index.html) :
   // voir js/rapport-commun.js, charge avant ce script.
-  detail.innerHTML = construireRapportHtml(report);
+  detail.innerHTML = construireRapportHtml(item.report_data, { checkId: item.id, verifieLe: item.created_at });
   entree.classList.add('ouvert');
   // Lu avant l'ecriture de max-height pour forcer un reflow : sans lui, le
   // navigateur regroupe les deux changements et saute directement a la
@@ -169,7 +169,7 @@ async function chargerHistorique(reinitialiser) {
       + '<span class="hist-chevron"></span>'
       + '</div>'
       + '<div class="hist-detail"></div>';
-    entree.querySelector('.hist-item').addEventListener('click', () => basculer(entree, item.report_data));
+    entree.querySelector('.hist-item').addEventListener('click', () => basculer(entree, item));
     $('historique-liste').appendChild(entree);
   }
 }

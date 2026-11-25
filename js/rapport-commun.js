@@ -388,9 +388,115 @@ function pilierHtml(p) {
     + '</div>';
 }
 
+/* ---------- Garantie restante et annonce (25 nov. 2026, comme l'app) ---------- */
+
+/* Fin de la couverture Apple (ISO) : date exacte du texte brut, fin d'AppleCare+
+   si plus tardive, sinon durée « Expires In » ajoutée au jour de la vérification.
+   null si expirée ou inconnue (lib/valeurs-rapport.ts côté app). */
+function finCouverture(r, verifieLe) {
+  const candidates = [];
+  const exacte = String(r.raw ?? '').match(/repairs?[^\n]*expiration date:\s*(\d{4}-\d{2}-\d{2})/i);
+  if (exacte) candidates.push(exacte[1]);
+  const ac = String(r.appleCareExpiration ?? '').trim().slice(0, 10);
+  if (/^\d{4}-\d{2}-\d{2}$/.test(ac)) candidates.push(ac);
+  const rep = String(r.repairServiceExpiration ?? '').trim();
+  if (!exacte && /^\d{4}-\d{2}-\d{2}/.test(rep)) candidates.push(rep.slice(0, 10));
+  if (!candidates.length && verifieLe && /repairs?[^\n]*expires?\s+in/i.test(String(r.raw ?? ''))) {
+    const d = { annees: 0, mois: 0, jours: 0 };
+    let trouve = false;
+    rep.replace(/(\d+)\s*(year|month|day)s?/gi, (_, n, u) => {
+      trouve = true;
+      const k = u.toLowerCase() === 'year' ? 'annees' : u.toLowerCase() === 'month' ? 'mois' : 'jours';
+      d[k] = Number(n);
+      return '';
+    });
+    const base = new Date(verifieLe);
+    if (trouve && !isNaN(base.getTime())) {
+      candidates.push(new Date(Date.UTC(base.getUTCFullYear() + d.annees, base.getUTCMonth() + d.mois, base.getUTCDate() + d.jours)).toISOString().slice(0, 10));
+    }
+  }
+  return candidates.length ? candidates.sort().pop() : null;
+}
+
+/* Temps restant jusqu'à la date ISO : années et mois (jours sous un mois). */
+function couvertureRestante(fin) {
+  const m = String(fin ?? '').match(/^(\d{4})-(\d{2})-(\d{2})$/);
+  if (!m) return null;
+  const maintenant = new Date();
+  const finJ = Date.UTC(+m[1], +m[2] - 1, +m[3]);
+  const nowJ = Date.UTC(maintenant.getFullYear(), maintenant.getMonth(), maintenant.getDate());
+  if (finJ <= nowJ) return null;
+  let mois = (+m[1] - maintenant.getFullYear()) * 12 + (+m[2] - 1 - maintenant.getMonth());
+  if (+m[3] < maintenant.getDate()) mois -= 1;
+  if (mois >= 1) return { annees: Math.floor(mois / 12), mois: mois % 12, jours: 0 };
+  return { annees: 0, mois: 0, jours: Math.round((finJ - nowJ) / 86400000) };
+}
+
+function dureeLisible(d) {
+  const t = PSI18N.t;
+  const parts = [];
+  if (d.annees) parts.push(t(d.annees === 1 ? 'rapportCommun.dureeAn' : 'rapportCommun.dureeAns', { n: d.annees }));
+  if (d.mois) parts.push(t('rapportCommun.dureeMois', { n: d.mois }));
+  if (d.jours) parts.push(t(d.jours === 1 ? 'rapportCommun.dureeJour' : 'rapportCommun.dureeJours', { n: d.jours }));
+  return parts.join(' ');
+}
+
+/* « IPHONE 15 PRO MAX,NAUS,256GB » -> « iPhone 15 Pro Max ». */
+function modeleLisible(brut) {
+  const morceau = String(brut ?? '').split(',').map(s => s.trim()).find(s => /iphone|ipad|macbook|imac/i.test(s))
+    || String(brut ?? '').split(',')[0].trim();
+  if (!morceau) return '';
+  return morceau.toLowerCase().replace(/\b(\w)/g, c => c.toUpperCase())
+    .replace(/\bIphone\b/g, 'iPhone').replace(/\bIpad\b/g, 'iPad').replace(/\bMacbook\b/g, 'MacBook').replace(/\bImac\b/g, 'iMac')
+    .replace(/\b(\d+)E\b/g, '$1e').replace(/\bSe\b/g, 'SE');
+}
+
+/* Texte d'annonce prêt à coller (lib/annonce.ts côté app) : faits du rapport,
+   jamais de prix, lien vers le rapport public balisé ?src=annonce. */
+function texteAnnonce(r, opts) {
+  const t = PSI18N.t;
+  const mac = estMac(r);
+  const titre = [(mac ? r.modeleApple : null) || modeleLisible(r.model), r.capacity].filter(Boolean).join(' ');
+  const lignes = titre ? [titre, ''] : [];
+  if (r.fmiOn === false) lignes.push('✅ ' + t('rapportCommun.annIcloud'));
+  if (!mac && r.blacklisted === false) lignes.push('✅ ' + t('rapportCommun.annListeNoire'));
+  if (mac && r.mdmOn === false) lignes.push('✅ ' + t('rapportCommun.annMdm'));
+  if (!mac && r.simLockStatus === 'unlocked') lignes.push('✅ ' + t('rapportCommun.annDebloque'));
+  if (!mac && r.simLockStatus === 'locked') lignes.push('🔒 ' + t('rapportCommun.annVerrouille'));
+  const sim = configurationSim(r);
+  if (sim && sim.esimSeuleProbable) lignes.push('📶 ' + t('rapportCommun.esimUniquement'));
+  const reste = couvertureRestante(finCouverture(r, opts.verifieLe));
+  if (reste) lignes.push('🛡 ' + t('rapportCommun.garantieRestante', { duree: dureeLisible(reste) }));
+  const pays = paysConnu(r.purchaseCountry);
+  if (!mac && pays) lignes.push('🌍 ' + t('rapportCommun.annPays', { pays }));
+  const id = /^[0-9a-f-]{36}$/i.test(String(opts.checkId ?? '')) ? opts.checkId : null;
+  lignes.push('', t('rapportCommun.annPied'), id ? `https://phonescore.app/r/${id}?src=annonce` : 'https://phonescore.app/?src=annonce');
+  return lignes.join('\n');
+}
+
+/* Bouton « Créer l'annonce » : partage natif sur mobile, sinon copie. Délégué
+   au document car le rapport est réécrit à chaque affichage. */
+document.addEventListener('click', async (e) => {
+  const bouton = e.target.closest && e.target.closest('.btn-annonce');
+  if (!bouton) return;
+  const texte = bouton.dataset.annonce || '';
+  const retour = bouton.parentElement.querySelector('.annonce-retour');
+  try {
+    if (navigator.share) {
+      await navigator.share({ text: texte });
+      return;
+    }
+    await navigator.clipboard.writeText(texte);
+    if (retour) { retour.textContent = PSI18N.t('rapportCommun.annCopiee'); retour.classList.remove('hidden'); }
+  } catch (err) {
+    if (err && err.name === 'AbortError') return;
+    if (retour) { retour.textContent = texte; retour.classList.remove('hidden'); }
+  }
+});
+
 /* Grille de quatre controles (verrou iCloud, blacklist, operateur,
    historique) + phrase de consequence, decompte plutot qu'indice sur 100. */
-function construireRapportHtml(r) {
+function construireRapportHtml(r, opts = {}) {
   const t = PSI18N.t;
   const sim = configurationSim(r);
   const liste = piliers(r);
@@ -458,19 +564,34 @@ function construireRapportHtml(r) {
   const cons = consequence(r);
   const classeConsequence = cons.ton ? ` ${cons.ton}` : '';
 
+  // Garantie restante en avant (argument de vente), sauf date d'achat impossible.
+  const fin = dateImpossible(r) ? null : finCouverture(r, opts.verifieLe);
+  const reste = couvertureRestante(fin);
+  const blocGarantie = reste
+    ? `<div class="garantie-restante"><b>🛡 ${echapper(t('rapportCommun.garantieRestante', { duree: dureeLisible(reste) }))}</b>`
+      + `<span>${echapper(t('rapportCommun.garantieRestanteSub', { date: new Date(fin + 'T12:00:00').toLocaleDateString(document.documentElement.lang === 'en' ? 'en-US' : 'fr-FR', { day: 'numeric', month: 'long', year: 'numeric' }) }))}</span></div>`
+    : '';
+  // Annonce prête à coller : seulement pour un appareil qui peut se vendre.
+  const blocAnnonce = verdictFinal !== 'danger'
+    ? `<div class="annonce"><button type="button" class="btn-annonce" data-annonce="${echapper(texteAnnonce(r, opts))}">📣 ${echapper(t('rapportCommun.annBouton'))}</button>`
+      + `<p class="annonce-retour hidden"></p></div>`
+    : '';
+
   return `<div class="verdict ${ton}"><b>${v.titre}</b><span>${v.detail}</span></div>`
     + `<p class="consequence${classeConsequence}">${echapper(cons.texte)}</p>`
+    + blocGarantie
     + `<div class="decompte"><div class="decompte-barre">${barre}</div>`
     + `<span class="decompte-texte">${decompteTexte(liste)}</span></div>`
     + `<div class="grille">${liste.map(pilierHtml).join('')}</div>`
     + alertes + `<dl>${lignes}</dl>${alerteSim}`
+    + blocAnnonce
     + `<p class="offre-parrainage">${echapper(t('rapportCommun.offreParrainage'))}</p>`;
 }
 
 /** Rend le rapport `r` dans l'element `id` et le fait apparaitre. */
-function afficherRapportDans(id, r) {
+function afficherRapportDans(id, r, opts = {}) {
   const conteneur = document.getElementById(id);
-  conteneur.innerHTML = construireRapportHtml(r);
+  conteneur.innerHTML = construireRapportHtml(r, opts);
   conteneur.classList.remove('hidden');
   conteneur.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
 }
