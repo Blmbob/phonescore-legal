@@ -31,7 +31,29 @@ function statutActivation(valeur) {
   if (!v) return '';
   if (/^not\s+activated$/i.test(v)) return PSI18N.t('rapportCommun.nonActive');
   if (/^activated$/i.test(v)) return PSI18N.t('rapportCommun.active');
+  if (/^purchase date not validated$/i.test(v)) return PSI18N.t('rapportCommun.dateNonValidee');
   return v;
+}
+
+/* Opérateur d'origine lu dans la politique Apple, même débloqué (comme l'app,
+   lib/operateur.ts) : « 2023 - US Verizon LTE Unlocked Policy » -> Verizon LTE,
+   États-Unis. Politique générique (« 10 - Unlock. ») : null. */
+const PREFIXES_PAYS_OPERATEUR = [
+  [/^US\s+/i, 'États-Unis'], [/^Canada\s+/i, 'Canada'], [/^Hong Kong(\s+and\s+Macau)?\s+/i, 'Hong Kong'],
+  [/^Japan\s+/i, 'Japon'], [/^UK\s+/i, 'Royaume-Uni'], [/^Mexico\s+/i, 'Mexique'], [/^France\s+/i, 'France'],
+];
+function operateurOrigine(brut) {
+  if (!brut) return null;
+  let nom = String(brut).trim().replace(/^\d+\s*-\s*/, '').replace(/\.$/, '').trim();
+  if (!nom || /^(unlock(ed)?|multi-mode unlock( service)?|n\/a\b.*)$/i.test(nom)) return null;
+  nom = nom.replace(/\s+(locked|unlocked|activation)\s+policy$/i, '').trim();
+  for (const [motif, pays] of PREFIXES_PAYS_OPERATEUR) {
+    if (motif.test(nom)) {
+      const reste = nom.replace(motif, '').trim();
+      return reste ? { nom: reste, pays } : null;
+    }
+  }
+  return { nom };
 }
 
 function ligne(cle, valeur, ton) {
@@ -97,7 +119,7 @@ function zoneDuRapport(r) {
 function sansTiroirProbable(r, generation) {
   if (estIphoneAir(r.model)) return true;
   if (generation === null) return false;
-  const pays = paysConnu(r.purchaseCountry);
+  const pays = paysConnu(r.purchaseCountry) || operateurOrigine(r.carrier)?.pays || '';
   if (!pays) {
     const zone = zoneDuRapport(r);
     if (!zone) return false;
@@ -385,6 +407,8 @@ function construireRapportHtml(r) {
   const numero = mac ? null : (numeroModeleApple(r.raw) || (r.numeroModele ? { numero: r.numeroModele } : null));
   // Zone de vente d'origine : Apple la publie par numéro de modèle.
   const zone = mac ? null : zoneVente(numero?.numero);
+  // Débloqué : l'opérateur d'origine reste lisible dans la politique Apple.
+  const origine = !mac && r.simLockStatus === 'unlocked' ? operateurOrigine(r.carrier) : null;
   const fabrication = mac && r.fabricationAnnee
     ? (r.fabricationSemaine ? t('rapportCommun.fabricationSemaine', { semaine: r.fabricationSemaine, annee: r.fabricationAnnee }) : r.fabricationAnnee)
     : '';
@@ -396,6 +420,7 @@ function construireRapportHtml(r) {
     ligne(t('rapportCommun.champCapacite'), r.capacity),
     ligne(t('rapportCommun.champNumeroSerie'), r.serialNumber),
     ligne(t('rapportCommun.champPaysAchat'), paysConnu(r.purchaseCountry)),
+    origine ? ligne(t('rapportCommun.champOperateurOrigine'), origine.pays ? `${origine.nom} (${origine.pays})` : origine.nom) : '',
     zone ? ligne(t('rapportCommun.champZoneVente'), t(`rapportCommun.zone_${zone}`)) : '',
     sim ? ligne(t('rapportCommun.champCartesSim'),
       sim.esimSeuleProbable ? t('rapportCommun.esimUniquement') : sim.doubleSim ? t('rapportCommun.doubleSim') : t('rapportCommun.simUnique'),
