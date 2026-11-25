@@ -17,7 +17,9 @@ const UUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
 
 const ENTETES = {
   'content-type': 'text/html; charset=utf-8',
-  'content-security-policy': "default-src 'none'; style-src 'unsafe-inline'; base-uri 'none'; form-action 'none'; frame-ancestors 'none'",
+  // form-action 'self' : le formulaire de notation de la boutique (25 nov. 2026)
+  // se renvoie à cette même adresse, en POST.
+  'content-security-policy': "default-src 'none'; style-src 'unsafe-inline'; base-uri 'none'; form-action 'self'; frame-ancestors 'none'",
   'x-frame-options': 'DENY',
   'x-content-type-options': 'nosniff',
   'referrer-policy': 'no-referrer',
@@ -55,5 +57,30 @@ export async function onRequestGet({ params, request }) {
     return pageErreur('Le rapport est momentanément indisponible. Réessayez dans un instant.', 502);
   }
 
+  return new Response(await reponse.text(), { status: 200, headers: ENTETES });
+}
+
+// Avis de l'acheteur sur la boutique : le formulaire de la page est relayé tel
+// quel (note, commentaire, champ piège) ; shared-report valide et enregistre.
+export async function onRequestPost({ params, request }) {
+  const id = String(params.id || '');
+  if (!UUID.test(id)) {
+    return pageErreur('Lien invalide.', 404);
+  }
+  const src = (new URL(request.url).searchParams.get('src') || '').toLowerCase().replace(/[^a-z0-9_.:-]/g, '').slice(0, 40);
+  const corps = (await request.text()).slice(0, 4000);
+  let reponse;
+  try {
+    reponse = await fetch(`${SOURCE}?id=${encodeURIComponent(id)}${src ? `&src=${encodeURIComponent(src)}` : ''}`, {
+      method: 'POST',
+      headers: { accept: 'text/html', 'content-type': 'application/x-www-form-urlencoded' },
+      body: corps,
+    });
+  } catch (e) {
+    return pageErreur("L'avis n'a pas pu être envoyé. Réessayez dans un instant.", 502);
+  }
+  if (!reponse.ok) {
+    return pageErreur("L'avis n'a pas pu être envoyé. Réessayez dans un instant.", 502);
+  }
   return new Response(await reponse.text(), { status: 200, headers: ENTETES });
 }
